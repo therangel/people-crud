@@ -163,10 +163,22 @@ function renderizarPessoas(array) {
 
     array.forEach((pessoa, index) => {
 
-        const elemento = document.createElement('li')
-        elemento.classList.add("user")
-        elemento.textContent = `Nome: ${pessoa.nome} | Idade: ${pessoa.idade} | Cidade: ${pessoa.cidade} |
-        Profissão: ${pessoa.profissao} | Salário: ${pessoa.salario} | Ativo: ${pessoa.ativo} `
+
+        const tableRow = document.createElement("tr")
+        const tdName = document.createElement("td")
+        const tdAge = document.createElement("td")
+        const tdCity = document.createElement("td")
+        const tdProfession = document.createElement("td")
+        const tdSalary = document.createElement("td")
+        const tdActive = document.createElement("td")
+        const tdActions = document.createElement("td")
+
+        tdName.textContent = pessoa.nome
+        tdAge.textContent = pessoa.idade
+        tdCity.textContent = pessoa.cidade
+        tdProfession.textContent = pessoa.profissao
+        tdSalary.textContent = pessoa.salario
+        tdActive.textContent = pessoa.ativo
         
         const botaoRemover = document.createElement("button")
         botaoRemover.textContent = "Remover"
@@ -179,19 +191,17 @@ function renderizarPessoas(array) {
             if(indicePessoa !== -1) {
                 pessoas.splice(indicePessoa, 1)
                 aplicarFiltros()
-            }      
-           
-            
+            }        
         })
 
-        botaoEditar.addEventListener("click", () => {                                                                   // ================  PAREI AQUI 
+        botaoEditar.addEventListener("click", () => {                                                                   
             let pessoaParaEditar = array[index]              
             editarPessoa(pessoaParaEditar) 
         })
 
-        
-        elemento.append(botaoRemover, botaoEditar)
-        lista.append(elemento)
+        tdActions.append(botaoRemover, botaoEditar)
+        tableRow.append(tdName, tdAge, tdCity, tdProfession, tdSalary, tdActive, tdActions)
+        lista.append(tableRow)
     })
   
 }
