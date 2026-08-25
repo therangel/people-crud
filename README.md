@@ -1,55 +1,94 @@
-Primeiro projeto: Painel de pessoas
+# People CRUD
 
-Vamos usar justamente o domínio que você acabou de trabalhar.
+Aplicação web de cadastro e gerenciamento de pessoas, desenvolvida para praticar conceitos fundamentais de JavaScript, manipulação do DOM e operações com arrays.
 
-O projeto terá
+## Funcionalidades
 
-Uma página com:
+* Cadastro de pessoas
+* Validação de nomes duplicados
+* Edição de pessoas cadastradas
+* Validação de nomes duplicados durante a edição
+* Remoção de pessoas
+* Filtro por cidade
+* Filtro por profissão
+* Filtro por status ativo
 
-formulário para cadastrar pessoa e Validações ***
-lista de pessoas cadastradas ***
-filtro por cidade ***
-filtro por profissão***
-botão para mostrar apenas pessoas ativas***
-contador de pessoas***
-salário total***
-botão para remover pessoa ***
-ordenação por nome ou salário***
-botão Limpar filtros***
-edição de uma pessoa***
+* Ordenação por nome:
+  * A–Z
+  * Z–A
 
-validações personalizadas
+* Ordenação por salário:
+  * Menor para maior
+  * Maior para menor
 
-contador de ativos/inativos***
+* Limpeza dos filtros
+* Contagem de pessoas exibidas
+* Contagem de pessoas ativas
+* Cálculo do total de salários
+* Atualização dinâmica da interface
 
-salário médio
-maior salário
-menor salário
-talvez busca por nome com <input>
+## Tecnologias
 
-┌─────────────────────────────────────────────┐
-│           PAINEL DE PESSOAS                 │
-├─────────────────────────────────────────────┤
-│                                             │
-│ Nome:       [________________]              │
-│ Idade:      [____]                          │
-│ Cidade:     [________________]              │
-│ Profissão:  [________________]              │
-│ Salário:    [________]                      │
-│ Ativo:      [ ✓ ]                           │ 
-│                                             │
-│              [ ADICIONAR ]                  │
-│                                             │
-├─────────────────────────────────────────────┤
-│ Pessoas: 7       Salários: R$ 28.500        │
-│                                             │
-│ Cidade: [Todas ▼]   Profissão: [Todas ▼]    │
-│                                             │
-│ [ ] Somente ativos                          │
-│                                             │
-├─────────────────────────────────────────────┤
-│ Ana       Desenvolvedora   R$ 6.500  Ativa  │
-│ Carlos    Designer         R$ 4.800  Ativo  │
-│ Marina    Desenvolvedora   R$ 5.200  Inat.  │
-│ ...                                         │
-└─────────────────────────────────────────────┘
+* HTML5
+* CSS3
+* JavaScript
+
+## Conceitos praticados
+
+O projeto foi desenvolvido como forma de praticar conceitos importantes de JavaScript, incluindo:
+
+* Manipulação do DOM
+* Eventos e `addEventListener`
+* Funções e parâmetros
+* Arrays e objetos
+* `filter()`
+* `some()`
+* `findIndex()`
+* `reduce()`
+* `sort()`
+* `localeCompare()`
+* Operador ternário e condicionais
+* Spread operator (`...`)
+* Escopo de variáveis
+* Referência de objetos
+* Renderização dinâmica de elementos
+* CRUD em memória
+* Organização do estado da aplicação
+
+## Como executar
+
+1. Clone este repositório:
+
+```bash
+git clone https://github.com/seu-usuario/people-crud.git
+```
+
+2. Entre na pasta do projeto:
+
+```bash
+cd people-crud
+```
+
+3. Abra o arquivo `index.html` no navegador.
+
+Não é necessário instalar dependências ou configurar um servidor para executar o projeto.
+
+## Próximas implementações
+
+Algumas funcionalidades planejadas para as próximas versões:
+
+* Validações adicionais dos campos do formulário
+* Melhorias na experiência de edição
+* Persistência dos dados com `localStorage`
+* Melhorias de responsividade
+* Melhorias na interface e experiência do usuário
+* Refatoração e organização do código
+* Novos recursos de gerenciamento de pessoas
+
+## Objetivo
+
+Este projeto faz parte do meu processo de aprendizado em desenvolvimento web, com foco no fortalecimento da lógica de programação e dos fundamentos de JavaScript antes de avançar para tecnologias e frameworks mais complexos.
+
+## Licença
+
+Este projeto está disponível sob a licença MIT. Consulte o arquivo `LICENSE` para mais informações.
