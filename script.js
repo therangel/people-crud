@@ -1,11 +1,11 @@
 // Elementos
+const formulario = document.getElementById("form-pessoa")
 const nomeInput = document.getElementById("nome")
 const idadeInput = document.getElementById("idade")
 const cidadeInput = document.getElementById("cidade")
 const profissaoInput = document.getElementById("profissao")
 const salarioInput = document.getElementById("salario")
 const ativoInput = document.getElementById("ativo")
-const formulario = document.getElementById("form-pessoa")
 const botaoAdd = document.getElementById("botao-adicionar")
 
 const lista = document.getElementById("lista")
@@ -44,15 +44,6 @@ filtroPorAtivos.addEventListener("change", aplicarFiltros)
 filtroOrdenacao.addEventListener("change", aplicarFiltros)
 
 botaoLimparFiltros.addEventListener("click", limparFiltros)
-
-// fazer uma função separada de verificações e armazenalas em um array , depois se algumas delas for false, é porque nao passou na verificação ( ou true)
-
-// VALIDÇÕES
-
-// validarNome()    
-// validarIdade()
-// validarSalario()
-// validarCamposObrigatorios()
 
 
 // Funções principais
@@ -219,7 +210,7 @@ function editarPessoa(pessoa){
 
     pessoaEmEdicao = pessoa
     modo = "salvar"
-                                                   // ================  PAREI AQUI
+                                                   
 }
 
 function salvarPessoa(pessoa) {
@@ -251,7 +242,7 @@ function salvarPessoa(pessoa) {
 function calcularSalarios(array) {
     
     const total = array.reduce((acc, pessoa) => {
-        return acc += pessoa.salario
+        return acc + pessoa.salario
     }, 0)
 
     totalSalarios.textContent = `Salários: R$${total}`
