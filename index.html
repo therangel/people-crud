@@ -4,114 +4,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
-    <title>Cadastro</title>
+
+    <title>Cadastro de Clientes</title>
 
 </head>
 
 
 <body>
-    <div class="container-wrapper">
-        <aside class="sidebar">
-            <div class="sidebar_box">
-                <button id="close-sidebar-btn" class="burger_btn close_sidebar">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+    <div class="overlay"></div>
 
-            <a href="">Home</a>
-            <a href="">Usuários</a>
+    <div class="container-wrapper">  
+        <aside class="sidebar">
+            <div class="box_logo">
+                <p>Logo</p>
+            </div>
+            <div class="box_links_nav">
+                <a href="">Home</a>
+                <a href="">Clientes</a>
+            </div>
         </aside>
 
-        <button id="open-sidebar-btn" class="burger_btn open_sidebar">
+        <button id="burger-btn" class="burger_btn">
             <span></span>
             <span></span>
             <span></span>
         </button>
 
         <main class="main">
-            <header class="header">
-                <h1>Painel de Pessoas</h1>
-            </header>
+            <section class="section clients">
+                <header class="header">
+                    <h1>Clientes</h1>
+                    <button class="add_client">Novo cliente</button>
+                </header>
+                
+                <div class="filtros">
+                    <h2>Filtrar</h2>
+                    <button id="limpar-filtros">Limpar Filtros</button>
+                    <div class="filtro-container">
+                        <p id="filtro-total-pessoas">Pessoas: 0</p>
+                        <p id="filtro-total-salarios">Salários: R$0</p>
+                        <p id="filtro-total-ativos"></p>
+                    </div>
+                    <div class="categorias">
+                        <div class="container">
+                            <label for="filtro-cidade">Cidade</label>
+                            <select id="filtro-cidade">
+                                <option value="todas">Todas</option>
+                                <option value="Rio de Janeiro">Rio de Janeiro</option>
+                                <option value="São Paulo">São Paulo</option>
+                                <option value="Belo Horizonte">Belo Horizonte</option>
+                            </select>
+                        </div>
+                        <div class="container">
+                            <label for="filtro-profissao">Profissão</label>
+                            <select id="filtro-profissao">
+                                <option value="todas">Todas</option>
+                                <option value="Desenvolvedor">Desenvolvedor</option>
+                                <option value="Analista">Analista</option>
+                                <option value="Designer">Designer</option>
+                            </select>
+                        </div>
+                        <div class="container">
+                            <label for="filtro-ativos">Ativos</label>
+                            <input type="checkbox" id="filtro-ativo">
+                        </div>
+    
+                        <div class="container">
+                            <label for="filtro-ordenacao">Ordenar</label>
+                            <select id="filtro-ordenacao">
+                                <option value="sem-ordenacao">Sem Ordenação</option>
+                                <option value="nome-a-z">Nome: A → Z</option>
+                                <option value="nome-z-a">Nome: Z → A</option>
+                                <option value="salario-menor">Salário: menor → maior</option>
+                                <option value="salario-maior">Salário: maior → menor</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-            <section class="section add_user ">
-               
-                <form id="form-pessoa" class="form">
-                    <div class="form-input-box">
-                        <label for="nome">Nome: </label>
-                        <input type="text" name="nome" id="nome" required>
+                <div class="modal-form">
+                    <div class="header-modal-form">
+                        <p>Dados</p>
+                        <button class="close-modal-btn">X</button>
                     </div>
-                    <div class="form-input-box">
-                        <label for="idade">Idade: </label>
-                        <input type="text" name="idade" id="idade" min="18" required>
-                    </div>
-                    <div class="form-input-box">
-                        <label for="cidade">Cidade: </label>
-                        <input type="text" name="cidade" id="cidade" required>
-                    </div>
-                    <div class="form-input-box">
-                        <label for="profissao">Profissão: </label>
-                        <input type="text" name="profissao" id="profissao" required>
-                    </div>
-                    <div class="form-input-box">
-                        <label for="salario">Salário: </label>
-                        <input type="number" id="salario" min="0" required>
-                    </div>
-                    <div class="form-input-box ativo">
-                        <label for="ativo">Ativo: </label>
-                        <input type="checkbox" id="ativo">
-                    </div>
-                    <button type="submit" id="botao-adicionar">Adicionar</button>
-                </form>
+
+                    <form id="form-pessoa" class="form">
+                        <div class="form-input-box">
+                            <label for="nome">Nome: </label>
+                            <input type="text" name="nome" id="nome" required>
+                        </div>
+                        <div class="form-input-box">
+                            <label for="idade">Idade: </label>
+                            <input type="text" name="idade" id="idade" min="18" required>
+                        </div>
+                        <div class="form-input-box">
+                            <label for="cidade">Cidade: </label>
+                            <input type="text" name="cidade" id="cidade" required>
+                        </div>
+                        <div class="form-input-box">
+                            <label for="profissao">Profissão: </label>
+                            <input type="text" name="profissao" id="profissao" required>
+                        </div>
+                        <div class="form-input-box">
+                            <label for="salario">Salário: </label>
+                            <input type="number" id="salario" min="0" required>
+                        </div>
+                        <div class="form-input-box ativo">
+                            <label for="ativo">Ativo: </label>
+                            <input type="checkbox" id="ativo">
+                        </div>
+                        <button type="submit" id="botao-adicionar">Adicionar</button>
+                    </form>
+                </div>
 
                 <div class="container-section">
-                    <div class="filtros">
-                        <h2>Filtrar</h2>
-                        <button id="limpar-filtros">Limpar Filtros</button>
-                        <div class="filtro-container">
-                            <p id="filtro-total-pessoas">Pessoas: 0</p>
-                            <p id="filtro-total-salarios">Salários: R$0</p>
-                            <p id="filtro-total-ativos"></p>
-                        </div>
-                        <div class="categorias">
-                            <div class="container">
-                                <label for="filtro-cidade">Cidade</label>
-                                <select id="filtro-cidade">
-                                    <option value="todas">Todas</option>
-                                    <option value="Rio de Janeiro">Rio de Janeiro</option>
-                                    <option value="São Paulo">São Paulo</option>
-                                    <option value="Belo Horizonte">Belo Horizonte</option>
-                                </select>
-                            </div>
-                            <div class="container">
-                                <label for="filtro-profissao">Profissão</label>
-                                <select id="filtro-profissao">
-                                    <option value="todas">Todas</option>
-                                    <option value="Desenvolvedor">Desenvolvedor</option>
-                                    <option value="Analista">Analista</option>
-                                    <option value="Designer">Designer</option>
-                                </select>
-                            </div>
-                            <div class="container">
-                                <label for="filtro-ativos">Ativos</label>
-                                <input type="checkbox" id="filtro-ativo">
-                            </div>
-        
-                            <div class="container">
-                                <label for="filtro-ordenacao">Ordenar</label>
-                                <select id="filtro-ordenacao">
-                                    <option value="sem-ordenacao">Sem Ordenação</option>
-                                    <option value="nome-a-z">Nome: A → Z</option>
-                                    <option value="nome-z-a">Nome: Z → A</option>
-                                    <option value="salario-menor">Salário: menor → maior</option>
-                                    <option value="salario-maior">Salário: maior → menor</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-        
+                    
                     <div class="wrapper-table">
                         <table class="users-table">
                             <thead>
@@ -125,10 +138,10 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody id="lista">
-                    </div>
-                        </tbody>
-                    </table>
+                            <tbody id="lista"></tbody>
+                        </table>
+                    </div>  
+
                 </div>
             </section>
         </main>

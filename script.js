@@ -1,4 +1,9 @@
 // Elementos
+
+const openFormBtn = document.querySelector(".add_client")
+const modalForm = document.querySelector(".modal-form")
+const closeFormBtn = document.querySelector(".close-modal-btn")
+
 const formulario = document.getElementById("form-pessoa")
 const nomeInput = document.getElementById("nome")
 const idadeInput = document.getElementById("idade")
@@ -32,10 +37,20 @@ formulario.addEventListener("submit", (e) => {
     e.preventDefault() //anula o evento padrao de atualizar a pagina ao enviar formulario 
     if(modo === "adicionar"){
         adicionarPessoa()
+        closeForm() 
         
     } else if(modo === "salvar") {
         salvarPessoa(pessoaEmEdicao)
+        closeForm()
     }      
+})
+
+openFormBtn.addEventListener("click", () => {
+    openForm() 
+})
+
+closeFormBtn.addEventListener("click", () => {
+    closeForm() 
 })
 
 filtroPorCidade.addEventListener("change", aplicarFiltros)
@@ -47,6 +62,15 @@ botaoLimparFiltros.addEventListener("click", limparFiltros)
 
 
 // Funções principais
+
+function closeForm() {
+    modalForm.classList.remove("active")
+}
+
+function openForm() {
+    modalForm.classList.add("active")
+}
+
 function adicionarPessoa() {
     
     const nomeDuplicado = pessoas.some(pessoa => pessoa.nome === nomeInput.value)
@@ -188,6 +212,7 @@ function renderizarPessoas(array) {
         botaoEditar.addEventListener("click", () => {                                                                   
             let pessoaParaEditar = array[index]              
             editarPessoa(pessoaParaEditar) 
+            openForm() 
         })
 
         tdActions.append(botaoRemover, botaoEditar)

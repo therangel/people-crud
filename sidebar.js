@@ -1,14 +1,23 @@
-const openSidebarBtn = document.getElementById("open-sidebar-btn")
-const closeSidebarBtn = document.getElementById("close-sidebar-btn")
+const burgerBtn = document.getElementById("burger-btn")
 const sideBar = document.querySelector(".sidebar")
+const overlay = document.querySelector(".overlay")
 
-openSidebarBtn.addEventListener("click", () => {
-    sideBar.classList.add("open")
+burgerBtn.addEventListener("click", () => {
+    ativarMenu() 
 })
 
-closeSidebarBtn.addEventListener("click", () => {
-    sideBar.classList.remove("open")
+overlay.addEventListener("click", () => {
+    ativarMenu() 
 })
+
+function ativarMenu() {
+    sideBar.classList.toggle("active")
+    burgerBtn.classList.toggle("active")
+    overlay.classList.toggle("active")
+}
+
+
+
 
 
 
