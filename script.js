@@ -1,287 +1,321 @@
-// Elementos
+// DOM Elements
 
-const openFormBtn = document.querySelector(".add_client")
+const openFormButton = document.querySelector(".add_client")
 const modalForm = document.querySelector(".modal-form")
-const closeFormBtn = document.querySelector(".close-modal-btn")
+const closeFormButton = document.querySelector(".close-modal-btn")
 
-const formulario = document.getElementById("form-pessoa")
-const nomeInput = document.getElementById("nome")
-const idadeInput = document.getElementById("idade")
-const cidadeInput = document.getElementById("cidade")
-const profissaoInput = document.getElementById("profissao")
-const salarioInput = document.getElementById("salario")
-const ativoInput = document.getElementById("ativo")
-const botaoAdd = document.getElementById("botao-adicionar")
+const personForm = document.getElementById("form-pessoa")
+const nameInput = document.getElementById("nome")
+const ageInput = document.getElementById("idade")
+const cityInput = document.getElementById("cidade")
+const professionInput = document.getElementById("profissao")
+const salaryInput = document.getElementById("salario")
+const activeInput = document.getElementById("ativo")
+const addButton = document.getElementById("botao-adicionar")
 
-const lista = document.getElementById("lista")
+const peopleList = document.getElementById("lista")
 
-const filtroPorCidade = document.getElementById("filtro-cidade")
-const filtroPorProfissao = document.getElementById("filtro-profissao")
-const filtroPorAtivos = document.getElementById("filtro-ativo")
-const filtroOrdenacao = document.getElementById("filtro-ordenacao")
-const totalSalarios = document.getElementById("filtro-total-salarios")
-const totalPessoas = document.getElementById("filtro-total-pessoas")
-const botaoLimparFiltros = document.querySelector(".limpar-filtros")
+const cityFilter = document.getElementById("filtro-cidade")
+const professionFilter = document.getElementById("filtro-profissao")
+const activeFilter = document.getElementById("filtro-ativo")
+const sortFilter = document.getElementById("filtro-ordenacao")
+
+const totalSalaries = document.getElementById("filtro-total-salarios")
+const totalPeople = document.getElementById("filtro-total-pessoas")
+const totalActivePeople = document.getElementById("filtro-total-ativos")
+
+const clearFiltersButton = document.querySelector(".limpar-filtros")
 
 
-// Dados
-const pessoas = []
+// Data
+
+const people = []
 
 
-// Estado
-let modo = "adicionar"
-let pessoaEmEdicao = null
+// State
 
-//Eventos
-formulario.addEventListener("submit", (e) => {
-    e.preventDefault() //anula o evento padrao de atualizar a pagina ao enviar formulario 
-    if(modo === "adicionar"){
-        adicionarPessoa()
-        closeForm() 
-        
-    } else if(modo === "salvar") {
-        salvarPessoa(pessoaEmEdicao)
+let mode = "add"
+let personBeingEdited = null
+
+
+// Events
+
+personForm.addEventListener("submit", (event) => {
+    event.preventDefault()
+
+    if (mode === "add") {
+        addPerson()
         closeForm()
-    }      
+
+    } else if (mode === "save") {
+        savePerson(personBeingEdited)
+        closeForm()
+    }
 })
 
-openFormBtn.addEventListener("click", () => {
-    openForm() 
-})
+openFormButton.addEventListener("click", openForm)
 
-closeFormBtn.addEventListener("click", () => {
-    closeForm() 
-})
+closeFormButton.addEventListener("click", closeForm)
 
-filtroPorCidade.addEventListener("change", aplicarFiltros)
-filtroPorProfissao.addEventListener("change", aplicarFiltros)
-filtroPorAtivos.addEventListener("change", aplicarFiltros)
-filtroOrdenacao.addEventListener("change", aplicarFiltros)
+cityFilter.addEventListener("change", applyFilters)
+professionFilter.addEventListener("change", applyFilters)
+activeFilter.addEventListener("change", applyFilters)
+sortFilter.addEventListener("change", applyFilters)
 
-botaoLimparFiltros.addEventListener("click", limparFiltros)
+clearFiltersButton.addEventListener("click", clearFilters)
 
 
-// Funções principais
-
-function closeForm() {
-    modalForm.classList.remove("active")
-}
+// Form Functions
 
 function openForm() {
     modalForm.classList.add("active")
 }
 
-function adicionarPessoa() {
-    
-    const nomeDuplicado = pessoas.some(pessoa => pessoa.nome === nomeInput.value)
-
-    if(nomeDuplicado) {
-        alert("Nome ja existe")
-    }else{
-        const pessoa = {
-            nome: nomeInput.value,
-            idade: Number(idadeInput.value),
-            cidade: cidadeInput.value,
-            profissao: profissaoInput.value,
-            salario: Number(salarioInput.value),
-            ativo: ativoInput.checked
-        }   
-
-        pessoas.push(pessoa)
-        limparFormulario()
-        aplicarFiltros()
-        
-    }
+function closeForm() {
+    modalForm.classList.remove("active")
 }
 
-function limparFormulario(){
-    nomeInput.value = ""
-    idadeInput.value = ""
-    cidadeInput.value = ""
-    profissaoInput.value = ""
-    salarioInput.value = ""
-    ativoInput.checked = false
-}
+function addPerson() {
 
-function limparFiltros() {
-    filtroPorCidade.value = "todas"
-    filtroPorProfissao.value = "todas"
-    filtroPorAtivos.checked = false
-    filtroOrdenacao.value = "sem-ordenacao"
+    const isNameDuplicated = people.some(
+        person => person.name === nameInput.value
+    )
 
-    aplicarFiltros()
-}
-
-
-function aplicarFiltros() {
-
-    let listaFiltrada = pessoas
-
-    if(filtroPorCidade.value !== "todas") {
-        listaFiltrada = listaFiltrada.filter(pessoa => pessoa.cidade === filtroPorCidade.value)
+    if (isNameDuplicated) {
+        alert("Nome já existe")
+        return
     }
 
-    if(filtroPorProfissao.value !== "todas") {
-        listaFiltrada = listaFiltrada.filter(pessoa => pessoa.profissao === filtroPorProfissao.value)
+    const person = {
+        name: nameInput.value,
+        age: Number(ageInput.value),
+        city: cityInput.value,
+        profession: professionInput.value,
+        salary: Number(salaryInput.value),
+        active: activeInput.checked
     }
 
-    if(filtroPorAtivos.checked){
-        listaFiltrada = listaFiltrada.filter(pessoa => pessoa.ativo)
+    people.push(person)
+
+    clearForm()
+    applyFilters()
+}
+
+function editPerson(person) {
+
+    nameInput.value = person.name
+    ageInput.value = person.age
+    cityInput.value = person.city
+    professionInput.value = person.profession
+    salaryInput.value = person.salary
+    activeInput.checked = person.active
+
+    addButton.textContent = "Salvar"
+
+    personBeingEdited = person
+    mode = "save"
+}
+
+function savePerson(person) {
+
+    const isNameDuplicated = people.some(
+        currentPerson =>
+            currentPerson.name === nameInput.value &&
+            currentPerson !== personBeingEdited
+    )
+
+    if (isNameDuplicated) {
+        alert("Nome já existe!")
+        return
     }
 
-    let listaOrdenada = [...listaFiltrada]
+    person.name = nameInput.value
+    person.age = Number(ageInput.value)
+    person.city = cityInput.value
+    person.profession = professionInput.value
+    person.salary = Number(salaryInput.value)
+    person.active = activeInput.checked
 
-    if(filtroOrdenacao.value === "nome-a-z") {
-        listaOrdenada.sort((a, b) => a.nome.localeCompare(b.nome))    
+    applyFilters()
+
+    personBeingEdited = null
+    mode = "add"
+
+    addButton.textContent = "Adicionar"
+
+    clearForm()
+}
+
+function clearForm() {
+
+    nameInput.value = ""
+    ageInput.value = ""
+    cityInput.value = ""
+    professionInput.value = ""
+    salaryInput.value = ""
+    activeInput.checked = false
+}
+
+
+// Filter Functions
+
+function clearFilters() {
+
+    cityFilter.value = "todas"
+    professionFilter.value = "todas"
+    activeFilter.checked = false
+    sortFilter.value = "sem-ordenacao"
+
+    applyFilters()
+}
+
+function applyFilters() {
+
+    let filteredPeople = people
+
+    if (cityFilter.value !== "todas") {
+        filteredPeople = filteredPeople.filter(
+            person => person.city === cityFilter.value
+        )
     }
 
-    if(filtroOrdenacao.value === "nome-z-a") {
-        listaOrdenada.sort((a, b) => b.nome.localeCompare(a.nome))
-    }  
+    if (professionFilter.value !== "todas") {
+        filteredPeople = filteredPeople.filter(
+            person => person.profession === professionFilter.value
+        )
+    }
 
-    if(filtroOrdenacao.value === "salario-menor") {
-        listaOrdenada.sort((a, b) => a.salario - b.salario)
-    }  
+    if (activeFilter.checked) {
+        filteredPeople = filteredPeople.filter(
+            person => person.active
+        )
+    }
 
-    if(filtroOrdenacao.value === "salario-maior") {
-        listaOrdenada.sort((a, b) => b.salario - a.salario)
-    } 
+    const sortedPeople = [...filteredPeople]
 
-    atualizarTela(listaOrdenada)
+    if (sortFilter.value === "name-a-z") {
+        sortedPeople.sort(
+            (a, b) => a.name.localeCompare(b.name)
+        )
+    }
+
+    if (sortFilter.value === "name-z-a") {
+        sortedPeople.sort(
+            (a, b) => b.name.localeCompare(a.name)
+        )
+    }
+
+    if (sortFilter.value === "salary-low-high") {
+        sortedPeople.sort(
+            (a, b) => a.salary - b.salary
+        )
+    }
+
+    if (sortFilter.value === "salary-high-low") {
+        sortedPeople.sort(
+            (a, b) => b.salary - a.salary
+        )
+    }
+
+    updateScreen(sortedPeople)
 }
 
-function atualizarTela(lista) {
-    renderizarPessoas(lista)
-    calcularSalarios(lista)
-    atualizarQuantidade(lista)
-    contarAtivos(pessoas)
+
+// UI Functions
+
+function updateScreen(peopleList) {
+
+    renderPeople(peopleList)
+    calculateSalaries(peopleList)
+    updatePeopleCount(peopleList)
+    countActivePeople(peopleList)
 }
 
+function renderPeople(peopleToRender) {
 
-function contarAtivos(array) {
+    peopleList.innerHTML = ""
 
-    const ativos = array.filter(pessoa => pessoa.ativo)
-    console.log(ativos)
-
-    const elementoAtivos = document.getElementById("filtro-total-ativos")
-    
-    elementoAtivos.textContent = `Ativos: ${ativos.length}`
-
-    console.log(elementoAtivos)
-    
-}
-
-//Funções auxiliares
-function renderizarPessoas(array) {
-
-    lista.innerHTML = ""
-
-    array.forEach((pessoa, index) => {
-
+    peopleToRender.forEach((person, index) => {
 
         const tableRow = document.createElement("tr")
-        const tdName = document.createElement("td")
-        const tdAge = document.createElement("td")
-        const tdCity = document.createElement("td")
-        const tdProfession = document.createElement("td")
-        const tdSalary = document.createElement("td")
-        const tdActive = document.createElement("td")
-        const tdActions = document.createElement("td")
 
-        tdName.textContent = pessoa.nome
-        tdAge.textContent = pessoa.idade
-        tdCity.textContent = pessoa.cidade
-        tdProfession.textContent = pessoa.profissao
-        tdSalary.textContent = pessoa.salario
-        tdActive.textContent = pessoa.ativo
-        
-        const botaoRemover = document.createElement("button")
-        botaoRemover.textContent = "Remover"
+        const nameCell = document.createElement("td")
+        const ageCell = document.createElement("td")
+        const cityCell = document.createElement("td")
+        const professionCell = document.createElement("td")
+        const salaryCell = document.createElement("td")
+        const activeCell = document.createElement("td")
+        const actionsCell = document.createElement("td")
 
-        const botaoEditar = document.createElement("button")
-        botaoEditar.textContent = "Editar"
-        
-        botaoRemover.addEventListener("click", () => {    
-            const indicePessoa = pessoas.findIndex(pessoaDoArray => pessoaDoArray === pessoa)  
-            if(indicePessoa !== -1) {
-                pessoas.splice(indicePessoa, 1)
-                aplicarFiltros()
-            }        
+        nameCell.textContent = person.name
+        ageCell.textContent = person.age
+        cityCell.textContent = person.city
+        professionCell.textContent = person.profession
+        salaryCell.textContent = person.salary
+        activeCell.textContent = person.active
+
+        const removeButton = document.createElement("button")
+        removeButton.textContent = "Remover"
+
+        const editButton = document.createElement("button")
+        editButton.textContent = "Editar"
+
+        removeButton.addEventListener("click", () => {
+
+            const personIndex = people.findIndex(
+                currentPerson => currentPerson === person
+            )
+
+            if (personIndex !== -1) {
+                people.splice(personIndex, 1)
+                applyFilters()
+            }
         })
 
-        botaoEditar.addEventListener("click", () => {                                                                   
-            let pessoaParaEditar = array[index]              
-            editarPessoa(pessoaParaEditar) 
-            openForm() 
+        editButton.addEventListener("click", () => {
+
+            const personToEdit = peopleToRender[index]
+
+            editPerson(personToEdit)
+            openForm()
         })
 
-        tdActions.append(botaoRemover, botaoEditar)
-        tableRow.append(tdName, tdAge, tdCity, tdProfession, tdSalary, tdActive, tdActions)
-        lista.append(tableRow)
+        actionsCell.append(removeButton, editButton)
+
+        tableRow.append(
+            nameCell,
+            ageCell,
+            cityCell,
+            professionCell,
+            salaryCell,
+            activeCell,
+            actionsCell
+        )
+
+        peopleList.append(tableRow)
     })
-  
 }
 
-function editarPessoa(pessoa){  
-                   
-    nomeInput.value = pessoa.nome
-    idadeInput.value = pessoa.idade
-    cidadeInput.value = pessoa.cidade
-    profissaoInput.value = pessoa.profissao
-    salarioInput.value = pessoa.salario
-    ativoInput.checked = pessoa.ativo
+function calculateSalaries(peopleList) {
 
-    botaoAdd.textContent = "Salvar"
+    const total = peopleList.reduce(
+        (accumulator, person) => accumulator + person.salary,
+        0
+    )
 
-    pessoaEmEdicao = pessoa
-    modo = "salvar"
-                                                   
+    totalSalaries.textContent = `Salários: R$${total}`
 }
 
-function salvarPessoa(pessoa) {
+function updatePeopleCount(peopleList) {
 
-    const verificarNome = pessoas.some(pessoa => pessoa.nome === nomeInput.value && pessoa !== pessoaEmEdicao)
-
-
-    if(verificarNome) {
-       window.alert("Nome já existe!")
-       return
-    }
-
-    pessoa.nome = nomeInput.value
-    pessoa.idade = Number(idadeInput.value)
-    pessoa.cidade = cidadeInput.value
-    pessoa.profissao = profissaoInput.value
-    pessoa.salario = Number(salarioInput.value)
-    pessoa.ativo = ativoInput.checked
-
-    aplicarFiltros()
-
-    pessoaEmEdicao = null
-    modo = "adicionar"
-    botaoAdd.textContent = "Adicionar"
-    limparFormulario()
-
+    totalPeople.textContent = `Pessoas: ${peopleList.length}`
 }
 
-function calcularSalarios(array) {
-    
-    const total = array.reduce((acc, pessoa) => {
-        return acc + pessoa.salario
-    }, 0)
+function countActivePeople(peopleList) {
 
-    totalSalarios.textContent = `Salários: R$${total}`
+    const activePeople = peopleList.filter(
+        person => person.active
+    )
+
+    totalActivePeople.textContent = `Ativos: ${activePeople.length}`
 }
-
-function atualizarQuantidade(array) {
-    totalPessoas.textContent = `Pessoas: ${array.length}` 
-}
-
-
-
-
-
-
-
-
-

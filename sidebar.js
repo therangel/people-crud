@@ -1,24 +1,20 @@
-const burgerBtn = document.getElementById("burger-btn")
-const sideBar = document.querySelector(".sidebar")
+const menuButton = document.getElementById("burger-btn")
+const sidebar = document.querySelector(".sidebar")
 const overlay = document.querySelector(".overlay")
 
-burgerBtn.addEventListener("click", () => {
-    ativarMenu() 
-})
+menuButton.addEventListener("click", toggleMenu)
 
-overlay.addEventListener("click", () => {
-    fecharMenu() 
-})
+overlay.addEventListener("click", closeMenu)
 
-function ativarMenu() {
-    sideBar.classList.toggle("active")
-    burgerBtn.classList.toggle("active")
+function toggleMenu() {
+    sidebar.classList.toggle("active")
+    menuButton.classList.toggle("active")
     overlay.classList.toggle("active")
 }
 
-function fecharMenu() {
-    sideBar.classList.remove("active")
-    burgerBtn.classList.remove("active")
+function closeMenu() {
+    sidebar.classList.remove("active")
+    menuButton.classList.remove("active")
     overlay.classList.remove("active")
 }
 
