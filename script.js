@@ -25,6 +25,7 @@ const totalSalaries = document.querySelector(".total-salaries")
 const totalActivePeople = document.querySelector(".total-active-people")
 
 const clearFiltersButton = document.querySelector(".clear-filters-button")
+const appliedFilterList = document.querySelector(".applied-filter-list")
 
 
 // Data
@@ -53,7 +54,11 @@ personForm.addEventListener("submit", (event) => {
     }
 })
 
-openFormButton.addEventListener("click", openForm)
+openFormButton.addEventListener("click", () => {
+    resetForm()
+    openForm()
+     
+})
 
 closeFormButton.addEventListener("click", closeForm)
 
@@ -75,22 +80,23 @@ function closeForm() {
     modalForm.classList.remove("active")
 }
 
+function resetForm() {
+    clearForm()
+
+    personBeingEdited = null
+    mode = "add"
+
+    addButton.textContent = "Adicionar"
+}
+
 function addPerson() {
 
-    const isNameDuplicated = people.some(
-        person => person.name === nameInput.value
-    )
-
-    if (isNameDuplicated) {
-        alert("Nome já existe")
-        return
-    }
-
     const person = {
-        name: nameInput.value,
+        id: crypto.randomUUID(),
+        name: nameInput.value.trim(),
         age: Number(ageInput.value),
-        city: cityInput.value,
-        profession: professionInput.value,
+        city: cityInput.value.trim(),
+        profession: professionInput.value.trim(),
         salary: Number(salaryInput.value),
         active: activeInput.checked
     }
@@ -118,16 +124,13 @@ function editPerson(person) {
 
 function savePerson(person) {
 
-    const isNameDuplicated = people.some(
-        currentPerson =>
-            currentPerson.name === nameInput.value &&
-            currentPerson !== personBeingEdited
-    )
+    closeFormButton.addEventListener("click", () => {
+        personBeingEdited = null
+        mode = "add"
 
-    if (isNameDuplicated) {
-        alert("Nome já existe!")
-        return
-    }
+        addButton.textContent = "Adicionar"
+
+    })
 
     person.name = nameInput.value
     person.age = Number(ageInput.value)
@@ -218,10 +221,22 @@ function applyFilters() {
     }
 
     updateScreen(sortedPeople)
+    // appliedFilters() 
 }
 
 
 // UI Functions
+
+// function appliedFilters() {
+//     const filterAppliedCity = document.createElement("span")
+//     const filterAppliedProfession = document.createElement("span")
+
+//     filterAppliedCity.classList.add("filter-applied")
+//     filterAppliedCity.textContent = cityFilter.value
+//     filterAppliedProfession.textContent = professionFilter.value
+
+//     appliedFilterList.append(filterAppliedCity, filterAppliedProfession)
+// }
 
 function updateScreen(peopleList) {
 
@@ -252,7 +267,8 @@ function renderPeople(peopleToRender) {
         cityCell.textContent = person.city
         professionCell.textContent = person.profession
         salaryCell.textContent = person.salary
-        activeCell.textContent = person.active
+        activeCell.textContent = person.active ? "Sim" : "Não"
+
 
         const removeButton = document.createElement("button")
         removeButton.textContent = "Remover"
@@ -263,7 +279,7 @@ function renderPeople(peopleToRender) {
         removeButton.addEventListener("click", () => {
 
             const personIndex = people.findIndex(
-                currentPerson => currentPerson === person
+                currentPerson => currentPerson.id === person.id
             )
 
             if (personIndex !== -1) {
