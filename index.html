@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -15,64 +15,81 @@
 
 </head>
 
-
 <body>
     
+    <div class="app"> 
 
-    <div class="container-wrapper"> 
         <div class="overlay"></div> 
+
         <aside class="sidebar">
-            <div class="box_logo">
+
+            <div class="logo">
                 <p>Logo</p>
             </div>
-            <div class="box_links_nav">
+
+            <nav class="navigation">
                 <a href="">Home</a>
                 <a href="">Clientes</a>
-            </div>
+            </nav>
         </aside>
 
-        <button id="burger-btn" class="burger_btn">
+        <button id="burger-btn" class="menu-button">
             <span></span>
             <span></span>
             <span></span>
         </button>
 
-        <main class="main">
-            <section class="section clients">
-                <header class="header">
+        <main class="main-content">
+
+            <section class="clients-section">
+
+                <header class="page-header">
+
                     <h1>Clientes</h1>
-                    <button class="add_client">Novo cliente</button>
+
+                    <button class="add-client-button">
+                        Novo cliente
+                    </button>
+
                 </header>
                 
-                <div class="filtros">
+                <div class="filters">
                     
-                    <div class="categorias">
-                        <div class="container">
-                            <label for="filtro-cidade">Cidade</label>
-                            <select id="filtro-cidade">
+                    <div class="filter-options">
+
+                        <div class="filter-group">
+
+                            <label for="city-filter">Cidade</label>
+
+                            <select id="city-filter" class="filter-select">
                                 <option value="todas">Todas</option>
                                 <option value="Rio de Janeiro">Rio de Janeiro</option>
                                 <option value="São Paulo">São Paulo</option>
                                 <option value="Belo Horizonte">Belo Horizonte</option>
                             </select>
                         </div>
-                        <div class="container">
-                            <label for="filtro-profissao">Profissão</label>
-                            <select id="filtro-profissao">
+
+                        <div class="filter-group">
+
+                            <label for="profession-filter">Profissão</label>
+                            <select id="profession-filter">
                                 <option value="todas">Todas</option>
                                 <option value="Desenvolvedor">Desenvolvedor</option>
                                 <option value="Analista">Analista</option>
                                 <option value="Designer">Designer</option>
                             </select>
                         </div>
-                        <div class="container">
-                            <label for="filtro-ativos">Ativos</label>
-                            <input type="checkbox" id="filtro-ativo">
+
+                        <div class="filter-group">
+
+                            <label for="active-filter">Ativos</label>
+                            <input type="checkbox" id="active-filter">
                         </div>
     
-                        <div class="container">
-                            <label for="filtro-ordenacao">Ordenar</label>
-                            <select id="filtro-ordenacao">
+                        <div class="filter-group">
+
+                            <label for="sort-filter">Ordenar</label>
+                            <select id="sort-filter">
                                 <option value="sem-ordenacao">Sem Ordenação</option>
                                 <option value="nome-a-z">Nome: A → Z</option>
                                 <option value="nome-z-a">Nome: Z → A</option>
@@ -82,60 +99,66 @@
                         </div>
                     </div>
 
-                    <div class="result-filters">
+                    <div class="applied-filters">
                         <p>Filtrar por: </p>
-                        <div class="filtros-aplicados">
+                        <div class="applied-filter-list">
 
                         </div>
-                        <button class="limpar-filtros">Limpar</button>
+                        <button class="clear-filters-button">Limpar</button>
                     </div>
 
-                    <div class="filtro-container">
-                        <p id="filtro-total-pessoas">Clientes: 0</p>
-                        <p id="filtro-total-salarios">Salário total: R$0</p>
-                        <p id="filtro-total-ativos">Ativos: 0</p>
+
+                    <div class="filter-summary">
+                        <p class="total-people">Clientes: 0</p>
+                        <p class="total-salaries">Salário total: R$0</p>
+                        <p class="total-active-people">Ativos: 0</p>
                     </div>
                 </div>
 
                 <div class="modal-form">
-                    <div class="header-modal-form">
+
+                    <div class="modal-header">
+
                         <p>Dados</p>
-                        <button class="close-modal-btn">X</button>
+                        <button class="close-modal-button">X</button>
                     </div>
 
-                    <form id="form-pessoa" class="form">
-                        <div class="form-input-box">
-                            <label for="nome">Nome: </label>
-                            <input type="text" name="nome" id="nome" required>
+                    <form class="person-form">
+
+                        <div class="form-field">
+                            <label for="name">Nome: </label>
+                            <input type="text" name="name" id="name" required>
                         </div>
-                        <div class="form-input-box">
-                            <label for="idade">Idade: </label>
-                            <input type="text" name="idade" id="idade" min="18" required>
+                        <div class="form-field">
+                            <label for="age">Idade: </label>
+                            <input type="text" name="age" id="age" min="18" required>
                         </div>
-                        <div class="form-input-box">
-                            <label for="cidade">Cidade: </label>
-                            <input type="text" name="cidade" id="cidade" required>
+                        <div class="form-field">
+                            <label for="city">Cidade: </label>
+                            <input type="text" name="city" id="city" required>
                         </div>
-                        <div class="form-input-box">
-                            <label for="profissao">Profissão: </label>
-                            <input type="text" name="profissao" id="profissao" required>
+                        <div class="form-field">
+                            <label for="profession">Profissão: </label>
+                            <input type="text" name="profession" id="profession" required>
                         </div>
-                        <div class="form-input-box">
-                            <label for="salario">Salário: </label>
-                            <input type="number" id="salario" min="0" required>
+                        <div class="form-field">
+                            <label for="salary">Salário: </label>
+                            <input type="number" name="salary" id="salary" min="0" required>
                         </div>
-                        <div class="form-input-box ativo">
-                            <label for="ativo">Ativo: </label>
-                            <input type="checkbox" id="ativo">
+                        <div class="form-field">
+                            <label for="active">Ativo: </label>
+                            <input type="checkbox" name="active" id="active">
                         </div>
-                        <button type="submit" id="botao-adicionar">Adicionar</button>
+
+                        <button type="submit" class="form-submit-button">Adicionar</button>
                     </form>
                 </div>
 
-                <div class="container-section">
+                <div class="table-section">
                     
-                    <div class="wrapper-table">
-                        <table class="users-table">
+                    <div class="table-wrapper">
+
+                        <table class="clients-table">
                             <thead>
                                 <tr>
                                     <th>Nome</th>
@@ -147,7 +170,7 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody id="lista"></tbody>
+                            <tbody class="people-list"></tbody>
                         </table>
                     </div>  
 

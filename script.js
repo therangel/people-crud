@@ -1,30 +1,30 @@
 // DOM Elements
 
-const openFormButton = document.querySelector(".add_client")
+const openFormButton = document.querySelector(".add-client-button")
 const modalForm = document.querySelector(".modal-form")
-const closeFormButton = document.querySelector(".close-modal-btn")
+const closeFormButton = document.querySelector(".close-modal-button")
 
-const personForm = document.getElementById("form-pessoa")
-const nameInput = document.getElementById("nome")
-const ageInput = document.getElementById("idade")
-const cityInput = document.getElementById("cidade")
-const professionInput = document.getElementById("profissao")
-const salaryInput = document.getElementById("salario")
-const activeInput = document.getElementById("ativo")
-const addButton = document.getElementById("botao-adicionar")
+const personForm = document.querySelector(".person-form")
+const nameInput = document.getElementById("name")
+const ageInput = document.getElementById("age")
+const cityInput = document.getElementById("city")
+const professionInput = document.getElementById("profession")
+const salaryInput = document.getElementById("salary")
+const activeInput = document.getElementById("active")
+const addButton = document.querySelector(".form-submit-button")
 
-const peopleList = document.getElementById("lista")
+const peopleList = document.querySelector(".people-list")
 
-const cityFilter = document.getElementById("filtro-cidade")
-const professionFilter = document.getElementById("filtro-profissao")
-const activeFilter = document.getElementById("filtro-ativo")
-const sortFilter = document.getElementById("filtro-ordenacao")
+const cityFilter = document.getElementById("city-filter")
+const professionFilter = document.getElementById("profession-filter")
+const activeFilter = document.getElementById("active-filter")
+const sortFilter = document.getElementById("sort-filter")
 
-const totalSalaries = document.getElementById("filtro-total-salarios")
-const totalPeople = document.getElementById("filtro-total-pessoas")
-const totalActivePeople = document.getElementById("filtro-total-ativos")
+const totalPeople = document.querySelector(".total-people")
+const totalSalaries = document.querySelector(".total-salaries")
+const totalActivePeople = document.querySelector(".total-active-people")
 
-const clearFiltersButton = document.querySelector(".limpar-filtros")
+const clearFiltersButton = document.querySelector(".clear-filters-button")
 
 
 // Data
@@ -303,12 +303,12 @@ function calculateSalaries(peopleList) {
         0
     )
 
-    totalSalaries.textContent = `Salários: R$${total}`
+    totalSalaries.textContent = `Salário total: R$${total}`
 }
 
 function updatePeopleCount(peopleList) {
 
-    totalPeople.textContent = `Pessoas: ${peopleList.length}`
+    totalPeople.textContent = `Clientes: ${peopleList.length}`
 }
 
 function countActivePeople(peopleList) {
