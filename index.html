@@ -17,9 +17,10 @@
 
 
 <body>
-    <div class="overlay"></div>
+    
 
-    <div class="container-wrapper">  
+    <div class="container-wrapper"> 
+        <div class="overlay"></div> 
         <aside class="sidebar">
             <div class="box_logo">
                 <p>Logo</p>
@@ -44,13 +45,7 @@
                 </header>
                 
                 <div class="filtros">
-                    <h2>Filtrar</h2>
-                    <button id="limpar-filtros">Limpar Filtros</button>
-                    <div class="filtro-container">
-                        <p id="filtro-total-pessoas">Pessoas: 0</p>
-                        <p id="filtro-total-salarios">Salários: R$0</p>
-                        <p id="filtro-total-ativos"></p>
-                    </div>
+                    
                     <div class="categorias">
                         <div class="container">
                             <label for="filtro-cidade">Cidade</label>
@@ -85,6 +80,20 @@
                                 <option value="salario-maior">Salário: maior → menor</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="result-filters">
+                        <p>Filtrar por: </p>
+                        <div class="filtros-aplicados">
+
+                        </div>
+                        <button class="limpar-filtros">Limpar</button>
+                    </div>
+
+                    <div class="filtro-container">
+                        <p id="filtro-total-pessoas">Clientes: 0</p>
+                        <p id="filtro-total-salarios">Salário total: R$0</p>
+                        <p id="filtro-total-ativos">Ativos: 0</p>
                     </div>
                 </div>
 

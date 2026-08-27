@@ -8,10 +8,11 @@
 :root{
     --black: #000000;
     --white: #ffffff;
-    --light_gray: #ecf2ff;
+    --light_gray: #eeeeee;
+    --light_blue: #9ab7d4;
     --cor1: #383B42;
     --cor2: #423F38;
-    --cor3: #5D6F97;
+    --cor3: #274868;
     --cor4: #dfbb67;
     --font-serif: "Cormorant Garamond", serif;
     --font-sans: "Plus Jakarta Sans", sans-serif;
@@ -23,7 +24,6 @@ a {
 }
 
 button {
-    background-color: #ffffff;
     padding: 7px;
     border-radius: 10px;
     border: none;
@@ -46,14 +46,21 @@ body {
 
 .overlay {
     position: absolute;
+    top: 67px;
+    left: 0;
     z-index: -9999;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transform: .3s;
 }
 
 .overlay.active {
-    z-index: 10;   
+    z-index: 10;  
+    opacity: 1;
+    pointer-events: visible; 
 }
 
 .burger_btn {
@@ -99,7 +106,7 @@ body {
 
 .sidebar {
     position: fixed;
-    top: 63px;
+    top: 66px;
     left: -100%;
 
     display: flex;
@@ -132,6 +139,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.3rem;  
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .sidebar.active{
@@ -144,11 +152,10 @@ body {
     width: 100%;
     height: 100%;  
     padding-top: 0px;
-    background-color: rgb(207, 207, 207);
+    background-color: var(--light_gray);
 }
 
 .header {
-    /* position: relative; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -157,8 +164,13 @@ body {
     padding: 13px 0 13px 50px;
 
     text-align: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     width: 100%;
+    height: 67px;
+}
+
+.header h1 {
+    font-size: 1.5rem;
 }
 
 .add_client {
@@ -179,7 +191,9 @@ body {
 
     padding: 0 1rem;
     margin: 0 auto;
-    background-color: var(--cor3);
+    background-color: var(--white);
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 }
 
 .modal-form {
@@ -192,11 +206,15 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--white);
+    background-color: var(--cor3);
     width: 90%;
     max-width: 500px;
     padding: 1rem;
     border-radius: 0.5rem;  
+}
+
+.modal-form p {
+    color: white;
 }
 
 .header-modal-form {
@@ -212,9 +230,9 @@ body {
     align-items: center;
     gap: 1rem;
     width: 100%;  
-    background-color: var(--cor3);
+    background-color: var(--light_gray);
     padding: 1rem 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.5rem;  
 }
 
 .modal-form.active {
@@ -255,19 +273,21 @@ body {
     gap: 1rem;
     width: 100%;
     padding: 10px;
+    font-size: 0.8rem;
 }
 
 .filtro-container{
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-wrap: wrap;
+    gap: 0.7rem; 
+
     width: 100%;
-    gap: 0.5rem;    
+    color: rgba(0, 0, 0, 0.7); 
 }
 
 .filtro-container p{
-    font-size: 15px;
+    font-size: 0.8rem;
 }
 
 .categorias {
@@ -285,29 +305,47 @@ body {
 .categorias .container{
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
     
 }
+
+.result-filters {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 1rem;
+    width: 100%;
+}
+
 
 .wrapper-table {
     overflow-x: auto;
     width: 100%;
+    border-radius: 0.5rem;
 }
 
 .users-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: rgb(248, 255, 241); 
+    background-color: rgb(255, 255, 255); 
+    border-radius: 0.5rem;
 }
 
 thead {
-    background-color: var(--cor4);
+    background-color: var(--cor3);
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--light_gray)
 }
 
 th, td {
     padding: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.418);
+    border: 0.5px solid var(--white);
     text-align: left;
 }
+
 
 td:last-child {
     text-align: center;
@@ -346,14 +384,16 @@ td:last-child button {
         display: flex;
     }
 
-    
     .burger_btn {
         display: none;
     }
 
     .main {
-        padding: 2rem;
-        
+        padding: 2rem; 
+    }
+
+    .header {
+        padding: 13px;
     }
 
     .add_client {

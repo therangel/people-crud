@@ -21,7 +21,7 @@ const filtroPorAtivos = document.getElementById("filtro-ativo")
 const filtroOrdenacao = document.getElementById("filtro-ordenacao")
 const totalSalarios = document.getElementById("filtro-total-salarios")
 const totalPessoas = document.getElementById("filtro-total-pessoas")
-const botaoLimparFiltros = document.getElementById("limpar-filtros")
+const botaoLimparFiltros = document.querySelector(".limpar-filtros")
 
 
 // Dados

@@ -7,7 +7,7 @@ burgerBtn.addEventListener("click", () => {
 })
 
 overlay.addEventListener("click", () => {
-    ativarMenu() 
+    fecharMenu() 
 })
 
 function ativarMenu() {
@@ -15,6 +15,13 @@ function ativarMenu() {
     burgerBtn.classList.toggle("active")
     overlay.classList.toggle("active")
 }
+
+function fecharMenu() {
+    sideBar.classList.remove("active")
+    burgerBtn.classList.remove("active")
+    overlay.classList.remove("active")
+}
+
 
 
 

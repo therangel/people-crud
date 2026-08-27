@@ -2,6 +2,8 @@
 
 Aplicação web de cadastro e gerenciamento de pessoas, desenvolvida para praticar conceitos fundamentais de JavaScript, manipulação do DOM e operações com arrays.
 
+Acesse por aqui: people-crud-azure.vercel.app
+
 ## Funcionalidades
 
 * Cadastro de pessoas
