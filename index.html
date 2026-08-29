@@ -62,7 +62,7 @@
                             <label for="city-filter">Cidade</label>
 
                             <select id="city-filter" class="filter-select">
-                                <option value="todas">Todas</option>
+                                <option value="all">Todas</option>
                                 <option value="Rio de Janeiro">Rio de Janeiro</option>
                                 <option value="São Paulo">São Paulo</option>
                                 <option value="Belo Horizonte">Belo Horizonte</option>
@@ -73,7 +73,7 @@
 
                             <label for="profession-filter">Profissão</label>
                             <select id="profession-filter">
-                                <option value="todas">Todas</option>
+                                <option value="all">Todas</option>
                                 <option value="Desenvolvedor">Desenvolvedor</option>
                                 <option value="Analista">Analista</option>
                                 <option value="Designer">Designer</option>
@@ -103,19 +103,25 @@
                         <p>Filtrar por: </p>
 
                         <div class="applied-filter-list">
-                            <div class="applied-city-box">
+                            <div class="applied-city-box applied-filter">
                                 <button class="delete-filter">X</button>
                                 <span class="vertical-line">|</span>
                                 <span class="applied-city"></span>
                             </div>
 
-                            <div class="applied-profession-box">
+                            <div class="applied-profession-box applied-filter">
                                 <button class="delete-filter">X</button>
                                 <span class="vertical-line">|</span>
                                 <span class="applied-profession"></span>
                             </div>
 
-                            <div class="applied-sort-box">
+                            <div class="applied-active-box applied-filter">
+                                <button class="delete-filter">X</button>
+                                <span class="vertical-line">|</span>
+                                <span class="applied-active"></span>
+                            </div>
+
+                            <div class="applied-sort-box applied-filter">
                                 <button class="delete-filter">X</button>
                                 <span class="vertical-line">|</span>
                                 <span class="applied-sort"></span>

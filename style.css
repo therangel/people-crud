@@ -351,6 +351,10 @@ body {
     display: flex;
 }
 
+.applied-active-box.active {
+    display: flex;
+}
+
 .applied-sort-box.active {
     display: flex;
 }

@@ -125,11 +125,29 @@ const sortFilter = document.getElementById("sort-filter");
 const clearFiltersButton = document.querySelector(".clear-filters-button");
 
 // Filtering and Sorting Functions
-function clearFilters() {
-    cityFilter.value = "todas";
-    professionFilter.value = "todas";
-    activeFilter.checked = false;
-    sortFilter.value = "sem-ordenacao";
+function clearFilters(allFilters, filter) {
+
+    if(allFilters) {
+        cityFilter.value = "all";
+        professionFilter.value = "all";
+        activeFilter.checked = false;
+        sortFilter.value = "sem-ordenacao";
+    } else {
+        switch (filter) {
+            case "city":
+                cityFilter.value = "all";
+                break;
+            case  "profession":
+                professionFilter.value = "all"; 
+                break;
+            case "active":  
+                activeFilter.checked = false; 
+                break;
+            case "sort":
+                sortFilter.value = "sem-ordenacao"; 
+                break;
+        }       
+    }
 
     applyFilters();
 }
@@ -137,13 +155,13 @@ function clearFilters() {
 function applyFilters() {
     let filteredPeople = people;
 
-    if (cityFilter.value !== "todas") {
+    if (cityFilter.value !== "all") {
         filteredPeople = filteredPeople.filter(
             person => person.city === cityFilter.value 
         );       
     }
 
-    if (professionFilter.value !== "todas") {
+    if (professionFilter.value !== "all") {
         filteredPeople = filteredPeople.filter(
             person => person.profession === professionFilter.value
         );
@@ -184,7 +202,10 @@ cityFilter.addEventListener("change", applyFilters);
 professionFilter.addEventListener("change", applyFilters);
 activeFilter.addEventListener("change", applyFilters);
 sortFilter.addEventListener("change", applyFilters);
-clearFiltersButton.addEventListener("click", clearFilters);
+
+clearFiltersButton.addEventListener("click", () => {
+    clearFilters(true)
+});
 
 
 // ==========================================
@@ -199,21 +220,25 @@ const totalActivePeople = document.querySelector(".total-active-people");
 
 const appliedCityBox = document.querySelector(".applied-city-box");
 const appliedProfessionBox = document.querySelector(".applied-profession-box");
+const appliedActiveBox = document.querySelector(".applied-active-box");
 const appliedSortBox = document.querySelector(".applied-sort-box");
+
 const appliedCity = document.querySelector(".applied-city");
 const appliedProfession = document.querySelector(".applied-profession");
+const appliedActive = document.querySelector(".applied-active");
 const appliedSort = document.querySelector(".applied-sort");
+const deleteFilterButton = document.querySelectorAll(".delete-filter");
 
 // Visual Interface (UI) Functions
 function appliedFilters() {
-    if (cityFilter.value !== "todas") {
+    if (cityFilter.value !== "all") {
         appliedCity.textContent = cityFilter.value;
         appliedCityBox.classList.add("active");
     } else {
         appliedCityBox.classList.remove("active");
     }
 
-    if (professionFilter.value !== "todas") {
+    if (professionFilter.value !== "all") {
         appliedProfession.textContent = professionFilter.value;
         appliedProfessionBox.classList.add("active");
     } else {
@@ -226,13 +251,44 @@ function appliedFilters() {
     } else {
         appliedSortBox.classList.remove("active");
     }
+
+    if (activeFilter.checked) {
+        appliedActive.textContent = "Ativos"
+        appliedActiveBox.classList.add("active");
+    } else {
+        appliedActiveBox.classList.remove("active");
+    }
 }
+
+deleteFilterButton.forEach(button => {
+    button.addEventListener("click", () => {
+        const daddyContainer = button.closest(".applied-filter")
+
+        if(daddyContainer.classList.contains("applied-city-box")) {
+
+            daddyContainer.classList.remove("active")
+            clearFilters(false, "city")
+            
+        } else if (daddyContainer.classList.contains("applied-profession-box")){
+            daddyContainer.classList.remove("active")
+            clearFilters(false, "profession")
+
+        } else if (daddyContainer.classList.contains("applied-active-box")){
+            daddyContainer.classList.remove("active")
+            clearFilters(false, "active")
+
+        } else if (daddyContainer.classList.contains("applied-sort-box")){
+            daddyContainer.classList.remove("active")
+            clearFilters(false, "sort")
+        }
+    })
+})
 
 function updateScreen(peopleList) {
     renderPeople(peopleList);
-    calculateSalaries(peopleList)
-    updatePeopleCount(peopleList)
-    countActivePeople(peopleList)
+    calculateSalaries(peopleList);
+    updatePeopleCount(peopleList);
+    countActivePeople(peopleList);
 }
 
 function renderPeople(peopleToRender) {
@@ -292,21 +348,24 @@ function calculateSalaries(peopleList) {
     const total = peopleList.reduce(
         (accumulator, person) => accumulator + person.salary,
         0
-    )
+    );
 
-    totalSalaries.textContent = `Salário total: R$${total}`
+    totalSalaries.textContent = `Salário total: R$${total}`;
 }
 
 function updatePeopleCount(peopleList) {
 
-    totalPeople.textContent = `Clientes: ${peopleList.length}`
-}
+    totalPeople.textContent = `Clientes: ${peopleList.length}`;
+};
 
 function countActivePeople(peopleList) {
 
     const activePeople = peopleList.filter(
         person => person.active
-    )
+    );
 
-    totalActivePeople.textContent = `Ativos: ${activePeople.length}`
-}
+    totalActivePeople.textContent = `Ativos: ${activePeople.length}`;
+};
+
+
+
