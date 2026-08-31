@@ -2,7 +2,7 @@
 // 1. GLOBAL STATE OF DATA
 // ==========================================
 // Data shared across the entire application
-const people = [];
+const clients = [];
 
 
 // ==========================================
@@ -14,7 +14,7 @@ const openFormButton = document.querySelector(".add-client-button");
 const modalForm = document.querySelector(".modal-form");
 const closeFormButton = document.querySelector(".close-modal-button");
 
-const personForm = document.querySelector(".person-form");
+const clientForm = document.querySelector(".client-form");
 const nameInput = document.getElementById("name");
 const ageInput = document.getElementById("age");
 const cityInput = document.getElementById("city");
@@ -24,7 +24,7 @@ const activeInput = document.getElementById("active");
 const addButton = document.querySelector(".form-submit-button");
 
 let mode = "add"; // Internal form state: "add" or "save"
-let personBeingEdited = null;
+let clientBeingEdited = null;
 
 // Form Functions
 function openForm() {
@@ -46,13 +46,13 @@ function clearForm() {
 
 function resetForm() {
     clearForm();
-    personBeingEdited = null;
+    clientBeingEdited = null;
     mode = "add";
     addButton.textContent = "Adicionar";
 }
 
-function addPerson() {
-    const person = {
+function addClient() {
+    const client = {
         id: crypto.randomUUID(),
         name: nameInput.value.trim(),
         age: Number(ageInput.value),
@@ -62,31 +62,31 @@ function addPerson() {
         active: activeInput.checked
     };
 
-    people.push(person);
+    clients.push(client);
     clearForm();
     applyFilters();
 }
 
-function editPerson(person) {
-    nameInput.value = person.name;
-    ageInput.value = person.age;
-    cityInput.value = person.city;
-    professionInput.value = person.profession;
-    salaryInput.value = person.salary;
-    activeInput.checked = person.active;
+function editClient(client) {
+    nameInput.value = client.name;
+    ageInput.value = client.age;
+    cityInput.value = client.city;
+    professionInput.value = client.profession;
+    salaryInput.value = client.salary;
+    activeInput.checked = client.active;
 
     addButton.textContent = "Salvar";
-    personBeingEdited = person;
+    clientBeingEdited = client;
     mode = "save";
 }
 
-function savePerson(person) {
-    person.name = nameInput.value;
-    person.age = Number(ageInput.value);
-    person.city = cityInput.value;
-    person.profession = professionInput.value;
-    person.salary = Number(salaryInput.value);
-    person.active = activeInput.checked;
+function saveClient(client) {
+    client.name = nameInput.value;
+    client.age = Number(ageInput.value);
+    client.city = cityInput.value;
+    client.profession = professionInput.value;
+    client.salary = Number(salaryInput.value);
+    client.active = activeInput.checked;
 
     applyFilters();
     resetForm();
@@ -100,14 +100,14 @@ openFormButton.addEventListener("click", () => {
 
 closeFormButton.addEventListener("click", closeForm);
 
-personForm.addEventListener("submit", (event) => {
+clientForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     if (mode === "add") {
-        addPerson();
+        addClient();
         closeForm();
     } else if (mode === "save") {
-        savePerson(personBeingEdited);
+        saveClient(clientBeingEdited);
         closeForm();
     }
 });
@@ -153,47 +153,47 @@ function clearFilters(allFilters, filter) {
 }
 
 function applyFilters() {
-    let filteredPeople = people;
+    let filteredClient = clients;
 
     if (cityFilter.value !== "all") {
-        filteredPeople = filteredPeople.filter(
-            person => person.city === cityFilter.value 
+        filteredClient = filteredClient.filter(
+            client => client.city === cityFilter.value 
         );       
     }
 
     if (professionFilter.value !== "all") {
-        filteredPeople = filteredPeople.filter(
-            person => person.profession === professionFilter.value
+        filteredClient = filteredClient.filter(
+            client => client.profession === professionFilter.value
         );
     }
 
     if (activeFilter.checked) {
-        filteredPeople = filteredPeople.filter(
-            person => person.active
+        filteredClient = filteredClient.filter(
+            client => client.active
         );
     }
 
-    const sortedPeople = [...filteredPeople];
+    const sortedClient = [...filteredClient];
 
     if (sortFilter.value !== "sem-ordenação") {
         if (sortFilter.value === "name-a-z") {
-            sortedPeople.sort((a, b) => a.name.localeCompare(b.name));
+            sortedClient.sort((a, b) => a.name.localeCompare(b.name));
         }
 
         if (sortFilter.value === "name-z-a") {
-            sortedPeople.sort((a, b) => b.name.localeCompare(a.name));
+            sortedClient.sort((a, b) => b.name.localeCompare(a.name));
         }
 
         if (sortFilter.value === "salary-low-high") {
-            sortedPeople.sort((a, b) => a.salary - b.salary);
+            sortedClient.sort((a, b) => a.salary - b.salary);
         }
 
         if (sortFilter.value === "salary-high-low") {
-            sortedPeople.sort((a, b) => b.salary - a.salary);
+            sortedClient.sort((a, b) => b.salary - a.salary);
         }
     }
     
-    updateScreen(sortedPeople);
+    updateScreen(sortedClient);
     appliedFilters();    
 }
 
@@ -213,10 +213,10 @@ clearFiltersButton.addEventListener("click", () => {
 // ==========================================
 
 // Elementos do DOM da Listagem e Cards/Tags
-const peopleList = document.querySelector(".people-list");
-const totalPeople = document.querySelector(".total-people");
+const clientList = document.querySelector(".client-list");
+const totalClient = document.querySelector(".total-client");
 const totalSalaries = document.querySelector(".total-salaries");
-const totalActivePeople = document.querySelector(".total-active-people");
+const totalActiveClient = document.querySelector(".total-active-client");
 
 const appliedCityBox = document.querySelector(".applied-city-box");
 const appliedProfessionBox = document.querySelector(".applied-profession-box");
@@ -284,17 +284,17 @@ deleteFilterButton.forEach(button => {
     })
 })
 
-function updateScreen(peopleList) {
-    renderPeople(peopleList);
-    calculateSalaries(peopleList);
-    updatePeopleCount(peopleList);
-    countActivePeople(peopleList);
+function updateScreen(clientList) {
+    renderPeople(clientList);
+    calculateSalaries(clientList);
+    updatePeopleCount(clientList);
+    countActivePeople(clientList);
 }
 
-function renderPeople(peopleToRender) {
-    peopleList.innerHTML = "";
+function renderPeople(clientToRender) {
+    clientList.innerHTML = "";
 
-    peopleToRender.forEach((person, index) => {
+    clientToRender.forEach((client, index) => {
         const tableRow = document.createElement("tr");
 
         const nameCell = document.createElement("td");
@@ -305,66 +305,68 @@ function renderPeople(peopleToRender) {
         const activeCell = document.createElement("td");
         const actionsCell = document.createElement("td");
 
-        nameCell.textContent = person.name;
-        ageCell.textContent = person.age;
-        cityCell.textContent = person.city;
-        professionCell.textContent = person.profession;
-        salaryCell.textContent = person.salary;
-        activeCell.textContent = person.active ? "Sim" : "Não";
+        nameCell.textContent = client.name;
+        ageCell.textContent = client.age;
+        cityCell.textContent = client.city;
+        professionCell.textContent = client.profession;
+        salaryCell.textContent = client.salary;
+        activeCell.textContent = client.active ? "Sim" : "Não";
 
         const removeButton = document.createElement("button");
-        removeButton.textContent = "Remover";
+        removeButton.classList.add("table-action-button")
+        removeButton.innerHTML = `<span class="material-symbols-outlined delete-client-symbol">delete</span>`;
 
         const editButton = document.createElement("button");
-        editButton.textContent = "Editar";
+        editButton.classList.add("table-action-button")
+        editButton.innerHTML = `<span class="material-symbols-outlined edit-client-symbol">edit</span>`;
 
         // Internal events of the table buttons
         removeButton.addEventListener("click", () => {
-            const personIndex = people.findIndex(
-                currentPerson => currentPerson.id === person.id
+            const personIndex = clients.findIndex(
+                currentPerson => currentPerson.id === client.id
             );
 
             if (personIndex !== -1) {
-                people.splice(personIndex, 1);
+                clients.splice(personIndex, 1);
                 applyFilters();
             }
         });
 
         editButton.addEventListener("click", () => {
-            const personToEdit = peopleToRender[index];
-            editPerson(personToEdit);
+            const clientToEdit = clientToRender[index];
+            editClient(clientToEdit);
             openForm();
         });
 
         actionsCell.append(editButton, removeButton);
         tableRow.append(nameCell, ageCell, cityCell, professionCell, salaryCell, activeCell, actionsCell);
-        peopleList.append(tableRow);
+        clientList.append(tableRow);
     });
 }
 
 
-function calculateSalaries(peopleList) {
+function calculateSalaries(clientList) {
 
-    const total = peopleList.reduce(
-        (accumulator, person) => accumulator + person.salary,
+    const total = clientList.reduce(
+        (accumulator, client) => accumulator + client.salary,
         0
     );
 
     totalSalaries.textContent = `Salário total: R$${total}`;
 }
 
-function updatePeopleCount(peopleList) {
+function updatePeopleCount(clientList) {
 
-    totalPeople.textContent = `Clientes: ${peopleList.length}`;
+    totalClient.textContent = `Clientes: ${clientList.length}`;
 };
 
-function countActivePeople(peopleList) {
+function countActivePeople(clientList) {
 
-    const activePeople = peopleList.filter(
-        person => person.active
+    const activeClient = clientList.filter(
+        client => client.active
     );
 
-    totalActivePeople.textContent = `Ativos: ${activePeople.length}`;
+    totalActiveClient.textContent = `Ativos: ${activeClient.length}`;
 };
 
 

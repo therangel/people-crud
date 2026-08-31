@@ -8,8 +8,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close,delete,edit,person_add" />
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
 
     <title>Cadastro de Clientes</title>
 
@@ -43,12 +47,13 @@
 
             <section class="clients-section">
 
-                <header class="page-header">
+                <header class="section-header">
 
-                    <h1>Clientes</h1>
+                    <h1 class="section-title">Clientes</h1>
 
-                    <button class="add-client-button">
-                        Novo cliente
+                    <button class="add-client-button btn btn-primary">
+                        <span class="material-symbols-outlined person-add-symbol">person_add</span>
+                        <span class="add-button-text">Novo cliente</span>
                     </button>
 
                 </header>
@@ -104,25 +109,53 @@
 
                         <div class="applied-filter-list">
                             <div class="applied-city-box applied-filter">
-                                <button class="delete-filter">X</button>
-                                <span class="vertical-line">|</span>
-                                <span class="applied-city"></span>
+
+                                <button class="delete-filter">
+
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+
+                                <span class="applied-city "></span>
+
                             </div>
 
                             <div class="applied-profession-box applied-filter">
-                                <button class="delete-filter">X</button>
-                                <span class="vertical-line">|</span>
+
+                                <button class="delete-filter">
+
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+
                                 <span class="applied-profession"></span>
+
                             </div>
 
                             <div class="applied-active-box applied-filter">
-                                <button class="delete-filter">X</button>
-                                <span class="vertical-line">|</span>
+
+                                <button class="delete-filter">
+
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+
                                 <span class="applied-active"></span>
+
                             </div>
 
                             <div class="applied-sort-box applied-filter">
-                                <button class="delete-filter">X</button>
+
+                                <button class="delete-filter">
+
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+
                                 <span class="vertical-line">|</span>
                                 <span class="applied-sort"></span>
                             </div>
@@ -133,9 +166,9 @@
 
 
                     <div class="filter-summary">
-                        <p class="total-people">Clientes: 0</p>
+                        <p class="total-client">Clientes: 0</p>
                         <p class="total-salaries">Salário total: R$0</p>
-                        <p class="total-active-people">Ativos: 0</p>
+                        <p class="total-active-client">Ativos: 0</p>
                     </div>
                 </div>
 
@@ -143,11 +176,13 @@
 
                     <div class="modal-header">
 
-                        <p>Dados</p>
-                        <button class="close-modal-button">X</button>
+                        <h2 class="modal-title">Dados</h2>
+                        <button class="close-modal-button btn">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
                     </div>
 
-                    <form class="person-form">
+                    <form class="client-form">
 
                         <div class="form-field">
                             <label for="name">Nome: </label>
@@ -155,7 +190,7 @@
                         </div>
                         <div class="form-field">
                             <label for="age">Idade: </label>
-                            <input type="text" name="age" id="age" min="18" required>
+                            <input type="number" name="age" id="age" min="18" required>
                         </div>
                         <div class="form-field">
                             <label for="city">Cidade: </label>
@@ -174,7 +209,7 @@
                             <input type="checkbox" name="active" id="active">
                         </div>
 
-                        <button type="submit" class="form-submit-button">Adicionar</button>
+                        <button type="submit" class="form-submit-button btn btn-primary">Adicionar</button>
                     </form>
                 </div>
 
@@ -194,7 +229,7 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody class="people-list"></tbody>
+                            <tbody class="client-list"></tbody>
                         </table>
                     </div>  
 
@@ -205,7 +240,7 @@
     </div>
     
 
-    <script src="script.js"></script>
-    <script src="sidebar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/sidebar.js"></script>
 </body>
 </html>
