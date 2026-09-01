@@ -51,22 +51,25 @@
 
 /* OVERLAY */
 .overlay {
-    position: absolute;
+    position: fixed;
     top: 67px;
     left: 0;
-    z-index: -9999;
-    height: 100%;
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+
     opacity: 0;
     pointer-events: none;
-    transform: .3s;
+    visibility: hidden;
+
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .overlay.active {
-    z-index: 10;  
     opacity: 1;
-    pointer-events: visible; 
+    pointer-events: auto; 
+    visibility: visible;
 }
 
 /* HEADER */
@@ -103,7 +106,8 @@
     z-index: 55;
 
     padding: 1rem;
-    width: 220px;
+    max-width: 250px;
+    width: 250px;
     background-color: var(--color-primary);
     transition: .3s;
     opacity: 0;
@@ -117,14 +121,24 @@
     pointer-events: all;
 }
 
-.logo{
+.sidebar-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding-bottom: 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.logo p {
+.logo-txt {
     color: white;
     font-size: 1.3rem;
+}
+
+.close-sidebar {
+    color: var(--color-secondary);
+    cursor: pointer;
+    display: none;
+    transition: 0.3s;
 }
 
 .navigation {
@@ -142,10 +156,8 @@
     left: 15px;
 
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
     
     background-color: transparent;
     border: none;
@@ -157,24 +169,16 @@
 }
 
 .menu-button span {
-    transition: .3s;
-    width: 25px;
-    height: 5px;
-    background-color: var(--color-secondary);
+    transition: 0.3s;
+    font-size: 1.8rem;
+    color: var(--color-secondary);
+    
 }
 
-.menu-button.active span:nth-child(1){
-    position: absolute;
-    transform: rotate(-45deg);
-}
-
-.menu-button.active span:nth-child(2){
-    opacity: 0;
-}
-
-.menu-button.active span:nth-child(3){
-    position: absolute;
-    transform: rotate(45deg);
+.menu-button.active span{
+    
+    transform: rotate(-180deg) translateY(2px);
+    color: var(--color-primary);
 }
 
 /* ADD BUTTON */
@@ -257,7 +261,6 @@
     background-color: var(--light_gray);
     padding: 0 10px;
     border-radius: 30px; 
-    display: none;
 }
 
 .delete-filter {
@@ -271,23 +274,6 @@
 .delete-filter span {
     font-size: 1.2rem;
     opacity: 0.5;
-}
-
-
-.applied-city-box.active {
-    display: flex;
-}
-
-.applied-profession-box.active {
-    display: flex;
-}
-
-.applied-active-box.active {
-    display: flex;
-}
-
-.applied-sort-box.active {
-    display: flex;
 }
 
 .clear-filters-button {
@@ -383,7 +369,7 @@
 }
 
 
-.form-field #active{
+.form-field #status{
     width: 15px;
 }
 
@@ -450,9 +436,6 @@
 
     .sidebar{
         position: static;
-        top: 0;
-        left: 0;
-        max-width: 30%;
         opacity: 1;
         pointer-events: all;
     }
@@ -464,4 +447,22 @@
     .section-header {
         padding: 13px;
     }
+
+    .close-sidebar {
+        display: block;
+    }
+
+    .sidebar.toggle{
+        width: 80px;
+    }
+
+    .sidebar.toggle .sidebar-header {
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+
+    .close-sidebar.toggle{
+        transform: scaleX(-1);  
+    }
 }
+

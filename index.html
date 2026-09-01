@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close,delete,edit,person_add" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close,delete,edit,left_panel_close,left_panel_open,menu,person_add" />
 
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/variables.css">
@@ -27,8 +27,10 @@
 
         <aside class="sidebar">
 
-            <div class="logo">
-                <p>Logo</p>
+            <div class="sidebar-header">
+                <p class="logo-txt">Logo</p>
+                <span class="material-symbols-outlined close-sidebar">left_panel_close</span>
+                <!-- <span class="material-symbols-outlined open-sidebar">left_panel_open</span> -->
             </div>
 
             <nav class="navigation">
@@ -38,9 +40,7 @@
         </aside>
 
         <button id="burger-btn" class="menu-button">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span class="material-symbols-outlined">menu</span>
         </button>
 
         <main class="main-content">
@@ -75,31 +75,21 @@
                         </div>
 
                         <div class="filter-group">
-
-                            <label for="profession-filter">Profissão</label>
-                            <select id="profession-filter">
-                                <option value="all">Todas</option>
-                                <option value="Desenvolvedor">Desenvolvedor</option>
-                                <option value="Analista">Analista</option>
-                                <option value="Designer">Designer</option>
+                            <label for="status-filter">Ativos</label>
+                            <select id="status-filter">
+                                <option value="all">Todos</option>
+                                <option value="actives">Ativos</option>
+                                <option value="inactives">Inativos</option>
                             </select>
-                        </div>
-
-                        <div class="filter-group">
-
-                            <label for="active-filter">Ativos</label>
-                            <input type="checkbox" id="active-filter">
                         </div>
     
                         <div class="filter-group">
 
                             <label for="sort-filter">Ordenar</label>
                             <select id="sort-filter">
-                                <option value="sem-ordenacao">Sem Ordenação</option>
-                                <option value="nome-a-z">Nome: A → Z</option>
-                                <option value="nome-z-a">Nome: Z → A</option>
-                                <option value="salario-menor">Salário: menor → maior</option>
-                                <option value="salario-maior">Salário: maior → menor</option>
+                                <option value="no-sort">Sem Ordenação</option>
+                                <option value="name-a-z">Nome: A → Z</option>
+                                <option value="name-z-a">Nome: Z → A</option>
                             </select>
                         </div>
                     </div>
@@ -108,57 +98,7 @@
                         <p>Filtrar por: </p>
 
                         <div class="applied-filter-list">
-                            <div class="applied-city-box applied-filter">
-
-                                <button class="delete-filter">
-
-                                    <span class="material-symbols-outlined">
-                                        close
-                                    </span>
-                                </button>
-
-                                <span class="applied-city "></span>
-
-                            </div>
-
-                            <div class="applied-profession-box applied-filter">
-
-                                <button class="delete-filter">
-
-                                    <span class="material-symbols-outlined">
-                                        close
-                                    </span>
-                                </button>
-
-                                <span class="applied-profession"></span>
-
-                            </div>
-
-                            <div class="applied-active-box applied-filter">
-
-                                <button class="delete-filter">
-
-                                    <span class="material-symbols-outlined">
-                                        close
-                                    </span>
-                                </button>
-
-                                <span class="applied-active"></span>
-
-                            </div>
-
-                            <div class="applied-sort-box applied-filter">
-
-                                <button class="delete-filter">
-
-                                    <span class="material-symbols-outlined">
-                                        close
-                                    </span>
-                                </button>
-
-                                <span class="vertical-line">|</span>
-                                <span class="applied-sort"></span>
-                            </div>
+                           
                         </div>
 
                         <button class="clear-filters-button">Limpar</button>
@@ -167,9 +107,30 @@
 
                     <div class="filter-summary">
                         <p class="total-client">Clientes: 0</p>
-                        <p class="total-salaries">Salário total: R$0</p>
                         <p class="total-active-client">Ativos: 0</p>
                     </div>
+
+                </div>
+
+                <div class="table-section">
+                    
+                    <div class="table-wrapper">
+
+                        <table class="clients-table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Cidade</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>                             
+                                </tr>
+                            </thead>
+                            <tbody class="client-list"></tbody>
+                        </table>
+                    </div>  
                 </div>
 
                 <div class="modal-form">
@@ -189,50 +150,25 @@
                             <input type="text" name="name" id="name" required>
                         </div>
                         <div class="form-field">
-                            <label for="age">Idade: </label>
-                            <input type="number" name="age" id="age" min="18" required>
+                            <label for="email">Email: </label>
+                            <input type="email" name="email" id="email" min="18" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="phone">Telefone: </label>
+                            <input type="number" name="phone" id="phone" required>
                         </div>
                         <div class="form-field">
                             <label for="city">Cidade: </label>
                             <input type="text" name="city" id="city" required>
                         </div>
+                        
                         <div class="form-field">
-                            <label for="profession">Profissão: </label>
-                            <input type="text" name="profession" id="profession" required>
-                        </div>
-                        <div class="form-field">
-                            <label for="salary">Salário: </label>
-                            <input type="number" name="salary" id="salary" min="0" required>
-                        </div>
-                        <div class="form-field">
-                            <label for="active">Ativo: </label>
-                            <input type="checkbox" name="active" id="active">
+                            <label for="status">Status: </label>
+                            <input type="checkbox" name="status" id="status">
                         </div>
 
                         <button type="submit" class="form-submit-button btn btn-primary">Adicionar</button>
                     </form>
-                </div>
-
-                <div class="table-section">
-                    
-                    <div class="table-wrapper">
-
-                        <table class="clients-table">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Idade</th>
-                                    <th>Cidade</th>
-                                    <th>Profissão</th>
-                                    <th>Salário</th>
-                                    <th>Ativo</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody class="client-list"></tbody>
-                        </table>
-                    </div>  
-
                 </div>
             </section>
         </main>

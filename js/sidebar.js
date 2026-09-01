@@ -1,10 +1,9 @@
 const menuButton = document.getElementById("burger-btn")
 const sidebar = document.querySelector(".sidebar")
 const overlay = document.querySelector(".overlay")
+const closeSidebarButton = document.querySelector(".close-sidebar")
+const openSidebarButton = document.querySelector(".open-sidebar")
 
-menuButton.addEventListener("click", toggleMenu)
-
-overlay.addEventListener("click", closeMenu)
 
 function toggleMenu() {
     sidebar.classList.toggle("active")
@@ -18,9 +17,15 @@ function closeMenu() {
     overlay.classList.remove("active")
 }
 
+function toggleSidebar() {
+    sidebar.classList.toggle("toggle")
+    closeSidebarButton.classList.toggle("toggle")
+}
 
 
-
+menuButton.addEventListener("click", toggleMenu)
+overlay.addEventListener("click", closeMenu)
+closeSidebarButton.addEventListener("click", toggleSidebar)
 
 
 

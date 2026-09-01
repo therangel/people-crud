@@ -1,12 +1,14 @@
 .app {
+    display: flex;
+    flex-direction: column;
     height: 100vh;
     width: 100%;
 }
 
 .main-content {
     width: 100%;
-    height: 100%;  
-    padding-top: 0px;
+    height: 100%;
+    /* padding-top: 0px; */
     background-color: var(--light_gray);
 }
 
@@ -15,12 +17,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
 
     width: 100%;
+    height: 100%; 
     max-width: 1600px;
     min-width: 250px;
-    height: 100%; 
 
     padding: 0 1rem;
     margin: 0 auto;
@@ -34,16 +36,11 @@
 @media (width >= 768px) {
 
     .app{
-        display: flex;
+        flex-direction: row;
     }
 
     .main-content {
         padding: 2rem; 
-    }
-
-    .clients-section {
-        display: flex;
-        gap: 2rem;   
-    }
+    }   
 
 }
