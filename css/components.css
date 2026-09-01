@@ -101,13 +101,11 @@
     display: flex;
     flex-direction: column;
     gap: 1.8rem;
-    align-items: left;
     height: 100vh;
     z-index: 55;
 
     padding: 1rem;
-    max-width: 250px;
-    width: 250px;
+    width: clamp(150px, 80%, 230px);
     background-color: var(--color-primary);
     transition: .3s;
     opacity: 0;
@@ -434,10 +432,15 @@
 
 @media (width >= 768px) {
 
+    .overlay{
+        display: none;
+    }
+
     .sidebar{
         position: static;
         opacity: 1;
         pointer-events: all;
+        width: 250px;
     }
 
     .menu-button {
@@ -452,16 +455,16 @@
         display: block;
     }
 
-    .sidebar.toggle{
+    .sidebar.clicked{
         width: 80px;
     }
 
-    .sidebar.toggle .sidebar-header {
+    .sidebar.clicked .sidebar-header {
         flex-direction: column-reverse;
         gap: 1rem;
     }
 
-    .close-sidebar.toggle{
+    .close-sidebar.clicked{
         transform: scaleX(-1);  
     }
 }

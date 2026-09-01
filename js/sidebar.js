@@ -18,8 +18,8 @@ function closeMenu() {
 }
 
 function toggleSidebar() {
-    sidebar.classList.toggle("toggle")
-    closeSidebarButton.classList.toggle("toggle")
+    sidebar.classList.toggle("clicked")
+    closeSidebarButton.classList.toggle("clicked")
 }
 
 

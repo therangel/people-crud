@@ -200,12 +200,18 @@ function applyFilters() {
         sortFilter.value = "no-sort";
     }
 
-    // if(sortGroup.length > 0) {
-    //     sortedClient = sortedClient.filter(client =>
-    //         sortGroup.includes(client.name));   
-    // }
-    
+    if(sortGroup.length > 0) {
 
+        if (sortGroup.includes("Nome: A → Z")) {
+            sortedClient.sort((a, b) => a.name.localeCompare(b.name)); 
+        }
+
+        if (sortGroup.includes("Nome: Z → A")) {
+            sortedClient.sort((a, b) => b.name.localeCompare(a.name));
+        }
+ 
+    }
+    
     updateScreen(sortedClient);
     appliedFilters();  
 }
