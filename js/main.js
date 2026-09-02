@@ -2,9 +2,11 @@
 // 1. GLOBAL STATE OF DATA
 // ==========================================
 // Data shared across the entire application
-const clients = [];
+const clients = JSON.parse(localStorage.getItem("clients")) || [];
 
-
+function saveClientsLs() {
+    localStorage.setItem("clients", JSON.stringify(clients))
+}
 // ==========================================
 // 2. CONTEXT: FORM AND MODAL (CLIENTS)
 // ==========================================
@@ -61,12 +63,13 @@ function addClient() {
         id: crypto.randomUUID(),
         name: nameInput.value.trim(),
         email: emailInput.value,
-        phone: Number(phone.value),
+        phone: Number(phoneInput.value),
         city: cityInput.value.trim(),
         status: statusInput.checked
     };
 
     clients.push(client);
+    saveClientsLs()
     clearForm();
     applyFilters();
 }
@@ -86,10 +89,11 @@ function editClient(client) {
 function saveClient(client) {
     client.name = nameInput.value;
     client.email = emailInput.value;
-    client.phone = Number(phone.value);
+    client.phone = Number(phoneInput.value);
     client.city = cityInput.value;
     client.status = statusInput.checked;
 
+    saveClientsLs()
     applyFilters();
     resetForm();
 }
@@ -232,9 +236,9 @@ clearFiltersButton.addEventListener("click", clearFilters);
 const clientList = document.querySelector(".client-list");
 const totalClient = document.querySelector(".total-client");
 const totalActiveClient = document.querySelector(".total-active-client");
-
 let appliedFilterList = document.querySelector(".applied-filter-list")
 
+updateScreen(clients)
 
 // Visual Interface (UI) Functions
 function appliedFilters() {
@@ -288,12 +292,8 @@ function appliedFilters() {
             
             statusGroup.splice(index, 1)
             appliedStatusBox.remove()
-            applyFilters()
-            
-              
-        })  
-
-        // statusGroup = [] 
+            applyFilters()        
+        })   
     })
 
     sortGroup.forEach((sort, index) => {
@@ -316,18 +316,16 @@ function appliedFilters() {
             
             sortGroup.splice(index, 1)
             appliedSortBox.remove()
-            
-            applyFilters()
-              
+            applyFilters()    
         })  
     })
 }
-
 
 function updateScreen(clientList) {
     renderPeople(clientList);
     updatePeopleCount(clientList);
     countActivePeople(clientList);
+    console.log("ListaFiltrada",clientList)
 }
 
 function renderPeople(clientToRender) {
@@ -367,6 +365,8 @@ function renderPeople(clientToRender) {
 
             if (personIndex !== -1) {
                 clients.splice(personIndex, 1);
+
+                saveClientsLs()
                 applyFilters();
             }
         });
@@ -398,5 +398,4 @@ function countActivePeople(clientList) {
     totalActiveClient.textContent = `Ativos: ${activeClient.length}`;
 };
 
-
-
+console.log("lista",clients)

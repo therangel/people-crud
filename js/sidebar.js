@@ -25,6 +25,7 @@ function toggleSidebar() {
 
 menuButton.addEventListener("click", toggleMenu)
 overlay.addEventListener("click", closeMenu)
+
 closeSidebarButton.addEventListener("click", toggleSidebar)
 
 

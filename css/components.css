@@ -441,6 +441,7 @@
         opacity: 1;
         pointer-events: all;
         width: 250px;
+        min-width: 250px;
     }
 
     .menu-button {
@@ -456,7 +457,8 @@
     }
 
     .sidebar.clicked{
-        width: 80px;
+        width: 85px;
+        min-width: 85px;
     }
 
     .sidebar.clicked .sidebar-header {
