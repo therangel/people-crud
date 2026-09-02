@@ -72,26 +72,6 @@
     visibility: visible;
 }
 
-/* HEADER */
-.section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    z-index: 50;
-    padding: 13px 0 13px 50px;
-
-    text-align: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    width: 100%;
-    height: 67px;
-}
-
-.section-title{
-    font-size: 1.5rem;
-    color: var(--color-primary);
-}
-
 /* SIDEBAR */
 .sidebar {
     position: fixed;
@@ -105,7 +85,9 @@
     z-index: 55;
 
     padding: 1rem;
-    width: clamp(150px, 80%, 230px);
+    /* width: clamp(150px, 80%, 230px); */
+    flex: 0 0 250px;
+    min-width: 250px;
     background-color: var(--color-primary);
     transition: .3s;
     opacity: 0;
@@ -150,7 +132,7 @@
 /* BURGER */
 .menu-button {
     position: absolute;
-    top: 20px;
+    top: 21px;
     left: 15px;
 
     display: flex;
@@ -176,6 +158,27 @@
 .menu-button.active span{
     
     transform: rotate(-180deg) translateY(2px);
+    color: var(--color-primary);
+}
+
+
+/* HEADER */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    z-index: 50;
+    padding: 0 0 1rem 50px;
+
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 67px;
+}
+
+.section-title{
+    font-size: 1.5rem;
     color: var(--color-primary);
 }
 
@@ -205,6 +208,7 @@
     width: 100%;
     padding: 10px;
     font-size: 0.8rem;
+    
 }
 
 .filter-summary{
@@ -256,7 +260,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: var(--light_gray);
+    background-color: var(--light-gray);
     padding: 0 10px;
     border-radius: 30px; 
 }
@@ -311,6 +315,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    
 }
 
 .close-modal-button {
@@ -335,7 +340,7 @@
     align-items: center;
     gap: 1rem;
     width: 100%;  
-    background-color: var(--light_gray);
+    background-color: var(--light-gray);
     padding: 1rem 0.5rem;
     border-radius: 0.5rem;  
 }
@@ -373,51 +378,63 @@
 
 /* TABLE */
 .table-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     width: 100%;
-    min-width: 280px;
-    padding: 0.5rem;   
+    height: 100%;
+    /* background-color: antiquewhite; */
+    padding: 1rem 0 1rem 0;
 }
 
 .table-wrapper{
     overflow-x: auto;
     width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .clients-table {
     width: 100%;
     border-collapse: collapse;
     background-color: rgb(255, 255, 255); 
-    border-radius: 10px;
-    border-bottom: 2px solid var(--light_gray);
-    max-width: 1200px;
-    margin: 0 auto;  
 }
 
-.clients-table thead {
+.clients-table thead tr{
     background-color: var(--color-primary);
-    color: white;     
+    color: white; 
+    font-weight: 600;   
+    text-transform: uppercase;    
 }
 
-.clients-table tbody tr:nth-child(even) {
-    background-color: var(--light_gray);
+
+
+.clients-table tbody tr {
+    border-bottom: 1px solid var(--light-gray);
 }
+
+/* .clients-table tbody tr:nth-child(even) {
+    background-color: var(--light-gray);
+} */
 
 .clients-table th, td {
-    padding: 0.5rem 1rem;
-    /* border: 0.5px solid white; */
+    padding: 7px 25px;
     text-align: left;
-    text-wrap: nowrap;   
+    text-wrap: nowrap;  
+    font-size: 0.9rem;
+
 }
 
-.clients-table th:last-child {
-    border-left: 0.5px solid white;
+.clients-table th:last-child,
+.clients-table th:first-child {
     text-align: center;
 }
 
 .clients-table td:last-child {
     text-align: center;
-    white-space: nowrap;
-    border-left: 2px solid var(--light_gray);   
+    white-space: nowrap; 
 }
 
 .table-action-button{
@@ -440,7 +457,7 @@
         position: static;
         opacity: 1;
         pointer-events: all;
-        width: 250px;
+        width: 250px; 
         min-width: 250px;
     }
 
@@ -457,8 +474,8 @@
     }
 
     .sidebar.clicked{
-        width: 85px;
-        min-width: 85px;
+        flex: 0 0 80px;
+        min-width: 85px; 
     }
 
     .sidebar.clicked .sidebar-header {

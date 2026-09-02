@@ -1,17 +1,23 @@
 // ==========================================
-// 1. GLOBAL STATE OF DATA
+// 1. GLOBAL STATE 
 // ==========================================
-// Data shared across the entire application
+
 const clients = JSON.parse(localStorage.getItem("clients")) || [];
 
-function saveClientsLs() {
-    localStorage.setItem("clients", JSON.stringify(clients))
-}
+
+let mode = "add"; // Internal form state: "add" or "save"
+let clientBeingEdited = null;
+
+let cityGroup = []
+let statusGroup = null 
+let sortGroup = null 
+
+
 // ==========================================
-// 2. CONTEXT: FORM AND MODAL (CLIENTS)
+// 2. DOM ELEMENTS
 // ==========================================
 
-// DOM Elements and Control Variables
+// Form
 const openFormButton = document.querySelector(".add-client-button");
 const modalForm = document.querySelector(".modal-form");
 const closeFormButton = document.querySelector(".close-modal-button");
@@ -24,10 +30,29 @@ const cityInput = document.getElementById("city");
 const statusInput = document.getElementById("status");
 const addButton = document.querySelector(".form-submit-button");
 
-let mode = "add"; // Internal form state: "add" or "save"
-let clientBeingEdited = null;
+// Filters
+const cityFilter = document.getElementById("city-filter");
+const statusFilter = document.getElementById("status-filter");
+const sortFilter = document.getElementById("sort-filter");
+const clearFiltersButton = document.querySelector(".clear-filters-button");
 
-// Form Functions
+// List / counters
+const clientList = document.querySelector(".client-list");
+const totalClient = document.querySelector(".total-client");
+const totalActiveClient = document.querySelector(".total-active-client");
+const appliedFilterList = document.querySelector(".applied-filter-list");
+
+// ==========================================
+// 3. DATA PERSISTENCE
+// ==========================================
+function saveClientsLs() {
+    localStorage.setItem("clients", JSON.stringify(clients))
+}
+
+
+// ==========================================
+// 4. FORM AND MODAL
+// ==========================================
 function openForm() {
     modalForm.classList.add("active");
 }
@@ -51,24 +76,25 @@ function resetForm() {
     addButton.textContent = "Adicionar";
 }
 
-function addClient() {
-
-    // const formattedInputCIty = cityInput.value
-    // .toLowerCase()
-    // .split(" ")
-    // .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    // .join(" ")
-
-    const client = {
-        id: crypto.randomUUID(),
+function getClientFormData() {
+    return {
         name: nameInput.value.trim(),
-        email: emailInput.value,
+        email: emailInput.value.trim(),
         phone: Number(phoneInput.value),
         city: cityInput.value.trim(),
         status: statusInput.checked
     };
+}
+
+function addClient() {
+
+    const client = {
+        id: crypto.randomUUID(),
+        ...getClientFormData()
+    };
 
     clients.push(client);
+
     saveClientsLs()
     clearForm();
     applyFilters();
@@ -87,59 +113,83 @@ function editClient(client) {
 }
 
 function saveClient(client) {
-    client.name = nameInput.value;
-    client.email = emailInput.value;
-    client.phone = Number(phoneInput.value);
-    client.city = cityInput.value;
-    client.status = statusInput.checked;
+    Object.assign(client, getClientFormData());
 
     saveClientsLs()
     applyFilters();
     resetForm();
 }
 
-// Form Events
-openFormButton.addEventListener("click", () => {
-    resetForm();
-    openForm();
-});
+// ==========================================
+// 5. FILTERS
+// ==========================================
 
-closeFormButton.addEventListener("click", closeForm);
+function handleCityFilter() {
 
-clientForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+    const selectedCity = cityFilter.value
 
-    if (mode === "add") {
-        addClient();
-        closeForm();
-    } else if (mode === "save") {
-        saveClient(clientBeingEdited);
-        closeForm();
+    if (selectedCity === "all") {
+        return
+    };
+
+    if(!cityGroup.includes(selectedCity)){
+        cityGroup.push(selectedCity)
     }
-});
 
+    cityFilter.value = "all"
 
-// ==========================================
-// 3. CONTEXT: FILTER AND SEARCH SYSTEM
-// ==========================================
+    applyFilters();
+}
 
-// Filter DOM Elements
-const cityFilter = document.getElementById("city-filter");
-const statusFilter = document.getElementById("status-filter");
-const sortFilter = document.getElementById("sort-filter");
-const clearFiltersButton = document.querySelector(".clear-filters-button");
+function handleStatusFilter() {
 
+    const selectedStatus = statusFilter.value
 
-let cityGroup = []
-let statusGroup = [] 
-let sortGroup = [] 
+    if (selectedStatus === "all") {
+         return   
+    };
 
-// Filtering and Sorting Functions
+    statusGroup = null 
+
+    if(selectedStatus === "actives"){
+        statusGroup = true
+    } 
+
+    if(selectedStatus === "inactives") {
+        statusGroup = false
+    }
+    
+    statusFilter.value = "all"
+
+    applyFilters();
+}
+
+function handleSortFilter() {
+    const selectedSort = sortFilter.value;
+
+    if (selectedSort === "no-sort") {
+        return;
+    }
+
+    sortGroup = null;
+
+    if (selectedSort === "name-a-z") {
+        sortGroup = "name-a-z"
+    }
+
+    if (selectedSort === "name-z-a") {
+        sortGroup = "name-z-a"
+    }
+
+    sortFilter.value = "no-sort";
+
+    applyFilters();
+}
+
 function clearFilters() {
-
     cityGroup = []
-    statusGroup = [] 
-    sortGroup = [] 
+    statusGroup = null 
+    sortGroup = null 
 
     cityFilter.value = "all";
     statusFilter.value= "all";
@@ -150,182 +200,95 @@ function clearFilters() {
 
 function applyFilters() {
 
-    let filteredClient = clients;
-    //1
-    if (cityFilter.value !== "all") {
-        if(!cityGroup.includes(cityFilter.value)){
-            cityGroup.push(cityFilter.value)
-        }
-        cityFilter.value = "all"
-    };
-
+    let clientsToDisplay = [...clients];
+    
     if (cityGroup.length > 0) {
-        filteredClient = filteredClient.filter(client =>
+        clientsToDisplay = clientsToDisplay.filter(client =>
             cityGroup.includes(client.city)
         );
     }
 
-    // 2
-    if (statusFilter.value !== "all") {
-        statusGroup = []
-        if(statusFilter.value === "actives"){
-            statusGroup.push(true)
-        } else if(statusFilter.value === "inactives") {
-            statusGroup.push(false)
-        }
-        
-        statusFilter.value = "all"
-        
-    };
-
-    if(statusGroup.length > 0) {
-        filteredClient = filteredClient.filter(client =>
-            statusGroup.includes(client.status)
+    if(statusGroup !== null) {
+        clientsToDisplay = clientsToDisplay.filter(client =>
+            client.status === statusGroup
         );
- 
     }
 
-    // 3
-    let sortedClient = [...filteredClient];
-
-    if (sortFilter.value !== "no-sort") {
-        sortGroup = []
-        if (sortFilter.value === "name-a-z") {
-            sortGroup.push("Nome: A → Z")
-            sortedClient.sort((a, b) => a.name.localeCompare(b.name));
-            
-        } else if (sortFilter.value === "name-z-a") {
-            
-            sortGroup.push("Nome: Z → A")
-            sortedClient.sort((a, b) => b.name.localeCompare(a.name));
-
-        } 
-
-        sortFilter.value = "no-sort";
+    if(sortGroup === "name-a-z") {
+        clientsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    if(sortGroup.length > 0) {
-
-        if (sortGroup.includes("Nome: A → Z")) {
-            sortedClient.sort((a, b) => a.name.localeCompare(b.name)); 
-        }
-
-        if (sortGroup.includes("Nome: Z → A")) {
-            sortedClient.sort((a, b) => b.name.localeCompare(a.name));
-        }
- 
+    if(sortGroup === "name-z-a") {
+        clientsToDisplay.sort((a, b) => b.name.localeCompare(a.name));
     }
     
-    updateScreen(sortedClient);
+    updateScreen(clientsToDisplay);
     appliedFilters();  
 }
 
-// Filter Events
-cityFilter.addEventListener("change", applyFilters);
-statusFilter.addEventListener("change", applyFilters);
-sortFilter.addEventListener("change", applyFilters);
-
-clearFiltersButton.addEventListener("click", clearFilters);
-
-
 // ==========================================
-// 4. CONTEXT: SCREEN RENDERING (UI)
+// 6. UI RENDERING
 // ==========================================
 
-// Elementos do DOM da Listagem e Cards/Tags
-const clientList = document.querySelector(".client-list");
-const totalClient = document.querySelector(".total-client");
-const totalActiveClient = document.querySelector(".total-active-client");
-let appliedFilterList = document.querySelector(".applied-filter-list")
+function renderAppliedFilter(text, onDelete) {
 
-updateScreen(clients)
+    const filterBox = document.createElement("div")
+    // appliedCityBox.classList.add("applied-city-box");
 
-// Visual Interface (UI) Functions
+    const deleteFilter = document.createElement("button")
+    deleteFilter.classList.add("delete-filter")
+    deleteFilter.textContent = `X`
+
+    const filterText = document.createElement("span")
+    // appliedCity.classList.add("applied-city")
+    filterText.textContent = text
+    
+    filterBox.append(deleteFilter, filterText)
+    appliedFilterList.append(filterBox)
+
+    deleteFilter.addEventListener("click", () => {
+        
+        onDelete()
+        filterBox.remove()
+        applyFilters()              
+    })     
+}
+
 function appliedFilters() {
 
-    appliedFilterList.textContent = ""
-    
+    appliedFilterList.textContent = "";
 
     cityGroup.forEach((city, index) => {
 
-        const appliedCityBox = document.createElement("div")
-        appliedCityBox.classList.add("applied-city-box");
-
-        const deleteFilter = document.createElement("button")
-        deleteFilter.classList.add("delete-filter")
-        deleteFilter.textContent = `X`
-
-        const appliedCity = document.createElement("span")
-        appliedCity.classList.add("applied-city")
-        appliedCity.textContent = city
-        
-        appliedCityBox.append(deleteFilter, appliedCity)
-        appliedFilterList.append(appliedCityBox)
-
-        deleteFilter.addEventListener("click", () => {
-            
+        renderAppliedFilter(city, 
+            () => {
             cityGroup.splice(index, 1)
-            appliedCityBox.remove()
             
-            applyFilters()
-              
-        })  
+        })
     })
 
-    statusGroup.forEach((status, index) => {
+    if(statusGroup !== null) {
 
-        const appliedStatusBox = document.createElement("div")
-        appliedStatusBox.classList.add("applied-status-box");
+        renderAppliedFilter(statusGroup ? "Ativos" : "Inativos", 
+            () => {
+            statusGroup = null   
+        })
+    }
 
-        const deleteFilter = document.createElement("button")
-        deleteFilter.classList.add("delete-filter")
-        deleteFilter.textContent = `X`
+    if(sortGroup !== null) {
 
-        const appliedStatus = document.createElement("span")
-        appliedStatus.classList.add("applied-status")
-        appliedStatus.textContent = status ? "Ativos" : "Inativos"
-        
-        appliedStatusBox.append(deleteFilter, appliedStatus)
-        appliedFilterList.append(appliedStatusBox)
-
-        deleteFilter.addEventListener("click", () => {
-            
-            statusGroup.splice(index, 1)
-            appliedStatusBox.remove()
-            applyFilters()        
-        })   
-    })
-
-    sortGroup.forEach((sort, index) => {
-        
-        const appliedSortBox = document.createElement("div")
-        appliedSortBox.classList.add("applied-sort-box");
-
-        const deleteFilter = document.createElement("button")
-        deleteFilter.classList.add("delete-filter")
-        deleteFilter.textContent = `X`
-
-        const appliedSort = document.createElement("span")
-        appliedSort.classList.add("applied-sort")
-        appliedSort.textContent = sort 
-        
-        appliedSortBox.append(deleteFilter, appliedSort)
-        appliedFilterList.append(appliedSortBox)
-
-        deleteFilter.addEventListener("click", () => {
-            
-            sortGroup.splice(index, 1)
-            appliedSortBox.remove()
-            applyFilters()    
-        })  
-    })
+        renderAppliedFilter(
+            sortGroup === "name-a-z" ? "Nome: A → Z" : "Nome: Z → A", 
+            () => {
+            sortGroup = null    
+        })
+    }
 }
 
-function updateScreen(clientList) {
-    renderPeople(clientList);
-    updatePeopleCount(clientList);
-    countActivePeople(clientList);
-    console.log("ListaFiltrada",clientList)
+function updateScreen(clientToDisplay) {
+    renderPeople(clientToDisplay);
+    updatePeopleCount(clientToDisplay);
+    countActivePeople(clientToDisplay);
 }
 
 function renderPeople(clientToRender) {
@@ -384,18 +347,49 @@ function renderPeople(clientToRender) {
 }
 
 
-function updatePeopleCount(clientList) {
+function updatePeopleCount(clientsToDisplay) {
 
-    totalClient.textContent = `Clientes: ${clientList.length}`;
+    totalClient.textContent = `Clientes: ${clientsToDisplay.length}`;
 };
 
-function countActivePeople(clientList) {
+function countActivePeople(clientsToDisplay) {
 
-    const activeClient = clientList.filter(
-        client => client.status
-    );
-
-    totalActiveClient.textContent = `Ativos: ${activeClient.length}`;
+    const activeClient = clientsToDisplay.filter(client => client.status).length;
+    totalActiveClient.textContent = `Ativos: ${activeClient}`;
 };
 
-console.log("lista",clients)
+// ==========================================
+// 7. INITIAL RENDER
+// ==========================================
+updateScreen(clients)
+appliedFilters();
+
+// ==========================================
+// 8. EVENTS
+// ==========================================
+openFormButton.addEventListener("click", () => {
+    resetForm();
+    openForm();
+});
+
+closeFormButton.addEventListener("click", closeForm);
+
+clientForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (mode === "add") {
+        addClient();
+        closeForm();
+    }
+    
+    if (mode === "save") {
+        saveClient(clientBeingEdited);
+        closeForm();
+    }
+});
+
+cityFilter.addEventListener("change", handleCityFilter);
+statusFilter.addEventListener("change", handleStatusFilter);
+sortFilter.addEventListener("change", handleSortFilter);
+
+clearFiltersButton.addEventListener("click", clearFilters);

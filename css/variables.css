@@ -2,8 +2,8 @@
     --black: #000000;
     --white: #ffffff;
 
-    --light_gray: #eeeeee;
-    --light_blue: #9ab7d4;
+    --light-gray: #eeeeee;
+    --light-blue: #9ab7d4;
 
     --color-primary: #274868;
     --color-primary-hover: #4175aa;
@@ -14,6 +14,9 @@
     --color-danger:#cf713a;
     --color-danger-hover:#e09163;
 
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-serif: "Cormorant Garamond", serif;
     --font-sans: "Plus Jakarta Sans", sans-serif;
+
 }
+
