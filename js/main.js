@@ -21,7 +21,7 @@ let sortGroup = null
 const openFormButton = document.querySelector(".add-client-button");
 const modalForm = document.querySelector(".modal-form");
 const closeFormButton = document.querySelector(".close-modal-button");
-
+const modalOverlay = document.querySelector(".overlay")
 const clientForm = document.querySelector(".client-form");
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
@@ -29,6 +29,7 @@ const phoneInput = document.getElementById("phone");
 const cityInput = document.getElementById("city");
 const statusInput = document.getElementById("status");
 const addButton = document.querySelector(".form-submit-button");
+
 
 // Filters
 const cityFilter = document.getElementById("city-filter");
@@ -55,10 +56,12 @@ function saveClientsLs() {
 // ==========================================
 function openForm() {
     modalForm.classList.add("active");
+    modalOverlay.classList.add("active");
 }
 
 function closeForm() {
     modalForm.classList.remove("active");
+    modalOverlay.classList.remove("active");
 }
 
 function clearForm() {
@@ -305,7 +308,7 @@ function renderPeople(clientToRender) {
         const statusCell = document.createElement("td");
         const actionsCell = document.createElement("td");
 
-        idCell.textContent = client.id;
+        idCell.textContent = index + 1;
         nameCell.textContent = client.name;
         emailCell.textContent = client.email;
         phoneCell.textContent = client.phone;
@@ -319,6 +322,10 @@ function renderPeople(clientToRender) {
         const editButton = document.createElement("button");
         editButton.classList.add("table-action-button")
         editButton.innerHTML = `<span class="material-symbols-outlined edit-client-symbol">edit</span>`;
+
+        const moreInfoButton = document.createElement("button");
+        moreInfoButton.classList.add("table-action-button")
+        moreInfoButton.innerHTML = `<span class="material-symbols-outlined info-client-symbol">visibility</span>`;
 
         // Internal events of the table buttons
         removeButton.addEventListener("click", () => {
@@ -340,7 +347,7 @@ function renderPeople(clientToRender) {
             openForm();
         });
 
-        actionsCell.append(editButton, removeButton);
+        actionsCell.append(editButton, removeButton, moreInfoButton);
         tableRow.append(idCell, nameCell, emailCell, phoneCell, cityCell, statusCell, actionsCell);
         clientList.append(tableRow);
     });
@@ -393,3 +400,5 @@ statusFilter.addEventListener("change", handleStatusFilter);
 sortFilter.addEventListener("change", handleSortFilter);
 
 clearFiltersButton.addEventListener("click", clearFilters);
+
+modalOverlay.addEventListener("click", closeForm);
