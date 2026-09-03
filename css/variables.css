@@ -14,6 +14,8 @@
     --color-danger:#cf713a;
     --color-danger-hover:#e09163;
 
+    --color-hover-all: rgba(255, 255, 255, 0.1);
+
     --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-serif: "Cormorant Garamond", serif;
     --font-sans: "Plus Jakarta Sans", sans-serif;

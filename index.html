@@ -31,7 +31,13 @@
 
                 <p class="logo-txt">Logo</p>
 
-                <span class="material-symbols-outlined collapse-sidebar">left_panel_close</span>
+                <button class="close-sidebar btn">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+
+                <button class="collapse-sidebar">
+                    <span class="material-symbols-outlined">left_panel_close</span>
+                </button>
             </div>
 
             <nav class="navigation">
@@ -51,19 +57,15 @@
             </nav>
         </aside>
 
-        <main class="main-content">
-            
-            <button id="burger-btn" class="menu-button">
-                <span></span>
-                <span></span>
-                <span></span>
-                <!-- <span class="material-symbols-outlined">menu</span> -->
-            </button>
-            <section class="clients-section">
-                
-                <header class="section-header">
+        <main class="main-content">    
+            <header class="main-header">
 
-                    <h1 class="section-title">Clientes</h1>
+                    <div class="header-group">
+                        <button id="burger-btn" class="menu-button btn">
+                            <span class="material-symbols-outlined">menu</span>
+                        </button>
+                        <h1 class="section-title">Clientes</h1>
+                    </div>
 
                     <button class="add-client-button btn btn-primary">
                         <span class="material-symbols-outlined person-add-symbol">person_add</span>
@@ -71,7 +73,9 @@
                     </button>
 
                 </header>
-                
+
+            <section class="clients-section">
+            
                 <div class="filters">
 
                     <div class="filter-options">

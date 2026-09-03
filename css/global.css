@@ -1,28 +1,33 @@
 .app {
     display: flex;
     flex-direction: column;
+
     width: 100%;
     height: 100vh;
     min-height: 100vh;
+
     font-family: var(--font-primary);  
     outline: 3px solid red;
-    /* min-width: 0;; */
 }
 
 .main-content {
-    /* position: relative; */
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; */
+
     width: 100%;
     height: 100vh;
+    
     flex: 1 1 0;
     min-width: 0;
     background-color: var(--light-gray);
-    /* background-color: var(--color-secondary); */
     outline: 3px solid green;
     overflow-y: auto;
 }
 
 .clients-section {
-    position: relative;
+    /* position: relative; */
     display: flex;
     flex-direction: column;
     align-items: center;
