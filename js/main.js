@@ -13,6 +13,10 @@ let cityGroup = []
 let statusGroup = null 
 let sortGroup = null 
 
+//Table 
+let clientsToDisplay = [];
+let indexInicial = 0;
+let indexFinal = 10;
 
 // ==========================================
 // 2. DOM ELEMENTS
@@ -43,6 +47,11 @@ const clientList = document.querySelector(".client-list");
 const totalClient = document.querySelector(".total-client");
 const totalActiveClient = document.querySelector(".total-active-client");
 const appliedFilterList = document.querySelector(".applied-filter-list");
+
+//Table
+const tableControl = document.querySelector(".table-control");
+const previousTable = document.querySelector(".previous")
+const nextTable = document.querySelector(".next")
 
 // ==========================================
 // 3. DATA PERSISTENCE
@@ -202,10 +211,6 @@ function clearFilters() {
     applyFilters();
 }
 
-let clientsToDisplay = [];
-let indexInicial = 0;
-let indexFinal = 10;
-
 function applyFilters() {
 
     clientsToDisplay = [...clients];
@@ -214,23 +219,26 @@ function applyFilters() {
         clientsToDisplay = clientsToDisplay.filter(client =>
             cityGroup.includes(client.city)
         );
+        indexInicial = 0;
     }
 
     if(statusGroup !== null) {
         clientsToDisplay = clientsToDisplay.filter(client =>
             client.status === statusGroup
         );
+        indexInicial = 0;
     }
 
     if(sortGroup === "name-a-z") {
         clientsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
+        indexInicial = 0;
     }
 
     if(sortGroup === "name-z-a") {
         clientsToDisplay.sort((a, b) => b.name.localeCompare(a.name));
+        indexInicial = 0;
     }
 
-    indexInicial = 0;
     updateScreen();
     appliedFilters();  
 }
@@ -264,7 +272,8 @@ function renderAppliedFilter(text, onDelete) {
 }
 
 function appliedFilters() {
-
+    
+    indexInicial = 0;
     appliedFilterList.textContent = "";
 
     cityGroup.forEach((city, index) => {
@@ -301,28 +310,11 @@ function updateScreen() {
 }
 
 function renderTablePage() {
-  
     const pageClients = clientsToDisplay.slice(indexInicial, indexInicial + indexFinal)
 
     renderPeople(pageClients, indexInicial)
+    updateTablePageCount()
 }
-
-const previousTable = document.querySelector(".previous")
-const nextTable = document.querySelector(".next")
-
-nextTable.addEventListener("click", () => {
-    if(indexInicial + indexFinal < clientsToDisplay.length){
-        indexInicial += indexFinal
-        renderTablePage() 
-    }  
-})
-
-previousTable.addEventListener("click", () => { 
-     if(indexInicial > 0) {
-        indexInicial -= indexFinal
-        renderTablePage()   
-    }   
-})  
 
 function renderPeople(clientToRender, indexInicial) {
     clientList.innerHTML = "";
@@ -383,6 +375,18 @@ function renderPeople(clientToRender, indexInicial) {
     });
 }
 
+function updateTablePageCount() {
+
+    const tablePageCount = document.querySelector(".table-page-count")
+    tablePageCount.textContent = ""
+
+    let pageTotal = indexInicial + indexFinal - 1 > clientsToDisplay.length ? clientsToDisplay.length : indexFinal + indexInicial
+
+    tablePageCount.textContent = `Mostrando ${indexInicial + 1} até ${pageTotal} de ${clientsToDisplay.length}`
+
+    tableControl.prepend(tablePageCount)
+}
+
 
 function updatePeopleCount() {
 
@@ -433,3 +437,18 @@ sortFilter.addEventListener("change", handleSortFilter);
 clearFiltersButton.addEventListener("click", clearFilters);
 
 modalOverlay.addEventListener("click", closeForm);
+
+nextTable.addEventListener("click", () => {
+    if(indexInicial + indexFinal < clientsToDisplay.length){
+        indexInicial += indexFinal
+        renderTablePage() 
+    }  
+})
+
+previousTable.addEventListener("click", () => { 
+     if(indexInicial > 0) {
+        indexInicial -= indexFinal
+        renderTablePage()   
+    }   
+})  
+
