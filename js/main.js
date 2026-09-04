@@ -8,6 +8,7 @@ const clients = JSON.parse(localStorage.getItem("clients")) || [];
 let mode = "add"; // Internal form state: "add" or "save"
 let clientBeingEdited = null;
 
+//Filters
 let cityGroup = []
 let statusGroup = null 
 let sortGroup = null 
@@ -201,9 +202,13 @@ function clearFilters() {
     applyFilters();
 }
 
+let clientsToDisplay = [];
+let indexInicial = 0;
+let indexFinal = 10;
+
 function applyFilters() {
 
-    let clientsToDisplay = [...clients];
+    clientsToDisplay = [...clients];
     
     if (cityGroup.length > 0) {
         clientsToDisplay = clientsToDisplay.filter(client =>
@@ -224,8 +229,9 @@ function applyFilters() {
     if(sortGroup === "name-z-a") {
         clientsToDisplay.sort((a, b) => b.name.localeCompare(a.name));
     }
-    
-    updateScreen(clientsToDisplay);
+
+    indexInicial = 0;
+    updateScreen();
     appliedFilters();  
 }
 
@@ -288,13 +294,37 @@ function appliedFilters() {
     }
 }
 
-function updateScreen(clientToDisplay) {
-    renderPeople(clientToDisplay);
-    updatePeopleCount(clientToDisplay);
-    countActivePeople(clientToDisplay);
+function updateScreen() {
+    renderTablePage();
+    updatePeopleCount();
+    countActivePeople();
 }
 
-function renderPeople(clientToRender) {
+function renderTablePage() {
+  
+    const pageClients = clientsToDisplay.slice(indexInicial, indexInicial + indexFinal)
+
+    renderPeople(pageClients, indexInicial)
+}
+
+const previousTable = document.querySelector(".previous")
+const nextTable = document.querySelector(".next")
+
+nextTable.addEventListener("click", () => {
+    if(indexInicial + indexFinal < clientsToDisplay.length){
+        indexInicial += indexFinal
+        renderTablePage() 
+    }  
+})
+
+previousTable.addEventListener("click", () => { 
+     if(indexInicial > 0) {
+        indexInicial -= indexFinal
+        renderTablePage()   
+    }   
+})  
+
+function renderPeople(clientToRender, indexInicial) {
     clientList.innerHTML = "";
 
     clientToRender.forEach((client, index) => {
@@ -308,7 +338,7 @@ function renderPeople(clientToRender) {
         const statusCell = document.createElement("td");
         const actionsCell = document.createElement("td");
 
-        idCell.textContent = index + 1;
+        idCell.textContent = indexInicial += 1;
         nameCell.textContent = client.name;
         emailCell.textContent = client.email;
         phoneCell.textContent = client.phone;
@@ -354,12 +384,12 @@ function renderPeople(clientToRender) {
 }
 
 
-function updatePeopleCount(clientsToDisplay) {
+function updatePeopleCount() {
 
     totalClient.textContent = `Clientes: ${clientsToDisplay.length}`;
 };
 
-function countActivePeople(clientsToDisplay) {
+function countActivePeople() {
 
     const activeClient = clientsToDisplay.filter(client => client.status).length;
     totalActiveClient.textContent = `Ativos: ${activeClient}`;
@@ -368,8 +398,9 @@ function countActivePeople(clientsToDisplay) {
 // ==========================================
 // 7. INITIAL RENDER
 // ==========================================
-updateScreen(clients)
-appliedFilters();
+applyFilters()
+// updateScreen()
+// appliedFilters();
 
 // ==========================================
 // 8. EVENTS
