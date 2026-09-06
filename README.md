@@ -2,32 +2,23 @@
 
 Aplicação web de cadastro e gerenciamento de pessoas, desenvolvida para praticar conceitos fundamentais de JavaScript, manipulação do DOM e operações com arrays.
 
-Acesse por aqui: people-crud-azure.vercel.app
+Acesse por aqui: https://people-crud-azure.vercel.app
 
 ## Funcionalidades
 
 * Cadastro de pessoas
-* Validação de nomes duplicados
 * Edição de pessoas cadastradas
-* Validação de nomes duplicados durante a edição
 * Remoção de pessoas
 * Filtro por cidade
-* Filtro por profissão
-* Filtro por status ativo
-
+* Filtro por status ativo/inativo
 * Ordenação por nome:
   * A–Z
   * Z–A
-
-* Ordenação por salário:
-  * Menor para maior
-  * Maior para menor
-
 * Limpeza dos filtros
 * Contagem de pessoas exibidas
 * Contagem de pessoas ativas
-* Cálculo do total de salários
 * Atualização dinâmica da interface
+* Tabela em modelo paginação (exibe 10 pessoas por pagina)
 
 ## Tecnologias
 
@@ -81,11 +72,13 @@ Algumas funcionalidades planejadas para as próximas versões:
 
 * Validações adicionais dos campos do formulário
 * Melhorias na experiência de edição
-* Persistência dos dados com `localStorage`
+* Persistência dos dados com `localStorage` 
 * Melhorias de responsividade
 * Melhorias na interface e experiência do usuário
 * Refatoração e organização do código
 * Novos recursos de gerenciamento de pessoas
+* Sistema de busca
+* Mais informações de dados
 
 ## Objetivo
 
