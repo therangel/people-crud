@@ -17,7 +17,7 @@ let sortGroup = null
 let clientsToDisplay = [];
 let indexInicial = 0;
 let indexFinal = 10;
-
+let numbers;
 // ==========================================
 // 2. DOM ELEMENTS
 // ==========================================
@@ -52,6 +52,7 @@ const appliedFilterList = document.querySelector(".applied-filter-list");
 const tableControl = document.querySelector(".table-control");
 const previousTable = document.querySelector(".previous")
 const nextTable = document.querySelector(".next")
+const pageNumbers = document.querySelector(".page-numbers")
 
 // ==========================================
 // 3. DATA PERSISTENCE
@@ -305,6 +306,7 @@ function appliedFilters() {
 
 function updateScreen() {
     renderTablePage();
+    pageNumbersControl();
     updatePeopleCount();
     countActivePeople();
 }
@@ -452,3 +454,23 @@ previousTable.addEventListener("click", () => {
     }   
 })  
 
+
+
+//renderizar na tela no lugar dos botoes
+function pageNumbersControl() {
+
+    pageNumbers.textContent = ""
+
+    const pages = (clientsToDisplay.length % 10) > 0 ? 
+    Math.ceil(clientsToDisplay.length / 10) :
+    clientsToDisplay.length / 10
+
+    numbers = Array.from({ length: pages }, (_, i) => i + 1);
+
+    numbers.forEach(n => {
+        const num = document.createElement("span")
+        num.textContent = n
+
+        pageNumbers.append(num)
+    });
+}
