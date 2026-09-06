@@ -52,7 +52,7 @@ const appliedFilterList = document.querySelector(".applied-filter-list");
 const tableControl = document.querySelector(".table-control");
 const previousTable = document.querySelector(".previous")
 const nextTable = document.querySelector(".next")
-const pageNumbers = document.querySelector(".page-numbers")
+const pageNumbers = document.querySelector(".page-number-group")
 
 // ==========================================
 // 3. DATA PERSISTENCE
@@ -315,6 +315,7 @@ function renderTablePage() {
     const pageClients = clientsToDisplay.slice(indexInicial, indexInicial + indexFinal)
 
     renderPeople(pageClients, indexInicial)
+
     updateTablePageCount()
 }
 
@@ -444,13 +445,15 @@ nextTable.addEventListener("click", () => {
     if(indexInicial + indexFinal < clientsToDisplay.length){
         indexInicial += indexFinal
         renderTablePage() 
+        renderPageNumbers()
     }  
 })
 
 previousTable.addEventListener("click", () => { 
      if(indexInicial > 0) {
         indexInicial -= indexFinal
-        renderTablePage()   
+        renderTablePage()  
+        renderPageNumbers() 
     }   
 })  
 
@@ -459,7 +462,7 @@ previousTable.addEventListener("click", () => {
 //renderizar na tela no lugar dos botoes
 function pageNumbersControl() {
 
-    pageNumbers.textContent = ""
+    // pageNumbers.textContent = ""
 
     const pages = (clientsToDisplay.length % 10) > 0 ? 
     Math.ceil(clientsToDisplay.length / 10) :
@@ -467,10 +470,27 @@ function pageNumbersControl() {
 
     numbers = Array.from({ length: pages }, (_, i) => i + 1);
 
-    numbers.forEach(n => {
-        const num = document.createElement("span")
-        num.textContent = n
+    renderPageNumbers()
+}
 
-        pageNumbers.append(num)
+function renderPageNumbers() {
+    pageNumbers.textContent = ""
+
+    const currentPage = Math.floor(indexInicial / indexFinal) + 1;
+
+    numbers.forEach(number => {
+
+        const pageNumber = document.createElement("span")
+        pageNumber.textContent = number
+        pageNumber.classList.add("page-number");
+        
+        if(number === currentPage) {
+            pageNumber.classList.add("active");
+        }
+
+        pageNumbers.append(pageNumber)
     });
+
+
+
 }

@@ -425,11 +425,21 @@
     gap: 0.7rem;
 }
 
-.page-numbers {
+.page-number-group {
     display: flex;
     gap: 0.5rem;
     width: 100%;
     height: 100%;
+}
+
+.page-number {
+    font-weight: bold;
+    padding: 0.4rem 0.6rem;
+}
+
+.page-number.active {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
 }
 
 .table-control-buttons button {
