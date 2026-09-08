@@ -7,9 +7,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_back_ios,arrow_forward_ios,close,delete,edit,group,home,left_panel_close,left_panel_open,menu,person_add,release_alert,search,visibility" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_back_ios,arrow_forward_ios,close,dark_mode,delete,edit,group,home,left_panel_close,left_panel_open,light_mode,menu,person_add,release_alert,search,visibility" />
 
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/variables.css">
@@ -58,95 +58,98 @@
             </nav>
         </aside>
 
-        <main class="main-content">    
-            <header class="main-header">
+        <header class="header">
 
+            <button id="burger-btn" class="menu-button btn">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+
+            <h1 class="logo-name">Logo</h1>
+
+            <span class="material-symbols-outlined theme-toggle">
+                light_mode
+            </span>
+        </header>
+
+        <main class="main-content">    
+            <section class="clients-section">
+
+                <header class="section-header">
                     <div class="header-group">
-                        <button id="burger-btn" class="menu-button btn">
-                            <span class="material-symbols-outlined">menu</span>
-                        </button>
                         <h1 class="section-title">Clientes</h1>
                     </div>
 
-                    <button class="add-client-button btn btn-primary">
-                        <span class="material-symbols-outlined person-add-symbol">person_add</span>
-                        <span class="add-button-text">Novo cliente</span>
+                    <button class="add-client-button btn btn-primary ">
+                        <span class="material-symbols-outlined person-add-symbol">
+                            person_add
+                        </span>
+
+                        <span class="add-button-text">
+                            Novo cliente
+                        </span>
                     </button>
 
                 </header>
-
-            <section class="clients-section">
-
-
                 <div class="filters">
-
+                    
                     <div class="filter-options">
 
-                        <div class="weather">
+                        <div class="table-search-container">
+                            <label for="table-search">
+                                <span class="material-symbols-outlined search-icon">
+                                    search
+                                </span>
+                                <input type="text" id="table-search" class="table-search" placeholder="pesquisar cliente...">
+                            </label>
                             
                         </div>
 
-                        <div class="filter-group">
-                            <label for="city-filter">Cidade</label>
-
-                            <select id="city-filter" class="filter-select">
-                                <option value="all">Todas</option>
-                                <option value="Rio de Janeiro">Rio de Janeiro</option>
-                                <option value="São Paulo">São Paulo</option>
-                                <option value="Belo Horizonte">Belo Horizonte</option>
-                            </select>
-                        </div>
-
-                        <div class="filter-group">
-                            <label for="status-filter">Status</label>
-                            <select id="status-filter" class="filter-select">
-                                <option value="all">Todos</option>
-                                <option value="actives">Ativos</option>
-                                <option value="inactives">Inativos</option>
-                            </select>
-                        </div>
-    
-                        <div class="filter-group">
-
-                            <label for="sort-filter">Ordenar</label>
-                            <select id="sort-filter" class="filter-select"> 
-                                <option value="no-sort">Sem Ordenação</option>
-                                <option value="name-a-z">Nome: A → Z</option>
-                                <option value="name-z-a">Nome: Z → A</option>
-                            </select>
+                        <div class="select-group">
+                            <div>
+                                <label for="city-filter">Cidade</label>
+                                <select id="city-filter" class="filter-select">
+                                    <option value="all">Todas</option>
+                                    <option value="Rio de Janeiro">Rio de Janeiro</option>
+                                    <option value="São Paulo">São Paulo</option>
+                                    <option value="Belo Horizonte">Belo Horizonte</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="status-filter">Status</label>
+                                <select id="status-filter" class="filter-select">
+                                    <option value="all">Todos</option>
+                                    <option value="actives">Ativos</option>
+                                    <option value="inactives">Inativos</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="sort-filter">Ordenar</label>
+                                <select id="sort-filter" class="filter-select">
+                                    <option value="no-sort">Sem Ordenação</option>
+                                    <option value="name-a-z">Nome: A → Z</option>
+                                    <option value="name-z-a">Nome: Z → A</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
                     <div class="applied-filters">
                         <p>Filtrar por: </p>
 
-                        <div class="applied-filter-list">
-                           
-                        </div>
+                        <div class="applied-filter-list"></div>
 
                         <button class="clear-filters-button">Limpar</button>
                     </div>
+
+                    
+                </div>
+                
+                <div class="filter-summary">
+                    <p class="total-client">Clientes: 0</p>
+                    <p class="total-active-client">Ativos: 0</p>
                 </div>
 
                 <div class="table-section">
-
-                    <div class="table-section-header">
-
-                        <div class="table-search-container">
-                            <label for="table-search"></label>
-
-                            <input type="text" id="table-search" class="table-search" placeholder="pesquisar cliente...">
-
-                            <span class="material-symbols-outlined search-icon">
-                                search
-                            </span>
-                        </div>
-                        
-                        <div class="filter-summary">
-                            <p class="total-client">Clientes: 0</p>
-                            <p class="total-active-client">Ativos: 0</p>
-                        </div>
-                    </div>
 
                     <div class="table-wrapper">
 
@@ -204,8 +207,15 @@
                 <div class="modal-form">
 
                     <div class="modal-header">
+                        <div class="modal-header-container">
+                            <span class="material-symbols-outlined">
+                                person_add
+                            </span>
+                            <h2 class="modal-title">
+                                Cadastrar Novo Cliente
+                            </h2>
+                        </div>
 
-                        <h2 class="modal-title">Dados</h2>
                         <button class="close-modal-button btn">
                             <span class="material-symbols-outlined">close</span>
                         </button>
@@ -237,7 +247,9 @@
 
                         <button type="submit" class="form-submit-button btn btn-primary">Adicionar</button>
                     </form>
+
                 </div>
+
             </section>
         </main>
         

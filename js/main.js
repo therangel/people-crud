@@ -419,7 +419,7 @@ function updateTablePageCount() {
 
     let pageTotal = indexInicial + indexFinal - 1 > clientsToDisplay.length ? clientsToDisplay.length : indexFinal + indexInicial
 
-    tablePageCount.textContent = `Mostrando ${indexInicial + 1} até ${pageTotal} de ${clientsToDisplay.length}`
+    tablePageCount.textContent = `Mostrando ${indexInicial + 1} - ${pageTotal} de ${clientsToDisplay.length}`
 
     tableControl.prepend(tablePageCount)
 }

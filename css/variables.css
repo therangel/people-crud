@@ -1,24 +1,56 @@
 :root{
-    --black: #000000;
-    --white: #ffffff;
+    --background: #f4f1ea;
+    --foreground: #1c1b18;
 
-    --light-gray: #eeeeee;
-    --light-blue: #9ab7d4;
+    --color-primary: #1e433d;
+    --color-primary-foreground: #f4f1ea;
 
-    --color-primary: #274868;
-    --color-primary-hover: #4175aa;
+    --color-secondary: #1c1f1d;
+    --color-secondary-foreground: #eceae4;
 
-    --color-secondary: #dfbb67;
-    --color-secondary-hover: #f5da9c;
+    --color-danger:#cf3a3a;
+    --color-danger-hover:#e06363;
 
-    --color-danger:#cf713a;
-    --color-danger-hover:#e09163;
+    --muted: #ece9e1;
+    --muted-foreground: #6d6a62;
 
-    --color-hover-all: rgba(255, 255, 255, 0.1);
+    --accent: #e4e0d6;
+    --accent-foreground: #1c1b18;
 
-    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --font-serif: "Cormorant Garamond", serif;
-    --font-sans: "Plus Jakarta Sans", sans-serif;
+    --sidebar: #ece9e1;
+    --sidebar-foreground: #1c1b18;
 
+    --border: color-mix(in oklab, #1c1b18 10%, transparent);
+
+    --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
 }
 
+.dark {
+    --background: #0e0f0e;
+    --foreground: #eceae4;
+
+    --color-primary: #c5d9d3;
+    --color-primary-foreground: #12201d;
+    
+    --color-secondary: #1c1f1d;
+    --color-secondary-foreground: #eceae4;
+
+    --color-danger:#cf3a3a;
+    --color-danger-hover:#e06363;
+
+    --muted: #1c1f1d;
+    --muted-foreground: #9a9890;
+
+    --accent: #232623;
+    --accent-foreground: #eceae4;
+
+    --sidebar: #121413;
+    --sidebar-foreground: #eceae4;
+
+    --border: color-mix(in oklab, #eceae4 12%, transparent);
+    
+    --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  
+}

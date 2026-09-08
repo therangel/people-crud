@@ -24,6 +24,7 @@ function collapseSidebar() {
 
 
 menuButton.addEventListener("click", openSidebar)
+
 overlay.addEventListener("click", closeMenu)
 closeSidebarButton.addEventListener("click", closeMenu)
 
