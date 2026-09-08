@@ -353,17 +353,25 @@ function renderPeople(clientToRender, indexInicial) {
         moreInfoButton.innerHTML = `<span class="material-symbols-outlined info-client-symbol">visibility</span>`;
 
         // Internal events of the table buttons
-        removeButton.addEventListener("click", () => {
-            const personIndex = clients.findIndex(
-                currentPerson => currentPerson.id === client.id
-            );
+        removeButton.addEventListener("click", async () => {
 
-            if (personIndex !== -1) {
-                clients.splice(personIndex, 1);
+            const response = await confirmationModal()
 
-                saveClientsLs()
-                applyFilters();
+            if(response){
+                const personIndex = clients.findIndex(
+                    currentPerson => currentPerson.id === client.id
+                );
+
+                if (personIndex !== -1) {
+                    clients.splice(personIndex, 1);
+
+                    saveClientsLs()
+                    applyFilters();
+                }
+            }else{
+                return
             }
+                
         });
 
         editButton.addEventListener("click", () => {
@@ -376,6 +384,32 @@ function renderPeople(clientToRender, indexInicial) {
         tableRow.append(idCell, nameCell, emailCell, phoneCell, cityCell, statusCell, actionsCell);
         clientList.append(tableRow);
     });
+}
+
+function confirmationModal() {
+
+    return new Promise((resolve) => {
+
+        const confirmationModalContainer = document.querySelector(".confirmation-modal")
+        const cancelButton = document.querySelector(".cancel-button")
+        const deleteButton = document.querySelector(".delete-button")
+
+        confirmationModalContainer.classList.add("active")
+        overlay.classList.add("active")
+
+        cancelButton.onclick = () => {
+            confirmationModalContainer.classList.remove("active")
+            overlay.classList.remove("active")
+            resolve(false)
+        }
+
+        deleteButton.onclick = () => {
+            confirmationModalContainer.classList.remove("active")
+            overlay.classList.remove("active")
+            resolve(true)
+        }
+    })
+    
 }
 
 function updateTablePageCount() {
