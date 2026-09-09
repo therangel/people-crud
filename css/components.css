@@ -593,11 +593,9 @@
     align-items: center; 
 }
 
-
 .form-field #status{
     width: 15px;
 }
-
 
 .confirmation-modal {
     position: absolute;
@@ -616,7 +614,7 @@
     
     width: 300px;
     border-radius: 10px;
-    z-index: 60;
+    z-index: 333;
 }
 
 .confirmation-modal.active{
@@ -671,10 +669,6 @@
         display: none;
     }
 
-    .main-header {
-        background-color: transparent;
-    }
-
     .person-add-symbol {
         padding-right: 5px;
         border-right: 1px solid rgba(255, 255, 255, 0.3);    
@@ -686,6 +680,7 @@
 
     .collapse-sidebar {
         display: block;
+        color: var(--color-primary);
     }
 
     .sidebar.collapsed{
