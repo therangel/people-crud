@@ -149,20 +149,20 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    color: var(--color-primary-foreground);
-    background-color: var(--color-primary);
+    color: var(--muted-foreground);
     padding: 7px;
     transition: 0.1s;
     border-radius: 5px;
 }
 
-.nav-link:nth-child(1){
-    background-color: transparent;
-    color: var(--muted-foreground);   
+.nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--accent);
 }
 
-.nav-link:hover {
-    background-color: var(--color-hover-all);
+.nav-link.active {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
 }
 
 .header {

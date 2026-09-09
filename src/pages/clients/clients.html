@@ -1,0 +1,194 @@
+<section class="main-section">
+  <header class="section-header">
+    <div class="header-group">
+      <h1 class="section-title">Clientes</h1>
+    </div>
+
+    <div class="section-header-line"></div>
+
+    <button class="add-client-button btn btn-primary">
+      <span class="material-symbols-outlined person-add-symbol">
+        person_add
+      </span>
+
+      <span class="add-button-text"> Novo cliente </span>
+    </button>
+  </header>
+  <div class="filters">
+    <div class="filter-options">
+      <div class="table-search-container">
+        <label for="table-search">
+          <span class="material-symbols-outlined search-icon"> search </span>
+          <input
+            type="text"
+            id="table-search"
+            class="table-search"
+            placeholder="pesquisar cliente..."
+          />
+        </label>
+      </div>
+
+      <div class="select-group">
+        <div>
+          <label for="city-filter">Cidade</label>
+          <select id="city-filter" class="filter-select">
+            <option value="all">Todas</option>
+            <option value="Rio de Janeiro">Rio de Janeiro</option>
+            <option value="São Paulo">São Paulo</option>
+            <option value="Belo Horizonte">Belo Horizonte</option>
+          </select>
+        </div>
+        <div>
+          <label for="status-filter">Status</label>
+          <select id="status-filter" class="filter-select">
+            <option value="all">Todos</option>
+            <option value="actives">Ativos</option>
+            <option value="inactives">Inativos</option>
+          </select>
+        </div>
+        <div>
+          <label for="sort-filter">Ordenar</label>
+          <select id="sort-filter" class="filter-select">
+            <option value="no-sort">Sem Ordenação</option>
+            <option value="name-a-z">Nome: A → Z</option>
+            <option value="name-z-a">Nome: Z → A</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="applied-filters">
+      <p>Filtrar por:</p>
+
+      <div class="applied-filter-list"></div>
+
+      <button class="clear-filters-button">Limpar</button>
+    </div>
+  </div>
+
+  <div class="filter-summary">
+    <p class="total-client">Clientes: 0</p>
+    <p class="total-active-client">Ativos: 0</p>
+  </div>
+
+  <div class="table-section">
+    <div class="table-wrapper">
+      <table class="clients-table">
+        <thead>
+          <tr>
+            <th>Nº</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Cidade</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody class="client-list"></tbody>
+      </table>
+    </div>
+
+    <div class="table-control">
+      <p class="table-page-count"></p>
+
+      <div class="table-control-buttons">
+        <button class="previous btn">
+          <span class="material-symbols-outlined"> arrow_back_ios </span>
+        </button>
+
+        <div class="page-number-group"></div>
+
+        <button class="next btn">
+          <span class="material-symbols-outlined"> arrow_forward_ios </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="confirmation-modal">
+    <span class="material-symbols-outlined"> release_alert </span>
+    <h3>tem Certeza?</h3>
+    <p class="confirmation-modal-text">
+      Cliente será <strong>removido</strong><br />
+      Essa ação não pode ser desfeita.
+    </p>
+    <div class="btn-group">
+      <button class="cancel-button btn">cancelar</button>
+      <button class="delete-button btn btn-danger">Deletar</button>
+    </div>
+  </div>
+
+  <div class="modal-form">
+    <div class="modal-header">
+      <div class="modal-header-container">
+        <span class="material-symbols-outlined"> person_add </span>
+        <h2 class="modal-title">Cadastrar Novo Cliente</h2>
+      </div>
+
+      <button class="close-modal-button btn">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <form class="client-form">
+      <div class="form-field">
+        <label for="name">Nome: </label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          required
+          placeholder="nome e sobrenome"
+          maxlength="999"
+        />
+      </div>
+      <div class="form-field">
+        <label for="email">Email: </label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          min="18"
+          autocomplete="email"
+          required
+          placeholder="seu@email.com"
+          maxlength="99"
+        />
+      </div>
+      <div class="form-field">
+        <label for="phone">Telefone: </label>
+        <input
+          type="tel"
+          name="phone"
+          id="phone"
+          autocomplete="tel"
+          inputmode="tel"
+          required
+          placeholder="(11) 98765-4321"
+          maxlength="99"
+        />
+      </div>
+      <div class="form-field">
+        <label for="city">Cidade: </label>
+        <input
+          type="text"
+          name="city"
+          id="city"
+          required
+          placeholder="cidade"
+          maxlength="99"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="status">Status: </label>
+        <input type="checkbox" name="status" id="status" />
+      </div>
+
+      <button type="submit" class="form-submit-button btn btn-primary">
+        Adicionar
+      </button>
+    </form>
+  </div>
+</section>
