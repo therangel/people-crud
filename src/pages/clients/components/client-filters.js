@@ -1,3 +1,5 @@
+let clientsToDisplay = [];
+
 let cityGroup = [];
 let statusGroup = null;
 let sortGroup = null;

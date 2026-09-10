@@ -1,5 +1,6 @@
 import { getClients } from "./services/client-storage";
 import { saveClients } from "./services/client-storage";
+import { initClientForm } from "./components/client-form";
 
 export async function clientsPage() {
   const response = await fetch("./src/pages/clients/clients.html");
@@ -12,10 +13,9 @@ export function initClients() {
   // 1. GLOBAL STATE
   // ==========================================
   const clients = getClients();
-
-  let mode = "add"; // Internal form state: "add" or "save"
-  let clientBeingEdited = null;
-
+  
+  initClientForm(clients, saveClients, applyFilters)
+  
   //Filters
   let cityGroup = [];
   let statusGroup = null;
@@ -32,18 +32,7 @@ export function initClients() {
   // 2. DOM ELEMENTS
   // ==========================================
 
-  // Form
-  const openFormButton = document.querySelector(".add-client-button");
-  const modalForm = document.querySelector(".modal-form");
-  const closeFormButton = document.querySelector(".close-modal-button");
   const modalOverlay = document.querySelector(".overlay");
-  const clientForm = document.querySelector(".client-form");
-  const nameInput = document.getElementById("name");
-  const emailInput = document.getElementById("email");
-  const phoneInput = document.getElementById("phone");
-  const cityInput = document.getElementById("city");
-  const statusInput = document.getElementById("status");
-  const addButton = document.querySelector(".form-submit-button");
 
   // Filters
   const cityFilter = document.getElementById("city-filter");
@@ -68,78 +57,7 @@ export function initClients() {
   );
 
   // ==========================================
-  // 4. FORM AND MODAL
-  // ==========================================
-  function openForm() {
-    modalForm.classList.add("active");
-    modalOverlay.classList.add("active");
-  }
-
-  function closeForm() {
-    modalForm.classList.remove("active");
-    modalOverlay.classList.remove("active");
-  }
-
-  function clearForm() {
-    nameInput.value = "";
-    emailInput.value = "";
-    phoneInput.value = "";
-    cityInput.value = "";
-    statusInput.checked = false;
-  }
-
-  function resetForm() {
-    clearForm();
-    clientBeingEdited = null;
-    mode = "add";
-    addButton.textContent = "Adicionar";
-  }
-
-  function getClientFormData() {
-    return {
-      name: nameInput.value.trim(),
-      email: emailInput.value.trim(),
-      phone: Number(phoneInput.value),
-      city: cityInput.value.trim(),
-      status: statusInput.checked,
-    };
-  }
-
-  function addClient() {
-    const client = {
-      id: crypto.randomUUID(),
-      ...getClientFormData(),
-    };
-
-    clients.push(client);
-
-    saveClients(clients);
-    clearForm();
-    applyFilters();
-  }
-
-  function editClient(client) {
-    nameInput.value = client.name;
-    emailInput.value = client.email;
-    phoneInput.value = client.phone;
-    cityInput.value = client.city;
-    statusInput.checked = client.status;
-
-    addButton.textContent = "Salvar";
-    clientBeingEdited = client;
-    mode = "save";
-  }
-
-  function saveClient(client) {
-    Object.assign(client, getClientFormData());
-
-    saveClients(clients);
-    applyFilters();
-    resetForm();
-  }
-
-  // ==========================================
-  // 5. FILTERS
+  // 3. FILTERS
   // ==========================================
 
   function searchClients(currentText) {
@@ -261,7 +179,7 @@ export function initClients() {
   }
 
   // ==========================================
-  // 6. UI RENDERING
+  // 4. UI RENDERING
   // ==========================================
 
   function renderAppliedFilter(text, onDelete) {
@@ -484,36 +402,14 @@ export function initClients() {
   }
 
   // ==========================================
-  // 7. INITIAL RENDER
+  // 5. INITIAL RENDER
   // ==========================================
   applyFilters();
-  // updateScreen()
-  // appliedFilters();
 
   // ==========================================
-  // 8. EVENTS
+  // 6. EVENTS
   // ==========================================
-  openFormButton.addEventListener("click", () => {
-    resetForm();
-    openForm();
-  });
-
-  closeFormButton.addEventListener("click", closeForm);
-
-  clientForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    if (mode === "add") {
-      addClient();
-      closeForm();
-    }
-
-    if (mode === "save") {
-      saveClient(clientBeingEdited);
-      closeForm();
-    }
-  });
-
+  
   search.addEventListener("input", (event) => {
     const currentText = event.target.value;
     searchClients(currentText);
@@ -526,10 +422,6 @@ export function initClients() {
   clearFiltersButton.addEventListener("click", clearFilters);
 
   modalOverlay.addEventListener("click", () => {
-    if (modalForm.classList.contains("active")) {
-      closeForm();
-    }
-
     if (confirmationModalContainer.classList.contains("active")) {
       closeConfirmationModal();
     }

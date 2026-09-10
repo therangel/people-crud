@@ -1,6 +1,6 @@
-import { sideBar } from "./components/sidebar.js";
-import { router } from "./router.js"; // Return HTML of the current Page
-import { initClients } from "./pages/clients/clients.js";
+import { sideBar } from "./components/sidebar";
+import { router } from "./router"; // Return HTML of the current Page
+import { initClients } from "./pages/clients/clients";
 // import { initHome } from './pages/home/home.js';
 
 const mainContent = document.getElementById("main"); // Where does the HTML file go
