@@ -1,17 +1,17 @@
-export async function clientsPage() {
-    
-    const response = await fetch('./src/pages/clients/clients.html')
+import { getClients } from "./services/client-storage";
+import { saveClients } from "./services/client-storage";
 
-    return await response.text()
+export async function clientsPage() {
+  const response = await fetch("./src/pages/clients/clients.html");
+
+  return await response.text();
 }
 
-
 export function initClients() {
-
   // ==========================================
   // 1. GLOBAL STATE
   // ==========================================
-  const clients = JSON.parse(localStorage.getItem("clients")) || [];
+  const clients = getClients();
 
   let mode = "add"; // Internal form state: "add" or "save"
   let clientBeingEdited = null;
@@ -68,13 +68,6 @@ export function initClients() {
   );
 
   // ==========================================
-  // 3. DATA PERSISTENCE
-  // ==========================================
-  function saveClientsLs() {
-    localStorage.setItem("clients", JSON.stringify(clients));
-  }
-
-  // ==========================================
   // 4. FORM AND MODAL
   // ==========================================
   function openForm() {
@@ -120,7 +113,7 @@ export function initClients() {
 
     clients.push(client);
 
-    saveClientsLs();
+    saveClients(clients);
     clearForm();
     applyFilters();
   }
@@ -140,7 +133,7 @@ export function initClients() {
   function saveClient(client) {
     Object.assign(client, getClientFormData());
 
-    saveClientsLs();
+    saveClients(clients);
     applyFilters();
     resetForm();
   }
@@ -382,7 +375,7 @@ export function initClients() {
           if (personIndex !== -1) {
             clients.splice(personIndex, 1);
 
-            saveClientsLs();
+            saveClients(clients);
             applyFilters();
           }
         } else {
