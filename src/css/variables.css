@@ -1,5 +1,6 @@
 :root{
     --background: #f4f1ea;
+    --background-hover: #e7e4dd;
     --foreground: #1c1b18;
 
     --color-primary: #1e433d;
@@ -13,6 +14,7 @@
 
     --muted: #ece9e1;
     --muted-foreground: #6d6a62;
+    --muted-hover: #dad7cf;
 
     --accent: #e4e0d6;
     --accent-foreground: #1c1b18;

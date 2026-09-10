@@ -5,13 +5,14 @@ export function sideBar(){
     const overlay = document.querySelector(".overlay")
     const collapseSidebarButton = document.querySelector(".collapse-sidebar")
     const closeSidebarButton = document.querySelector(".close-sidebar")
+    const navLinks = document.querySelectorAll(".nav-link")
 
     function openSidebar() {
         sidebar.classList.add("active")
         overlay.classList.add("active")
     }
 
-    function closeMenu() {
+    function closeSidebar() {
         sidebar.classList.remove("active")
         overlay.classList.remove("active")
     }
@@ -24,10 +25,16 @@ export function sideBar(){
 
     menuButton.addEventListener("click", openSidebar)
 
-    overlay.addEventListener("click", closeMenu)
-    closeSidebarButton.addEventListener("click", closeMenu)
+    overlay.addEventListener("click", closeSidebar)
+    closeSidebarButton.addEventListener("click", closeSidebar)
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", closeSidebar)
+    })
 
     collapseSidebarButton.addEventListener("click", collapseSidebar)
+
+    
 }
 
 

@@ -8,14 +8,12 @@ export async function router() {
 
     switch(path) {
         case '/':
-            return await homePage();
-
-        case '/clients':
-            return await clientsPage();
-
         case '/home':
             return await homePage();
             
+        case '/clients':
+            return await clientsPage();
+
         default:
             return '<h1>Página não encontrada</h1>';
     }

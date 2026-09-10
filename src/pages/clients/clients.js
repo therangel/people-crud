@@ -416,17 +416,17 @@ export function initClients() {
       const deleteButton = document.querySelector(".delete-button");
 
       confirmationModalContainer.classList.add("active");
-      overlay.classList.add("active");
+      modalOverlay.classList.add("active");
 
       cancelButton.onclick = () => {
         confirmationModalContainer.classList.remove("active");
-        overlay.classList.remove("active");
+        modalOverlay.classList.remove("active");
         resolve(false);
       };
 
       deleteButton.onclick = () => {
         confirmationModalContainer.classList.remove("active");
-        overlay.classList.remove("active");
+        modalOverlay.classList.remove("active");
         resolve(true);
       };
     });

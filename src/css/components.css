@@ -68,8 +68,12 @@
     background-color: transparent;
     height: 30px;
     z-index: 20;
-    padding: 0;
+    padding: 8px 3px;
     transition: 0.3s;
+}
+
+.menu-button:hover {
+    background-color: var(--background-hover);
 }
 
 .menu-button span {
@@ -126,7 +130,7 @@
 }
 
 .close-sidebar:hover {
-    background-color: var(--color-hover-all);
+    background-color: var(--muted-hover);
 }
 
 .collapse-sidebar {
@@ -162,7 +166,14 @@
 
 .nav-link.active {
     background-color: var(--color-primary);
-    color: var(--color-primary-foreground);
+    color: var(--color-primary-foreground);  
+}
+
+.nav-link.active .sidebar {
+    left: -100%;
+    transition: 0.3s;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .header {

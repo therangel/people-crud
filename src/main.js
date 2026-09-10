@@ -6,11 +6,19 @@ import { initClients } from './pages/clients/clients.js';
 const mainContent = document.querySelector('#main');
 
 function updateActiveLink() {
-    document.querySelectorAll('[data-route]').forEach(link => {
-        link.classList.toggle(
-            'active',
-            link.getAttribute('href') === window.location.pathname
-        );
+
+    const path = window.location.pathname;
+
+    const links = document.querySelectorAll('[data-route]')
+
+    links.forEach(link => {
+
+        const href = link.getAttribute('href')
+
+        const isHome = href === "/home" && (path === '/' || path === '/home')
+
+        link.classList.toggle('active', href === path || isHome)
+        
     });
 }
 
