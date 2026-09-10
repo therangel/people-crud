@@ -1,56 +1,34 @@
-import { sideBar } from './components/sidebar.js'
-import { router } from './router.js';
-import { initClients } from './pages/clients/clients.js';
+import { sideBar } from "./components/sidebar.js";
+import { router } from "./router.js"; // Return HTML of the current Page
+import { initClients } from "./pages/clients/clients.js";
+// import { initHome } from './pages/home/home.js';
 
-
-const mainContent = document.querySelector('#main');
+const mainContent = document.getElementById("main"); // Where does the HTML file go
+const links = document.querySelectorAll("[data-route]");
 
 function updateActiveLink() {
+  const path = window.location.pathname;
 
-    const path = window.location.pathname;
+  links.forEach((link) => {
+    const href = link.getAttribute("href");
 
-    const links = document.querySelectorAll('[data-route]')
+    const isHome = href === "/home" && (path === "/" || path === "/home");
 
-    links.forEach(link => {
-
-        const href = link.getAttribute('href')
-
-        const isHome = href === "/home" && (path === '/' || path === '/home')
-
-        link.classList.toggle('active', href === path || isHome)
-        
-    });
+    link.classList.toggle("active", href === path || isHome);
+  });
 }
 
 async function render() {
-    mainContent.innerHTML = await router();
+  mainContent.innerHTML = await router(); //The `main` element receives the HTML of the current page.
 
-    if(window.location.pathname === '/clients') {
-      initClients();
-    }
+  if (window.location.pathname === "/clients") {
+    initClients(); //init page logic
+  }
 
-    updateActiveLink();
+  updateActiveLink();
 }
 
+window.addEventListener("popstate", render);
 
-document.querySelectorAll('[data-route]').forEach(link => {
-
-    link.addEventListener('click', event => {
-
-        event.preventDefault();
-        
-        const url = link.getAttribute('href');
-
-        history.pushState({}, '', url);
-
-        render();
-    });
-});
-
-window.addEventListener('popstate', render);
-
-sideBar();
+sideBar(render);
 render();
-
-
-

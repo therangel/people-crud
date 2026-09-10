@@ -1,5 +1,5 @@
-import { homePage } from './pages/home/home.js';
-import { clientsPage } from './pages/clients/clients.js';
+import { homePage } from './pages/home/home.js'; // Page html in text format
+import { clientsPage } from './pages/clients/clients.js'; // Page html in text format
 
 
 

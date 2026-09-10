@@ -1,5 +1,5 @@
 
-export function sideBar(){
+export function sideBar(render){
     const menuButton = document.getElementById("burger-btn")
     const sidebar = document.querySelector(".sidebar")
     const overlay = document.querySelector(".overlay")
@@ -29,11 +29,21 @@ export function sideBar(){
     closeSidebarButton.addEventListener("click", closeSidebar)
 
     navLinks.forEach(link => {
-        link.addEventListener("click", closeSidebar)
-    })
+
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            
+            closeSidebar();
+
+            const url = link.getAttribute('href');
+
+            history.pushState({}, '', url);
+
+            render();
+        });
+    });
 
     collapseSidebarButton.addEventListener("click", collapseSidebar)
-
     
 }
 
