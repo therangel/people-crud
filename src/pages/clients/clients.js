@@ -8,13 +8,16 @@ export async function clientsPage() {
   return await response.text();
 }
 
+
+
 export function initClients() {
   // ==========================================
   // 1. GLOBAL STATE
   // ==========================================
   const clients = getClients();
   
-  initClientForm(clients, saveClients, applyFilters)
+  const { editClient, openForm } = initClientForm(clients, saveClients, applyFilters);
+  // initClientForm(clients, saveClients, applyFilters)
   
   //Filters
   let cityGroup = [];

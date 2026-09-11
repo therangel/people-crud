@@ -7,6 +7,7 @@ let clientBeingEdited = null;
 // 4. FORM AND MODAL
 // ==========================================
 
+
 export function initClientForm(clients, saveClients, applyFilters) {
 
   const openFormButton = document.querySelector(".add-client-button");
@@ -116,4 +117,8 @@ export function initClientForm(clients, saveClients, applyFilters) {
     }
 
   });
+
+  return { editClient, openForm }
 }
+
+  
