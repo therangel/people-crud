@@ -10,9 +10,6 @@ export async function clientsPage() {
 }
 
 export function initClients() {
-  // ==========================================
-  // 1. GLOBAL STATE
-  // ==========================================
 
   const clients = getClientsLs(); //DATA LOCAL-STORAGE
 
@@ -53,6 +50,8 @@ export function initClients() {
   const previousTable = document.querySelector(".previous");
   const nextTable = document.querySelector(".next");
   const pageNumbers = document.querySelector(".page-number-group");
+
+
   const confirmationModalContainer = document.querySelector(
     ".confirmation-modal",
   );
@@ -63,46 +62,54 @@ export function initClients() {
       startIndex + lastIndex,
     );
 
-    renderPeople(pageClients, startIndex);
+    renderClients(pageClients, startIndex);
 
     updateTablePageCount();
   }
 
-  function renderPeople(clientToRender, startIndex) {
+  function renderClients(clientToRender, startIndex) {
     clientList.innerHTML = "";
 
     clientToRender.forEach((client, index) => {
+
       const tableRow = document.createElement("tr");
 
-      const idCell = document.createElement("td");
-      const nameCell = document.createElement("td");
-      const emailCell = document.createElement("td");
-      const phoneCell = document.createElement("td");
-      const cityCell = document.createElement("td");
-      const statusCell = document.createElement("td");
+      const cells = {
+        id: startIndex + index + 1,
+        name: client.name,
+        email: client.email,
+        phone: client.phone,
+        city: client.city,
+        status: client.status ? "Ativo" : "Inativo",
+      }
+
+      Object.values(cells).forEach((value) => {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+        tableRow.append(cell);
+      })
+
       const actionsCell = document.createElement("td");
 
-      idCell.textContent = startIndex + index + 1;
-      nameCell.textContent = client.name;
-      emailCell.textContent = client.email;
-      phoneCell.textContent = client.phone;
-      cityCell.textContent = client.city;
-      statusCell.textContent = client.status ? "Ativo" : "Inativo";
+      actionsCell.append(
+        createActionButton("edit-client-symbol", "edit"),
+        createActionButton("delete-client-symbol", "delete"),
+        createActionButton("info-client-symbol", "visibility")
+      )
 
-      const removeButton = document.createElement("button");
-      removeButton.classList.add("table-action-button");
-      removeButton.innerHTML = `<span class="material-symbols-outlined delete-client-symbol">delete</span>`;
+      tableRow.append(actionsCell)
 
-      const editButton = document.createElement("button");
-      editButton.classList.add("table-action-button");
-      editButton.innerHTML = `<span class="material-symbols-outlined edit-client-symbol">edit</span>`;
+      function createActionButton(symbolClass, icon) {
+        const button = document.createElement("button");
+        button.classList.add("table-action-button");
+        button.innerHTML = `<span class="material-symbols-outlined ${symbolClass}">${icon}</span>`
+        return button
+      }
 
-      const moreInfoButton = document.createElement("button");
-      moreInfoButton.classList.add("table-action-button");
-      moreInfoButton.innerHTML = `<span class="material-symbols-outlined info-client-symbol">visibility</span>`;
-
+      const delClientButton = actionsCell.querySelector(".delete-client-symbol")
+      const editClientButton = actionsCell.querySelector(".edit-client-symbol")
       // Internal events of the table buttons
-      removeButton.addEventListener("click", async () => {
+      delClientButton.addEventListener("click", async () => {
         const response = await confirmationModal();
 
         if (response) {
@@ -121,23 +128,13 @@ export function initClients() {
         }
       });
 
-      editButton.addEventListener("click", () => {
+      editClientButton.addEventListener("click", () => {
         const clientToEdit = clientToRender[index];
         editClient(clientToEdit);
 
         openForm();
       });
 
-      actionsCell.append(editButton, removeButton, moreInfoButton);
-      tableRow.append(
-        idCell,
-        nameCell,
-        emailCell,
-        phoneCell,
-        cityCell,
-        statusCell,
-        actionsCell,
-      );
       clientList.append(tableRow);
     });
   }
@@ -232,7 +229,7 @@ export function initClients() {
     if (startIndex + lastIndex < clientsToDisplay.length) {
       startIndex += lastIndex;
 
-      updateScreen(clientsToDisplay);
+      updateScreen(clients);
     }
   });
 
@@ -240,7 +237,7 @@ export function initClients() {
     if (startIndex > 0) {
       startIndex -= lastIndex;
 
-      updateScreen(clientsToDisplay);
+      updateScreen(clients);
     }
   });
 
