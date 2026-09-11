@@ -1,14 +1,11 @@
 let mode = "add"; // Internal form state: "add" or "save"
 let clientBeingEdited = null;
 
-
-
 // ==========================================
 // 4. FORM AND MODAL
 // ==========================================
 
-
-export function initClientForm(clients, saveClients, applyFilters) {
+export function initClientForm(clients, saveClientsLs, onCLientChange) {
 
   const openFormButton = document.querySelector(".add-client-button");
   const modalForm = document.querySelector(".modal-form");
@@ -65,9 +62,9 @@ export function initClientForm(clients, saveClients, applyFilters) {
 
     clients.push(client); //enviando novo cliente para o array original de clientes
 
-    saveClients(clients); // chama função de salvar cliente no local storage
+    saveClientsLs(clients); // chama função de salvar cliente no local storage
     clearForm();
-    applyFilters(); // chama o filtro
+    onCLientChange();
   }
 
   function editClient(client) {
@@ -82,11 +79,11 @@ export function initClientForm(clients, saveClients, applyFilters) {
     mode = "save";
   }
 
-  function saveClient(client) {
-    Object.assign(client, getClientFormData());
+  function saveClient(clientBeingEdited) {
+    Object.assign(clientBeingEdited, getClientFormData());
 
-    saveClients(clients);
-    applyFilters();
+    saveClientsLs(clients);
+    onCLientChange();
     resetForm();
   }
 
@@ -101,14 +98,14 @@ export function initClientForm(clients, saveClients, applyFilters) {
     event.preventDefault();
 
     if (mode === "add") {
-      addClient();
-      closeForm();
+      addClient(); 
     }
 
     if (mode === "save") {
       saveClient(clientBeingEdited);
-      closeForm();
     }
+
+    closeForm();
   });
   
   modalOverlay.addEventListener("click", () => {

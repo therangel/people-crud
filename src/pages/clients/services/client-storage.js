@@ -1,7 +1,7 @@
-export function getClients() {
+export function getClientsLs() {
     return JSON.parse(localStorage.getItem("clients")) || [];
 }
 
-export function saveClients(clients) {
+export function saveClientsLs(clients) {
     localStorage.setItem("clients", JSON.stringify(clients));
 }

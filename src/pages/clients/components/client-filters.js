@@ -3,190 +3,200 @@ let clientsToDisplay = [];
 let cityGroup = [];
 let statusGroup = null;
 let sortGroup = null;
+let searchTerm = "";
 
-const cityFilter = document.getElementById("city-filter");
-const statusFilter = document.getElementById("status-filter");
-const sortFilter = document.getElementById("sort-filter");
-const clearFiltersButton = document.querySelector(".clear-filters-button");
-const search = document.querySelector(".table-search");
+export function initFilters(onChangeFilter) {
+  
+  const cityFilter = document.getElementById("city-filter");
+  const statusFilter = document.getElementById("status-filter");
+  const sortFilter = document.getElementById("sort-filter");
+  const clearFiltersButton = document.querySelector(".clear-filters-button");
+  const search = document.querySelector(".table-search");
+  const appliedFilterList = document.querySelector(".applied-filter-list");
 
-// ==========================================
-// 5. FILTERS
-// ==========================================
+  // ==========================================
+  // 5. FILTERS
+  // ==========================================
 
-function searchClients(currentText) {
-  searchTerm = currentText.toLowerCase();
+  function searchClients(currentText) {
+    searchTerm = currentText.toLowerCase();
 
-  indexInicial = 0;
-  applyFilters();
-}
-
-function handleCityFilter() {
-  const selectedCity = cityFilter.value;
-
-  if (selectedCity === "all") {
-    return;
+    // indexInicial = 0;
+    onChangeFilter();
   }
 
-  if (!cityGroup.includes(selectedCity)) {
-    cityGroup.push(selectedCity);
+  function handleCityFilter() {
+    const selectedCity = cityFilter.value;
+
+    if (selectedCity === "all") {
+      return;
+    }
+
+    if (!cityGroup.includes(selectedCity)) {
+      cityGroup.push(selectedCity);
+    }
+
+    cityFilter.value = "all";
+
+    onChangeFilter();
   }
 
-  cityFilter.value = "all";
+  function handleStatusFilter() {
+    const selectedStatus = statusFilter.value;
 
-  applyFilters();
-}
+    if (selectedStatus === "all") {
+      return;
+    }
 
-function handleStatusFilter() {
-  const selectedStatus = statusFilter.value;
+    statusGroup = null;
 
-  if (selectedStatus === "all") {
-    return;
+    if (selectedStatus === "actives") {
+      statusGroup = true;
+    }
+
+    if (selectedStatus === "inactives") {
+      statusGroup = false;
+    }
+
+    statusFilter.value = "all";
+
+    onChangeFilter();
   }
 
-  statusGroup = null;
+  function handleSortFilter() {
+    const selectedSort = sortFilter.value;
 
-  if (selectedStatus === "actives") {
-    statusGroup = true;
+    if (selectedSort === "no-sort") {
+      return;
+    }
+
+    sortGroup = null;
+
+    if (selectedSort === "name-a-z") {
+      sortGroup = "name-a-z";
+    }
+
+    if (selectedSort === "name-z-a") {
+      sortGroup = "name-z-a";
+    }
+
+    sortFilter.value = "no-sort";
+
+    onChangeFilter();
   }
 
-  if (selectedStatus === "inactives") {
-    statusGroup = false;
+  function clearFilters() {
+    cityGroup = [];
+    statusGroup = null;
+    sortGroup = null;
+    searchTerm = ""
+
+    cityFilter.value = "all";
+    statusFilter.value = "all";
+    sortFilter.value = "no-sort";
+    search.value = ""
+
+    onChangeFilter();
   }
 
-  statusFilter.value = "all";
+  function applyFilters(clients) {
 
-  applyFilters();
-}
+    clientsToDisplay = [...clients];
 
-function handleSortFilter() {
-  const selectedSort = sortFilter.value;
+    if (searchTerm !== "") {
+      clientsToDisplay = clientsToDisplay.filter((client) => {
+        return Object.values(client).some((value) =>
+          String(value).toLowerCase().startsWith(searchTerm),
+        );
+      });
+    }
 
-  if (selectedSort === "no-sort") {
-    return;
-  }
-
-  sortGroup = null;
-
-  if (selectedSort === "name-a-z") {
-    sortGroup = "name-a-z";
-  }
-
-  if (selectedSort === "name-z-a") {
-    sortGroup = "name-z-a";
-  }
-
-  sortFilter.value = "no-sort";
-
-  applyFilters();
-}
-
-function clearFilters() {
-  cityGroup = [];
-  statusGroup = null;
-  sortGroup = null;
-
-  cityFilter.value = "all";
-  statusFilter.value = "all";
-  sortFilter.value = "no-sort";
-
-  applyFilters();
-}
-
-function applyFilters() {
-  clientsToDisplay = [...clients];
-
-  if (searchTerm !== "") {
-    clientsToDisplay = clientsToDisplay.filter((client) => {
-      return Object.values(client).some((value) =>
-        String(value).toLowerCase().startsWith(searchTerm),
+    if (cityGroup.length > 0) {
+      clientsToDisplay = clientsToDisplay.filter((client) =>
+        cityGroup.includes(client.city),
       );
+      // startIndex = 0;
+    }
+
+    if (statusGroup !== null) {
+      clientsToDisplay = clientsToDisplay.filter(
+        (client) => client.status === statusGroup,
+      );
+      // startIndex = 0;
+    }
+
+    if (sortGroup === "name-a-z") {
+      clientsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
+      // startIndex = 0;
+    }
+
+    if (sortGroup === "name-z-a") {
+      clientsToDisplay.sort((a, b) => b.name.localeCompare(a.name));
+      // startIndex = 0;
+    }
+
+    appliedFilters();
+
+    return clientsToDisplay;
+  }
+
+  function renderAppliedFilter(text, onDelete) {
+    const filterBox = document.createElement("div");
+
+    const deleteFilter = document.createElement("button");
+    deleteFilter.classList.add("delete-filter");
+    deleteFilter.textContent = `X`;
+
+    const filterText = document.createElement("span");
+    
+    filterText.textContent = text;
+
+    filterBox.append(deleteFilter, filterText);
+    appliedFilterList.append(filterBox);
+
+    deleteFilter.addEventListener("click", () => {
+      onDelete();
+      onChangeFilter();
     });
   }
 
-  if (cityGroup.length > 0) {
-    clientsToDisplay = clientsToDisplay.filter((client) =>
-      cityGroup.includes(client.city),
-    );
-    startIndex = 0;
+  function appliedFilters() {
+    // startIndex = 0;
+    appliedFilterList.textContent = "";
+
+    cityGroup.forEach((city, index) => {
+      renderAppliedFilter(city, () => {
+        cityGroup.splice(index, 1);
+      });
+    });
+
+    if (statusGroup !== null) {
+      renderAppliedFilter(statusGroup ? "Ativos" : "Inativos", () => {
+        statusGroup = null;
+      });
+    }
+
+    if (sortGroup !== null) {
+      renderAppliedFilter(
+        sortGroup === "name-a-z" ? "Nome: A → Z" : "Nome: Z → A",
+        () => {
+          sortGroup = null;
+        },
+      );
+    }
   }
 
-  if (statusGroup !== null) {
-    clientsToDisplay = clientsToDisplay.filter(
-      (client) => client.status === statusGroup,
-    );
-    startIndex = 0;
-  }
-
-  if (sortGroup === "name-a-z") {
-    clientsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
-    startIndex = 0;
-  }
-
-  if (sortGroup === "name-z-a") {
-    clientsToDisplay.sort((a, b) => b.name.localeCompare(a.name));
-    startIndex = 0;
-  }
-
-  updateScreen();
-  appliedFilters();
-}
-
-function renderAppliedFilter(text, onDelete) {
-  const filterBox = document.createElement("div");
-  // appliedCityBox.classList.add("applied-city-box");
-
-  const deleteFilter = document.createElement("button");
-  deleteFilter.classList.add("delete-filter");
-  deleteFilter.textContent = `X`;
-
-  const filterText = document.createElement("span");
-  // appliedCity.classList.add("applied-city")
-  filterText.textContent = text;
-
-  filterBox.append(deleteFilter, filterText);
-  appliedFilterList.append(filterBox);
-
-  deleteFilter.addEventListener("click", () => {
-    onDelete();
-    // filterBox.remove();
-    applyFilters();
+  search.addEventListener("input", (event) => {
+    const currentText = event.target.value;
+    searchClients(currentText);
   });
+
+  cityFilter.addEventListener("change", handleCityFilter);
+  statusFilter.addEventListener("change", handleStatusFilter);
+  sortFilter.addEventListener("change", handleSortFilter);
+
+  clearFiltersButton.addEventListener("click", clearFilters);
+
+
+  return { applyFilters }
 }
-
-function appliedFilters() {
-  startIndex = 0;
-  appliedFilterList.textContent = "";
-
-  cityGroup.forEach((city, index) => {
-    renderAppliedFilter(city, () => {
-      cityGroup.splice(index, 1);
-    });
-  });
-
-  if (statusGroup !== null) {
-    renderAppliedFilter(statusGroup ? "Ativos" : "Inativos", () => {
-      statusGroup = null;
-    });
-  }
-
-  if (sortGroup !== null) {
-    renderAppliedFilter(
-      sortGroup === "name-a-z" ? "Nome: A → Z" : "Nome: Z → A",
-      () => {
-        sortGroup = null;
-      },
-    );
-  }
-}
-
-search.addEventListener("input", (event) => {
-  const currentText = event.target.value;
-  searchClients(currentText);
-});
-
-cityFilter.addEventListener("change", handleCityFilter);
-statusFilter.addEventListener("change", handleStatusFilter);
-sortFilter.addEventListener("change", handleSortFilter);
-
-clearFiltersButton.addEventListener("click", clearFilters);

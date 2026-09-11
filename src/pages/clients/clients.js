@@ -1,6 +1,7 @@
-import { getClients } from "./services/client-storage";
-import { saveClients } from "./services/client-storage";
+import { getClientsLs } from "./services/client-storage";
+import { saveClientsLs } from "./services/client-storage";
 import { initClientForm } from "./components/client-form";
+import { initFilters } from "./components/client-filters";
 
 export async function clientsPage() {
   const response = await fetch("./src/pages/clients/clients.html");
@@ -8,47 +9,44 @@ export async function clientsPage() {
   return await response.text();
 }
 
-
-
 export function initClients() {
   // ==========================================
   // 1. GLOBAL STATE
   // ==========================================
-  const clients = getClients();
-  
-  const { editClient, openForm } = initClientForm(clients, saveClients, applyFilters);
-  // initClientForm(clients, saveClients, applyFilters)
-  
-  //Filters
-  let cityGroup = [];
-  let statusGroup = null;
-  let sortGroup = null;
 
-  //Table
-  let clientsToDisplay = [];
+  const clients = getClientsLs(); //DATA LOCAL-STORAGE
+
   let startIndex = 0;
   let lastIndex = 10;
   let numbers;
-  let searchTerm = "";
+  let clientsToDisplay = [];
+
+  const clientList = document.querySelector(".client-list");
+
+  const { applyFilters } = initFilters(() => updateScreen(clients));
+
+  const { editClient, openForm } = initClientForm(clients, saveClientsLs, () =>
+    updateScreen(clients),
+  );
+
+  function updateScreen(clients) {
+    clientsToDisplay = applyFilters(clients);
+
+    renderTablePage(clientsToDisplay);
+
+    pageNumbersControl();
+    updatePeopleCount();
+    countActivePeople();
+  }
 
   // ==========================================
   // 2. DOM ELEMENTS
   // ==========================================
 
-  const modalOverlay = document.querySelector(".overlay");
-
-  // Filters
-  const cityFilter = document.getElementById("city-filter");
-  const statusFilter = document.getElementById("status-filter");
-  const sortFilter = document.getElementById("sort-filter");
-  const clearFiltersButton = document.querySelector(".clear-filters-button");
-  const search = document.querySelector(".table-search");
-
   // List / counters
-  const clientList = document.querySelector(".client-list");
+  const modalOverlay = document.querySelector(".overlay");
   const totalClient = document.querySelector(".total-client");
   const totalActiveClient = document.querySelector(".total-active-client");
-  const appliedFilterList = document.querySelector(".applied-filter-list");
 
   //Table
   const tableControl = document.querySelector(".table-control");
@@ -59,188 +57,7 @@ export function initClients() {
     ".confirmation-modal",
   );
 
-  // ==========================================
-  // 3. FILTERS
-  // ==========================================
-
-  function searchClients(currentText) {
-    searchTerm = currentText.toLowerCase();
-
-    indexInicial = 0;
-    applyFilters();
-  }
-
-  function handleCityFilter() {
-    const selectedCity = cityFilter.value;
-
-    if (selectedCity === "all") {
-      return;
-    }
-
-    if (!cityGroup.includes(selectedCity)) {
-      cityGroup.push(selectedCity);
-    }
-
-    cityFilter.value = "all";
-
-    applyFilters();
-  }
-
-  function handleStatusFilter() {
-    const selectedStatus = statusFilter.value;
-
-    if (selectedStatus === "all") {
-      return;
-    }
-
-    statusGroup = null;
-
-    if (selectedStatus === "actives") {
-      statusGroup = true;
-    }
-
-    if (selectedStatus === "inactives") {
-      statusGroup = false;
-    }
-
-    statusFilter.value = "all";
-
-    applyFilters();
-  }
-
-  function handleSortFilter() {
-    const selectedSort = sortFilter.value;
-
-    if (selectedSort === "no-sort") {
-      return;
-    }
-
-    sortGroup = null;
-
-    if (selectedSort === "name-a-z") {
-      sortGroup = "name-a-z";
-    }
-
-    if (selectedSort === "name-z-a") {
-      sortGroup = "name-z-a";
-    }
-
-    sortFilter.value = "no-sort";
-
-    applyFilters();
-  }
-
-  function clearFilters() {
-    cityGroup = [];
-    statusGroup = null;
-    sortGroup = null;
-
-    cityFilter.value = "all";
-    statusFilter.value = "all";
-    sortFilter.value = "no-sort";
-
-    applyFilters();
-  }
-
-  function applyFilters() {
-    clientsToDisplay = [...clients];
-
-    if (searchTerm !== "") {
-      clientsToDisplay = clientsToDisplay.filter((client) => {
-        return Object.values(client).some((value) =>
-          String(value).toLowerCase().startsWith(searchTerm),
-        );
-      });
-    }
-
-    if (cityGroup.length > 0) {
-      clientsToDisplay = clientsToDisplay.filter((client) =>
-        cityGroup.includes(client.city),
-      );
-      startIndex = 0;
-    }
-
-    if (statusGroup !== null) {
-      clientsToDisplay = clientsToDisplay.filter(
-        (client) => client.status === statusGroup,
-      );
-      startIndex = 0;
-    }
-
-    if (sortGroup === "name-a-z") {
-      clientsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
-      startIndex = 0;
-    }
-
-    if (sortGroup === "name-z-a") {
-      clientsToDisplay.sort((a, b) => b.name.localeCompare(a.name));
-      startIndex = 0;
-    }
-
-    updateScreen();
-    appliedFilters();
-  }
-
-  // ==========================================
-  // 4. UI RENDERING
-  // ==========================================
-
-  function renderAppliedFilter(text, onDelete) {
-    const filterBox = document.createElement("div");
-    // appliedCityBox.classList.add("applied-city-box");
-
-    const deleteFilter = document.createElement("button");
-    deleteFilter.classList.add("delete-filter");
-    deleteFilter.textContent = `X`;
-
-    const filterText = document.createElement("span");
-    // appliedCity.classList.add("applied-city")
-    filterText.textContent = text;
-
-    filterBox.append(deleteFilter, filterText);
-    appliedFilterList.append(filterBox);
-
-    deleteFilter.addEventListener("click", () => {
-      onDelete();
-      // filterBox.remove();
-      applyFilters();
-    });
-  }
-
-  function appliedFilters() {
-    startIndex = 0;
-    appliedFilterList.textContent = "";
-
-    cityGroup.forEach((city, index) => {
-      renderAppliedFilter(city, () => {
-        cityGroup.splice(index, 1);
-      });
-    });
-
-    if (statusGroup !== null) {
-      renderAppliedFilter(statusGroup ? "Ativos" : "Inativos", () => {
-        statusGroup = null;
-      });
-    }
-
-    if (sortGroup !== null) {
-      renderAppliedFilter(
-        sortGroup === "name-a-z" ? "Nome: A → Z" : "Nome: Z → A",
-        () => {
-          sortGroup = null;
-        },
-      );
-    }
-  }
-
-  function updateScreen() {
-    renderTablePage();
-    pageNumbersControl();
-    updatePeopleCount();
-    countActivePeople();
-  }
-
-  function renderTablePage() {
+  function renderTablePage(clientsToDisplay) {
     const pageClients = clientsToDisplay.slice(
       startIndex,
       startIndex + lastIndex,
@@ -296,8 +113,8 @@ export function initClients() {
           if (personIndex !== -1) {
             clients.splice(personIndex, 1);
 
-            saveClients(clients);
-            applyFilters();
+            saveClientsLs(clients); // attention!!!
+            updateScreen(clients);
           }
         } else {
           return;
@@ -307,6 +124,7 @@ export function initClients() {
       editButton.addEventListener("click", () => {
         const clientToEdit = clientToRender[index];
         editClient(clientToEdit);
+
         openForm();
       });
 
@@ -404,26 +222,6 @@ export function initClients() {
     });
   }
 
-  // ==========================================
-  // 5. INITIAL RENDER
-  // ==========================================
-  applyFilters();
-
-  // ==========================================
-  // 6. EVENTS
-  // ==========================================
-  
-  search.addEventListener("input", (event) => {
-    const currentText = event.target.value;
-    searchClients(currentText);
-  });
-
-  cityFilter.addEventListener("change", handleCityFilter);
-  statusFilter.addEventListener("change", handleStatusFilter);
-  sortFilter.addEventListener("change", handleSortFilter);
-
-  clearFiltersButton.addEventListener("click", clearFilters);
-
   modalOverlay.addEventListener("click", () => {
     if (confirmationModalContainer.classList.contains("active")) {
       closeConfirmationModal();
@@ -433,16 +231,18 @@ export function initClients() {
   nextTable.addEventListener("click", () => {
     if (startIndex + lastIndex < clientsToDisplay.length) {
       startIndex += lastIndex;
-      renderTablePage();
-      renderPageNumbers();
+
+      updateScreen(clientsToDisplay);
     }
   });
 
   previousTable.addEventListener("click", () => {
     if (startIndex > 0) {
       startIndex -= lastIndex;
-      renderTablePage();
-      renderPageNumbers();
+
+      updateScreen(clientsToDisplay);
     }
   });
+
+  updateScreen(clients);
 }
