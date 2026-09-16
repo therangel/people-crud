@@ -1,8 +1,6 @@
 import { homePage } from './pages/home/home'; // Page html in text format
 import { clientsPage } from './pages/clients/clients'; // Page html in text format
 
-
-
 export async function router() {
     const path = window.location.pathname;
 

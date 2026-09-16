@@ -39,9 +39,9 @@ export function initPagination(renderClients, onChangePagination) {
 
   function pageNumbersControl() {
     const pages =
-      clientsToDisplay.length % 10 > 0
-        ? Math.ceil(clientsToDisplay.length / 10)
-        : clientsToDisplay.length / 10;
+      clientsToDisplay.length % lastIndex > 0
+        ? Math.ceil(clientsToDisplay.length / lastIndex)
+        : clientsToDisplay.length / lastIndex;
 
     numbers = Array.from({ length: pages }, (_, i) => i + 1);
 

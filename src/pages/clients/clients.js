@@ -25,6 +25,7 @@ export function initClients() {
   );
   const { confirm } = initConfirmationModal();
 
+  
   const { renderClients } = initCLientTable(
     clients, 
     editClient, 
