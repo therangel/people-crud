@@ -28,8 +28,9 @@
     --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
 }
 
-.dark {
+html.dark {
     --background: #0e0f0e;
+    --background-hover: #e7e4dd;
     --foreground: #eceae4;
 
     --color-primary: #c5d9d3;

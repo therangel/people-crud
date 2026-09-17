@@ -176,6 +176,10 @@
     pointer-events: none;
 }
 
+.sidebar-footer .theme-toggle{
+    display: none;
+}
+
 .header {
     display: flex;
     align-items: center;
@@ -193,8 +197,12 @@
 .theme-toggle {
     font-variation-settings: 
     'FILL' 0;
-    color: var(--foreground);   
+    color: var(--foreground);  
+    cursor: pointer;
+    
 }
+
+
 
 /* HEADER */
 .section-header {
@@ -676,6 +684,17 @@
         border-right: 1px solid var(--border);
     }
 
+    .sidebar-footer {
+        display: flex;
+        align-items: last baseline;
+        justify-content: right;
+        height: 100%;
+    }
+
+    .sidebar-footer .theme-toggle{
+        display: block;
+    }
+    
     .menu-button {
         display: none;
     }

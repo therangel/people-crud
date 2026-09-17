@@ -1,10 +1,13 @@
 import { sideBar } from "./components/sidebar";
+import { initTheme, switchTheme } from "./components/theme-toggle";
 import { router } from "./router"; // Return HTML of the current Page
 import { initClients } from "./pages/clients/clients";
 // import { initHome } from './pages/home/home.js';
 
 const mainContent = document.getElementById("main"); // Where does the HTML file go
 const links = document.querySelectorAll("[data-route]");
+
+const themeButton = document.querySelectorAll(".theme-toggle-button")
 
 function updateActiveLink() {
   const path = window.location.pathname;
@@ -32,3 +35,16 @@ window.addEventListener("popstate", render);
 
 sideBar(render);
 render();
+
+initTheme()
+
+themeButton.forEach((btn) => {
+    btn.addEventListener("click", () => {
+
+    switchTheme()
+  })
+})
+
+
+
+
