@@ -15,7 +15,7 @@ export function initClientForm(clients, saveClientsLs, onCLientChange) {
   const nameInput = document.getElementById("name");
   const emailInput = document.getElementById("email");
   const phoneInput = document.getElementById("phone");
-  const cityInput = document.getElementById("city");
+  const stateInput = document.getElementById("state");
   const statusInput = document.getElementById("status");
   const addButton = document.querySelector(".form-submit-button");
 
@@ -33,7 +33,7 @@ export function initClientForm(clients, saveClientsLs, onCLientChange) {
     nameInput.value = "";
     emailInput.value = "";
     phoneInput.value = "";
-    cityInput.value = "";
+    stateInput.value = "";
     statusInput.checked = false;
   }
 
@@ -49,7 +49,7 @@ export function initClientForm(clients, saveClientsLs, onCLientChange) {
       name: nameInput.value.trim(),
       email: emailInput.value.trim(),
       phone: Number(phoneInput.value),
-      city: cityInput.value.trim(),
+      state: stateInput.value.trim(),
       status: statusInput.checked,
     };
   }
@@ -71,7 +71,7 @@ export function initClientForm(clients, saveClientsLs, onCLientChange) {
     nameInput.value = client.name;
     emailInput.value = client.email;
     phoneInput.value = client.phone;
-    cityInput.value = client.city;
+    stateInput.value = client.state;
     statusInput.checked = client.status;
 
     addButton.textContent = "Salvar";

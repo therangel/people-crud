@@ -1,13 +1,26 @@
+import { getStates } from "../../../services/ibge-service";
+
 let clientsToDisplay = [];
 
-let cityGroup = [];
+let statesGroup = [];
 let statusGroup = null;
 let sortGroup = null;
 let searchTerm = "";
 
+const states = await getStates()
+
+const statesName = states.map(state => {
+  return {
+    stateCode: state.sigla,
+    name: state.nome
+  }
+})
+
+console.log(statesName)
+
 export function initFilters(onChangeFilter) {
   
-  const cityFilter = document.getElementById("city-filter");
+  const stateFilter = document.getElementById("state-filter");
   const statusFilter = document.getElementById("status-filter");
   const sortFilter = document.getElementById("sort-filter");
   const clearFiltersButton = document.querySelector(".clear-filters-button");
@@ -18,6 +31,20 @@ export function initFilters(onChangeFilter) {
   // 5. FILTERS
   // ==========================================
 
+  function renderStates(){
+
+    statesName.forEach(state => {
+      const stateOption = document.createElement("option");
+      stateOption.setAttribute("value", state.stateCode)
+      stateOption.textContent = state.name
+
+      stateFilter.append(stateOption)
+    })
+ 
+  }
+
+  renderStates()
+
   function searchClients(currentText) {
     searchTerm = currentText.toLowerCase();
 
@@ -25,18 +52,18 @@ export function initFilters(onChangeFilter) {
     onChangeFilter();
   }
 
-  function handleCityFilter() {
-    const selectedCity = cityFilter.value;
+  function handleStateFilter() {
+    const selectedState = stateFilter.value;
 
-    if (selectedCity === "all") {
+    if (selectedState === "all") {
       return;
     }
 
-    if (!cityGroup.includes(selectedCity)) {
-      cityGroup.push(selectedCity);
+    if (!statesGroup.includes(selectedState)) {
+      statesGroup.push(selectedState);
     }
 
-    cityFilter.value = "all";
+    stateFilter.value = "all";
 
     onChangeFilter();
   }
@@ -86,12 +113,12 @@ export function initFilters(onChangeFilter) {
   }
 
   function clearFilters() {
-    cityGroup = [];
+    statesGroup = [];
     statusGroup = null;
     sortGroup = null;
     searchTerm = ""
 
-    cityFilter.value = "all";
+    stateFilter.value = "all";
     statusFilter.value = "all";
     sortFilter.value = "no-sort";
     search.value = ""
@@ -111,10 +138,19 @@ export function initFilters(onChangeFilter) {
       });
     }
 
-    if (cityGroup.length > 0) {
-      clientsToDisplay = clientsToDisplay.filter((client) =>
-        cityGroup.includes(client.city),
-      );
+    if (statesGroup.length > 0) {
+
+      const selectedState = statesName.filter((state) => statesGroup.includes(state.stateCode))
+
+      console.log(selectedState)
+      console.log(clientsToDisplay)
+      clientsToDisplay = clientsToDisplay.filter((client) => {
+
+          const teste = selectedState.map(state => state.name)
+          return teste.includes(client.state)    
+           
+      })
+
       // startIndex = 0;
     }
 
@@ -149,7 +185,7 @@ export function initFilters(onChangeFilter) {
 
     const filterText = document.createElement("span");
     
-    filterText.textContent = text;
+    filterText.textContent = text
 
     filterBox.append(deleteFilter, filterText);
     appliedFilterList.append(filterBox);
@@ -164,9 +200,9 @@ export function initFilters(onChangeFilter) {
     // startIndex = 0;
     appliedFilterList.textContent = "";
 
-    cityGroup.forEach((city, index) => {
-      renderAppliedFilter(city, () => {
-        cityGroup.splice(index, 1);
+    statesGroup.forEach((state, index) => {
+      renderAppliedFilter(state, () => {
+        statesGroup.splice(index, 1);
       });
     });
 
@@ -191,7 +227,7 @@ export function initFilters(onChangeFilter) {
     searchClients(currentText);
   });
 
-  cityFilter.addEventListener("change", handleCityFilter);
+  stateFilter.addEventListener("change", handleStateFilter);
   statusFilter.addEventListener("change", handleStatusFilter);
   sortFilter.addEventListener("change", handleSortFilter);
 

@@ -1,4 +1,3 @@
-
 const theme = localStorage.getItem("theme") || "light" ;
 
 let chosenTheme = theme
@@ -15,8 +14,6 @@ export function initTheme() {
 }
 
 export function switchTheme() {
-
-    console.log(chosenTheme)
 
     if(chosenTheme === "light"){
 

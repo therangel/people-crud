@@ -12,7 +12,7 @@ export function initCLientTable(clients, editClient, openForm, confirmationModal
         name: client.name,
         email: client.email,
         phone: client.phone,
-        city: client.city,
+        state: client.state,
         status: client.status ? "Ativo" : "Inativo",
       };
 
