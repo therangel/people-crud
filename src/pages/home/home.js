@@ -1,6 +1,5 @@
-export async function homePage() {
+import homeHtml from "./home.html?raw";
 
-    const response = await fetch('./src/pages/home/home.html')
- 
-    return await response.text()
+export async function homePage() {
+    return homeHtml;
 }

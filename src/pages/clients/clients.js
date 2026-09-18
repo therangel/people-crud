@@ -1,3 +1,4 @@
+import clientsHtml from "./clients.html?raw";
 import { getClientsLs, saveClientsLs} from "./services/client-storage";
 import { initClientForm } from "./components/client-form";
 import { initFilters } from "./components/client-filters";
@@ -6,9 +7,7 @@ import { initPagination } from "./components/client-pagination";
 import { initConfirmationModal } from "./components/confirmation-modal";
 
 export async function clientsPage() {
-  const response = await fetch("./src/pages/clients/clients.html");
-
-  return await response.text();
+  return clientsHtml;
 }
 
 export function initClients() {
