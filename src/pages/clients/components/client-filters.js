@@ -7,16 +7,7 @@ let statusGroup = null;
 let sortGroup = null;
 let searchTerm = "";
 
-const states = await getStates()
-
-const statesName = states.map(state => {
-  return {
-    stateCode: state.sigla,
-    name: state.nome
-  }
-})
-
-console.log(statesName)
+const statesName = await getStates()
 
 export function initFilters(onChangeFilter) {
   

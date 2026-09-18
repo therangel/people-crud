@@ -9,9 +9,15 @@ export async function getStates() {
 
     const data = await response.json()
 
-    // console.log(data)
 
-    return data
+    statesCache = data.map(state => {
+        return {
+            stateCode: state.sigla,
+            name: state.nome
+        }
+    })
+
+    return statesCache
 }
 
 
