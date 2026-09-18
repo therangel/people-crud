@@ -1,5 +1,5 @@
 import clientsHtml from "./clients.html?raw";
-import { getClientsLs, saveClientsLs} from "./services/client-storage";
+import { getClientsLs, saveClientsLs } from "./services/client-storage";
 import { initClientForm } from "./components/client-form";
 import { initFilters } from "./components/client-filters";
 import { initCLientTable } from "./components/client-table";
@@ -24,21 +24,20 @@ export function initClients() {
   );
   const { confirm } = initConfirmationModal();
 
-  
   const { renderClients } = initCLientTable(
-    clients, 
-    editClient, 
-    openForm, 
+    clients,
+    editClient,
+    openForm,
     confirm,
     saveClientsLs,
-    () => updateScreen(clients)
-  )
-
-  const {renderTablePage, pageNumbersControl} = initPagination( 
-    renderClients, 
     () => updateScreen(clients),
-  )
-  
+  );
+
+  const { renderTablePage, pageNumbersControl } = initPagination(
+    renderClients,
+    () => updateScreen(clients),
+  );
+
   function updateScreen(clients) {
     clientsToDisplay = applyFilters(clients);
 
