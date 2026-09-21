@@ -139,10 +139,11 @@
           name="name"
           id="name"
           required
-          placeholder="nome e sobrenome"
+          placeholder="nome completo"
           maxlength="999"
         />
       </div>
+
       <div class="form-field">
         <label for="email">Email: </label>
         <input
@@ -152,7 +153,7 @@
           min="18"
           autocomplete="email"
           required
-          placeholder="seu@email.com"
+          placeholder="usuario@email.com"
           maxlength="99"
         />
       </div>
@@ -169,7 +170,24 @@
           maxlength="99"
         />
       </div>
+
       <div class="form-field">
+        <label for="state">Estado: </label>
+        <input
+          type="text"
+          list="list-of-states"
+          name="state"
+          id="state"
+          required
+          placeholder="Rio de janeiro, São Paulo..."
+          maxlength="99"
+        />
+        <datalist id="list-of-states" class="list-of-states">
+          
+        </datalist>
+      </div>
+
+      <!-- <div class="form-field">
         <label for="state">Estado: </label>
         <input
           type="text"
@@ -179,7 +197,7 @@
           placeholder="Rio de janeiro, São Paulo..."
           maxlength="99"
         />
-      </div>
+      </div> -->
 
       <div class="form-field">
         <label for="status">Status: </label>

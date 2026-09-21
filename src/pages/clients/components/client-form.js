@@ -1,9 +1,14 @@
+import { getStates } from "../../../services/ibge-service";
 let mode = "add"; // Internal form state: "add" or "save"
 let clientBeingEdited = null;
 
 // ==========================================
 // 4. FORM AND MODAL
 // ==========================================
+
+const states  = await getStates()
+const stateNames = states.map(state => state.name).sort()
+
 
 export function initClientForm(clients, saveClientsLs, onCLientChange) {
 
@@ -18,6 +23,19 @@ export function initClientForm(clients, saveClientsLs, onCLientChange) {
   const stateInput = document.getElementById("state");
   const statusInput = document.getElementById("status");
   const addButton = document.querySelector(".form-submit-button");
+  const stateList = document.querySelector(".list-of-states");
+
+  function renderStatesInput(){
+    // console.log(stateNames)
+    stateNames.forEach(state => {
+      
+      const option = document.createElement("option")
+      option.setAttribute("value", state)
+      stateList.append(option)
+    });  
+  }
+
+  renderStatesInput()
 
   function openForm() {
     modalForm.classList.add("active");

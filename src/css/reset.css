@@ -14,14 +14,12 @@ a {
     color: inherit;
 }
 
-
 body {
     min-height: 100vh;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    background-color: rgb(231, 231, 231);
-    
+    background-color: rgb(231, 231, 231);  
 }
 
 img,

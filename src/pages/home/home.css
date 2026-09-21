@@ -1,0 +1,37 @@
+
+
+.dashboard {
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+    /* background-color: aliceblue; */
+    width: 100%;
+
+}
+
+.dashboard-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--muted);
+    padding: 1rem;
+    border-radius: 15px;
+    height: 120px;
+    width: clamp(200px, 100%, 300px);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--muted-foreground);
+
+    .card-title {
+        color: var(--muted-foreground);
+        font-size: clamp(18px, 3vw, 20px);
+    }
+
+    .count-clients {
+        color: var(--color-primary);
+        font-size: clamp(2rem, 3vw, 2.2rem);
+        font-weight: bold;
+    }
+}

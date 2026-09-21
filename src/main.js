@@ -2,7 +2,7 @@ import { sideBar } from "./components/sidebar";
 import { initTheme, switchTheme } from "./components/theme-toggle";
 import { router } from "./router"; // Return HTML of the current Page
 import { initClients } from "./pages/clients/clients";
-// import { initHome } from './pages/home/home.js';
+import { initHome } from './pages/home/home.js';
 
 const mainContent = document.getElementById("main"); // Where does the HTML file go
 const links = document.querySelectorAll("[data-route]");
@@ -23,9 +23,14 @@ function updateActiveLink() {
 
 async function render() {
   mainContent.innerHTML = await router(); //The `main` element receives the HTML of the current page.
+  
 
   if (window.location.pathname === "/clients") {
     initClients(); //init page logic
+  }
+
+  if(window.location.pathname === "/home" || window.location.pathname === "/") {
+    initHome()
   }
 
   updateActiveLink();

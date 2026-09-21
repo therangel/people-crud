@@ -8,7 +8,6 @@
 
     font-family: var(--font-sans);  
     outline: 3px solid red;
-
 }
 
 .main-content {
@@ -26,16 +25,48 @@
 .main-section {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    
+
     width: 100%;
     max-width: 1200px;
     min-width: 250px;
 
     margin: 0 auto;
-    /* background-color: aliceblue; */
 }
 
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+
+    width: 100%;
+    max-width: 1200px;
+   
+    margin: 0 auto;
+    padding: 0.5rem 0;
+    text-align: center;
+    color: var(--foreground);
+    margin-bottom: 15px;
+}
+
+.section .header-group {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.section-title{
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--foreground);
+    padding: 0.3rem;
+    font-family: var(--font-display);
+}
+
+.section-header-line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--accent);
+}
 
 
 @media (width >= 768px) {

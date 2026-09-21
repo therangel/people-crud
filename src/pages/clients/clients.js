@@ -1,5 +1,5 @@
 import clientsHtml from "./clients.html?raw";
-import { getClientsLs, saveClientsLs } from "./services/client-storage";
+import { getClientsLs, saveClientsLs } from "../services/client-storage";
 import { initClientForm } from "./components/client-form";
 import { initFilters } from "./components/client-filters";
 import { initCLientTable } from "./components/client-table";
@@ -12,6 +12,7 @@ export async function clientsPage() {
 
 export function initClients() {
   const clients = getClientsLs(); //DATA LOCAL-STORAGE
+  console.log(clients)
   let clientsToDisplay = [];
 
   const totalClient = document.querySelector(".total-client");
@@ -38,25 +39,28 @@ export function initClients() {
     () => updateScreen(clients),
   );
 
+  
+  function updateClientCount() {
+    totalClient.textContent = `Clientes: ${clientsToDisplay.length}`;
+  }
+
+
+  function countActivePeople() {
+    const activeClients = clientsToDisplay.filter(
+      (client) => client.status,
+    ).length;
+    totalActiveClient.textContent = `Ativos: ${activeClients}`;
+  }
+
   function updateScreen(clients) {
     clientsToDisplay = applyFilters(clients);
 
     renderTablePage(clientsToDisplay);
     pageNumbersControl();
-    updatePeopleCount();
+    updateClientCount();
     countActivePeople();
   }
 
-  function updatePeopleCount() {
-    totalClient.textContent = `Clientes: ${clientsToDisplay.length}`;
-  }
-
-  function countActivePeople() {
-    const activeClient = clientsToDisplay.filter(
-      (client) => client.status,
-    ).length;
-    totalActiveClient.textContent = `Ativos: ${activeClient}`;
-  }
-
   updateScreen(clients);
+
 }
