@@ -133,8 +133,8 @@ export function initFilters(onChangeFilter) {
 
       const selectedState = statesName.filter((state) => statesGroup.includes(state.stateCode))
 
-      console.log(selectedState)
-      console.log(clientsToDisplay)
+      // console.log(selectedState)
+      // console.log(clientsToDisplay)
       clientsToDisplay = clientsToDisplay.filter((client) => {
 
           const teste = selectedState.map(state => state.name)
@@ -211,6 +211,38 @@ export function initFilters(onChangeFilter) {
         },
       );
     }
+   
+  }
+
+  function appliedFilterScroll() {
+
+    const sliderFilters = document.getElementById("slider-filters")
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    sliderFilters.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - sliderFilters.offsetLeft;
+        scrollLeft = sliderFilters.scrollLeft;
+    });
+
+    sliderFilters.addEventListener('mouseleave', () => {
+        isDown = false;
+    });
+
+    sliderFilters.addEventListener('mouseup', () => {
+        isDown = false;
+    });
+
+    sliderFilters.addEventListener('mousemove', (e) => {
+        if (!isDown) return; // Para a função se o mouse não estiver pressionado
+        e.preventDefault();
+        const x = e.pageX - sliderFilters.offsetLeft;
+        const walk = (x - startX) * 2; // O multiplicador (2) define a velocidade do arrasto
+        sliderFilters.scrollLeft = scrollLeft - walk;
+    });
+ 
   }
 
   search.addEventListener("input", (event) => {
@@ -223,7 +255,7 @@ export function initFilters(onChangeFilter) {
   sortFilter.addEventListener("change", handleSortFilter);
 
   clearFiltersButton.addEventListener("click", clearFilters);
-
-
+  appliedFilterScroll()
+   
   return { applyFilters }
 }

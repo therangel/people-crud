@@ -8,16 +8,14 @@ export async function homePage() {
 
 export function initHome() {
   const clientsList = getClientsLs()
-  // const activeClients = clientsList.filter(client => client.status)
+  
+  const totalClients = clientsList.length
+  const activeClients = clientsList.filter(client => client.status).length
+  const inactiveClients = clientsList.filter(client => !client.status).length
 
-  const totalClientsEl = document.querySelector(".total-clients");
-  const activeClientsEl = document.querySelector(".active-clients");
- 
-  const countClients = document.createElement("span");
-  countClients.classList.add("count-clients")
-  countClients.textContent = `${clientsList.length}`;
-
-  totalClientsEl.append(countClients)
-
+  document.getElementById("total-clients").textContent = totalClients;
+  document.getElementById("active-clients").textContent = activeClients;
+  document.getElementById("inactive-clients").textContent = inactiveClients;
+  
 }
 

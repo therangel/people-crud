@@ -33,9 +33,6 @@
           <label for="state-filter">Estado</label>
           <select id="state-filter" class="filter-select">
             <option value="all">Todas</option>
-            <!-- <option value="Rio de Janeiro">Rio de Janeiro</option>
-            <option value="São Paulo">São Paulo</option>
-            <option value="Belo Horizonte">Belo Horizonte</option> -->
           </select>
         </div>
         <div>
@@ -60,10 +57,11 @@
     <div class="applied-filters">
       <p>Filtrar por:</p>
 
-      <div class="applied-filter-list"></div>
+      <div class="applied-filter-list" id="slider-filters"></div>
 
       <button class="clear-filters-button">Limpar</button>
     </div>
+
   </div>
 
   <div class="filter-summary">
@@ -120,6 +118,7 @@
   </div>
 
   <div class="modal-form">
+
     <div class="modal-header">
       <div class="modal-header-container">
         <span class="material-symbols-outlined"> person_add </span>
@@ -132,81 +131,162 @@
     </div>
 
     <form class="client-form">
-      <div class="form-field">
-        <label for="name">Nome: </label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          required
-          placeholder="nome completo"
-          maxlength="999"
-        />
+
+      <!-- PERSONAL DATA FIELDS -->
+      <div class="form-container personal-data">
+
+        <span class="fields-title full-width">Dados Pessoais</span>
+
+        <div class="form-field">
+          <label for="name">Nome</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            required
+            placeholder="nome"
+            maxlength="999"
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="surname">Sobrenome</label>
+          <input
+            type="text"
+            name="surname"
+            id="surname"
+            required
+            placeholder="sobrenome"
+            maxlength="999"
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            min="18"
+            autocomplete="email"
+            required
+            placeholder="usuario@email.com"
+            maxlength="99"
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="phone">Telefone</label>
+          <input
+            type="tel"
+            name="phone"
+            id="phone"
+            autocomplete="tel"
+            inputmode="tel"
+            required
+            placeholder="(11) 98765-4321"
+            maxlength="99"
+          />
+        </div>
+
       </div>
 
-      <div class="form-field">
-        <label for="email">Email: </label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          min="18"
-          autocomplete="email"
-          required
-          placeholder="usuario@email.com"
-          maxlength="99"
-        />
-      </div>
-      <div class="form-field">
-        <label for="phone">Telefone: </label>
-        <input
-          type="tel"
-          name="phone"
-          id="phone"
-          autocomplete="tel"
-          inputmode="tel"
-          required
-          placeholder="(11) 98765-4321"
-          maxlength="99"
-        />
+      <!-- ADRESS FIELDS -->
+      <div class="form-container adress">
+
+        <span class="fields-title full-width">Endereço</span>
+
+        <div class="form-field" id="cep-field">
+          <label for="cep">CEP</label>
+          <input
+            type="text"
+            name="cep"
+            id="cep"
+            required
+            placeholder=""
+            maxlength="8"
+            minlength="8"     
+          />
+        </div>
+       
+        <div class="form-field">
+          <label for="state">Estado</label>
+          <input
+            type="text"
+            list="list-of-states"
+            name="state"
+            id="state"
+            required
+            maxlength="99"
+          />
+          <datalist id="list-of-states" class="list-of-states">
+        
+          </datalist>
+        </div>
+
+        <div class="form-field">
+          <label for="city">Cidade</label>
+          <input
+            type="text"
+            name="city"
+            id="city"
+            required
+            maxlength="99"   
+          />
+        </div>
+        <div class="form-field">
+          <label for="district">Bairro</label>
+          <input
+            type="text"
+            name="district"
+            id="district"
+            required
+            maxlength="99"   
+          />
+        </div>
+        <div class="form-field">
+          <label for="street">Rua</label>
+          <input
+            type="text"
+            name="street"
+            id="street"
+            required
+            maxlength="99"
+          />
+        </div>
+        <div class="form-field">
+          <label for="house-number">Número</label>
+          <input
+            type="text"
+            name="house-number"
+            id="house-number"
+            required
+            maxlength="9"     
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="complement">Complemento</label>
+          <input
+            type="text"
+            name="complement"
+            id="complement"
+            placeholder=""
+            maxlength="99"    
+          />
+        </div>
+
       </div>
 
-      <div class="form-field">
-        <label for="state">Estado: </label>
-        <input
-          type="text"
-          list="list-of-states"
-          name="state"
-          id="state"
-          required
-          placeholder="Rio de janeiro, São Paulo..."
-          maxlength="99"
-        />
-        <datalist id="list-of-states" class="list-of-states">
-          
-        </datalist>
-      </div>
-
-      <!-- <div class="form-field">
-        <label for="state">Estado: </label>
-        <input
-          type="text"
-          name="state"
-          id="state"
-          required
-          placeholder="Rio de janeiro, São Paulo..."
-          maxlength="99"
-        />
-      </div> -->
-
-      <div class="form-field">
-        <label for="status">Status: </label>
+      <div class="form-field full-width">
+        <label for="status">Status: </label> 
         <input type="checkbox" name="status" id="status" />
       </div>
 
       <button type="submit" class="form-submit-button btn btn-primary">
         Adicionar
       </button>
+
     </form>
   </div>
 </section>

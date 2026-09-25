@@ -1,37 +1,43 @@
 
 
-.dashboard {
+.dashboard-container {
     display: flex;
-    /* align-items: center; */
-    flex-direction: column;
-    justify-content: space-around;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 20px;
+    padding: 20px;
     /* background-color: aliceblue; */
-    width: 100%;
-
 }
 
-.dashboard-card {
+.metric-card {
+    flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--muted);
-    padding: 1rem;
+
+    padding: 20px;
     border-radius: 15px;
-    height: 120px;
-    width: clamp(200px, 100%, 300px);
+    
+    /* width: clamp(200px, 100%, 300px); */
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
     border: 1px solid var(--muted-foreground);
+    text-align: center;
+    background-color: var(--muted);
+
 
     .card-title {
         color: var(--muted-foreground);
         font-size: clamp(18px, 3vw, 20px);
     }
 
-    .count-clients {
-        color: var(--color-primary);
-        font-size: clamp(2rem, 3vw, 2.2rem);
+    .number {
+        margin: 0;
+        font-size: 32px;
         font-weight: bold;
+        color: var(--muted-foreground);
     }
+}
+
+.metric-card:nth-child(1) {
+    width: 100%;
 }

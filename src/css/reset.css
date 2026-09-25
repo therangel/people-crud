@@ -2,6 +2,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  /* padding: 0; */
 }
 
 * {
@@ -14,8 +15,8 @@ a {
     color: inherit;
 }
 
-body {
-    min-height: 100vh;
+body{
+    min-height: 100dvh;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;

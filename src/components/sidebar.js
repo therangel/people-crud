@@ -1,5 +1,6 @@
 
 export function sideBar(render){
+    const app = document.querySelector(".app")
     const menuButton = document.getElementById("burger-btn")
     const sidebar = document.querySelector(".sidebar")
     const overlay = document.querySelector(".overlay")
@@ -20,6 +21,7 @@ export function sideBar(render){
     function collapseSidebar() {
         sidebar.classList.toggle("collapsed")
         collapseSidebarButton.classList.toggle("collapsed")
+        app.classList.toggle("collapsed")
     }
 
 

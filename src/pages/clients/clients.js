@@ -12,7 +12,7 @@ export async function clientsPage() {
 
 export function initClients() {
   const clients = getClientsLs(); //DATA LOCAL-STORAGE
-  console.log(clients)
+  // console.log(clients)
   let clientsToDisplay = [];
 
   const totalClient = document.querySelector(".total-client");

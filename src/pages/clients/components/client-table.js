@@ -1,9 +1,19 @@
-export function initCLientTable(clients, editClient, openForm, confirmationModal, saveClientsLs, updateScreen) {
+import { initClientForm } from "./client-form";
+
+export function initCLientTable(
+  clients,
+  editClient,
+  openForm,
+  confirmationModal,
+  saveClientsLs,
+  updateScreen,
+) {
   const clientList = document.querySelector(".client-list");
 
   function renderClients(clientToRender, startIndex) {
     clientList.innerHTML = "";
 
+    
     clientToRender.forEach((client, index) => {
       const tableRow = document.createElement("tr");
 
@@ -24,6 +34,13 @@ export function initCLientTable(clients, editClient, openForm, confirmationModal
 
       const actionsCell = document.createElement("td");
 
+      function createActionButton(symbolClass, icon) {
+        const button = document.createElement("button");
+        button.classList.add("table-action-button");
+        button.innerHTML = `<span class="material-symbols-outlined ${symbolClass}">${icon}</span>`;
+        return button;
+      }
+
       actionsCell.append(
         createActionButton("edit-client-symbol", "edit"),
         createActionButton("delete-client-symbol", "delete"),
@@ -36,6 +53,8 @@ export function initCLientTable(clients, editClient, openForm, confirmationModal
         ".delete-client-symbol",
       );
       const editClientButton = actionsCell.querySelector(".edit-client-symbol");
+
+      const infoClientButton = actionsCell.querySelector(".info-client-symbol");
 
       // Internal events of the table buttons
       delClientButton.addEventListener("click", async () => {
@@ -59,21 +78,24 @@ export function initCLientTable(clients, editClient, openForm, confirmationModal
 
       editClientButton.addEventListener("click", () => {
         const clientToEdit = clientToRender[index];
+
         editClient(clientToEdit);
 
         openForm();
+      });
+
+      infoClientButton.addEventListener("click", () => {
+
+        // moreInfoModal()
+        console.log("FUNCIONA");
+
       });
 
       clientList.append(tableRow);
     });
   }
 
-  function createActionButton(symbolClass, icon) {
-    const button = document.createElement("button");
-    button.classList.add("table-action-button");
-    button.innerHTML = `<span class="material-symbols-outlined ${symbolClass}">${icon}</span>`;
-    return button;
-  }
+  
 
   return { renderClients };
 }
